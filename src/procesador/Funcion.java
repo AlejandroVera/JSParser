@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Funcion extends EntradaTS {
 
-	List<Variable.TipoVariable> parametros;
+	private List<Variable.TipoVariable> parametros;
 	
 	public Funcion(String nombre) {
 		super(nombre);

@@ -1,7 +1,13 @@
 package procesador;
 
+/**
+ * Cada una de las filas de cada una de las tablas de a Tabla de Simbolos
+ */
 public class EntradaTS {
 	
+	/**
+	 * Los diferentes tipos de datos que se pueden guardar en la tabla de simbolos.
+	 */
 	public static enum TipoEntradaTS{
 		INDEFINIDO, FUNCION, VARIABLE, RESERVADA
 	}

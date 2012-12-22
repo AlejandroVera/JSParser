@@ -19,6 +19,11 @@ public class TablaSimbolos {
 		
 	}
 	
+	/**
+	 * Añade un elemento a la tabla de simbolos. Si ya está no hace nada.
+	 * @param elemento Nombre del elemento a añadir.
+	 * @param global Tru si se tiene que añadir a la TS global. False en caso contrario.
+	 */
 	void añadir(String elemento, boolean global){
 		TS tabla = (global ? this.tSGlobal : this.tSActual);
 		tabla.añadir(elemento);
@@ -44,6 +49,22 @@ public class TablaSimbolos {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Realiza una búsqueda por todas las tablas de simbolos empezando por la actual y acabando por la global.
+	 * @param elemento Elemento a buscar
+	 * @return Devuelve la entrada en caso de encontrarla; sino null.
+	 */
+	public EntradaTS buscar(String elemento){
+		EntradaTS resultado = null;
+		
+		for (MatBloquesEntry entry : this.matrizBloques){
+			if((resultado = entry.getTS().buscar(elemento)) != null)
+				break; 
+		}
+		
+		return resultado;
 	}
 	
 	
