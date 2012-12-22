@@ -3,11 +3,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
 
-import procesador.Token.TipoToken;
 
 
 /**Analizador lexico. Se encarga de leer el texto fuente y obtene los tokens
@@ -15,39 +16,116 @@ import procesador.Token.TipoToken;
  */
 public class AnalizadorLexico {
 
-	/**Clase que representa un elemento de la matriz 
+	private final String digito= "1234567890";
+	private final String letra= "_ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnnopqrstuvwxyz";
+	private final String alfanum= digito+letra;
+
+
+	//*********************************CLASES PRIVADAS**********************************************
+
+	/**Clase que representa un elemento de la matriz de transicion
 	 *
 	 */
-	class Casilla{
-		public int siguienteEstado;
-		public Method accionSem;
-
+	private class Casilla{
+		private int siguienteEstado;
+		private Method accionSem;
+		//constructor
 		public Casilla(int siguienteEstado,Method accionSem){
 			this.siguienteEstado=siguienteEstado;
 			this.accionSem=accionSem;
 		}
 	}
 
-	private BufferedReader buffer;
-	private Map< TipoToken, ArrayList<Casilla> > matrizT;
+
+	/**Clase que representa una matriz de transicion
+	 *
+	 */
+	private class Matriz{
+
+		private HashMap<String,Casilla>[] estados;
+		//constructor
+		private Matriz(){
+			try {
+				estados = new HashMap[23];
+				estados[1]=new HashMap<String,Casilla>();
+
+				Class[] arg1 = new Class[1];
+				arg1[0]=Class.forName("TipoToken");
+
+				estados[1].put(";",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("[",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("]",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("(",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put(")",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("{",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("}",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put(",",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put(":",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("\"",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put(digito,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",null)));
+				estados[1].put(letra,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",null)));
+				estados[1].put("+",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put(">",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+				estados[1].put("&",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
+		
+			
+			
+			
+			
+			
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+
+		//obtiene una casilla de la matriz
+		private Casilla getCasilla(int estado,char tipo ){
+			return null;
+		}
+
+	}
+
+	//******************************FIN CLASES PRIVADAS**********************************************
+
+	private LinkedList<Character> buffer;
+	private int puntero;
 	private int estado;
 
 	/**Constructor
 	 * 
 	 */
 	public AnalizadorLexico(File fichero){
-		ArrayList<Casilla> columnas = new ArrayList<Casilla>(23);
-
-		abrirFichero(fichero);
+		this.estado=1;
+		this.puntero=0;
+		obtenerChars(fichero);
 	}
 
-	public Token siguienteToken(){
+	/**Con este metodo se obtiene un token por parte del analizador sintáctico
+	 * @return siguente token del texto
+	 */
+	public Token dameToken(){
 		return null;
 	}
 
+	/*+******************acciones semanticas*******************+*/
+	public void accionSem1(TipoToken t){
+		if(t.equals(TipoToken.COMA)){
+
+		}
+
+	}
+
+
+
 	/*+******************metodos auxiliares*******************+*/
 
-	private void abrirFichero(File fichero){
+	private void obtenerChars(File fichero){
 		File archivo = null;
 		FileReader fr = null;
 		try {
@@ -55,10 +133,15 @@ public class AnalizadorLexico {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		buffer = new BufferedReader(fr);
-
+		BufferedReader b = new BufferedReader(fr);
+		try {
+			int c;
+			while((c=b.read())!=-1){
+				buffer.offer((char)c);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
-
 
 }
