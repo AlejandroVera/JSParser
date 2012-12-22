@@ -1,9 +1,13 @@
 package procesador;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Map;
+
+import procesador.Token.TipoToken;
 
 
 /**Analizador lexico. Se encarga de leer el texto fuente y obtene los tokens
@@ -11,24 +15,29 @@ import java.util.ArrayList;
  */
 public class AnalizadorLexico {
 
+	/**Clase que representa un elemento de la matriz 
+	 *
+	 */
 	class Casilla{
 		public int siguienteEstado;
 		public Method accionSem;
-		
+
 		public Casilla(int siguienteEstado,Method accionSem){
 			this.siguienteEstado=siguienteEstado;
 			this.accionSem=accionSem;
 		}
 	}
-	
+
 	private BufferedReader buffer;
-	private ArrayList<ArrayList<Casilla>> matrizT;
+	private Map< TipoToken, ArrayList<Casilla> > matrizT;
 	private int estado;
 
 	/**Constructor
 	 * 
 	 */
-	public AnalizadorLexico(String fichero){
+	public AnalizadorLexico(File fichero){
+		ArrayList<Casilla> columnas = new ArrayList<Casilla>(23);
+
 		abrirFichero(fichero);
 	}
 
@@ -38,20 +47,16 @@ public class AnalizadorLexico {
 
 	/*+******************metodos auxiliares*******************+*/
 
-	private void abrirFichero(String fichero){
+	private void abrirFichero(File fichero){
 		File archivo = null;
 		FileReader fr = null;
 		try {
-			archivo = new File(fichero);
-			if(!archivo.exists()){
-				archivo.createNewFile();
-			}
 			fr = new FileReader(archivo);
-			buffer = new BufferedReader(fr);
-		}
-		catch(Exception e){
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		buffer = new BufferedReader(fr);
+
 	}
 
 
