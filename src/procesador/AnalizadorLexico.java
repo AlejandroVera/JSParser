@@ -113,7 +113,7 @@ public class AnalizadorLexico {
 	 * 
 	 */
 	public AnalizadorLexico(File fichero){
-		this.estado=1;
+		this.estado=0;
 		this.puntero=0;
 		obtenerChars(fichero);
 	}
