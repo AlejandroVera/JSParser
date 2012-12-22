@@ -2,14 +2,14 @@ package procesador;
 
 import java.util.Stack;
 
-public class TablaSimbolos {
+public class GestorTS {
 	
 	private Stack<MatBloquesEntry> matrizBloques;
 	private TS tSActual;
 	private TS tSGlobal;
 	
 	
-	public TablaSimbolos() {
+	public GestorTS() {
 		
 		this.matrizBloques = new Stack<MatBloquesEntry>();
 		
