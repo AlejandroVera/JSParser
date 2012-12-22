@@ -13,10 +13,18 @@ public class TS {
 		this.lista = new HashMap<String, EntradaTS>();
 	}
 	
-	public void añadir(String elemento){
+	/**
+	 * Añade una entrada a la tabla
+	 * @param elemento
+	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
+	 */
+	public EntradaTS añadir(String elemento){
 		if(buscar(elemento) == null){
-			this.lista.put(elemento, new EntradaTS(elemento));
-		}
+			EntradaTS ent = new EntradaTS(elemento);
+			this.lista.put(elemento, ent);
+			return ent;
+		}else
+			return null;
 	}
 	
 	public EntradaTS buscar(String elemento){

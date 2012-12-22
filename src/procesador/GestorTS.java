@@ -22,11 +22,12 @@ public class GestorTS {
 	/**
 	 * Añade un elemento a la tabla de simbolos. Si ya está no hace nada.
 	 * @param elemento Nombre del elemento a añadir.
-	 * @param global Tru si se tiene que añadir a la TS global. False en caso contrario.
+	 * @param global True si se tiene que añadir a la TS global. False en caso contrario.
+	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
 	 */
-	void añadir(String elemento, boolean global){
+	public EntradaTS añadir(String elemento, boolean global){
 		TS tabla = (global ? this.tSGlobal : this.tSActual);
-		tabla.añadir(elemento);
+		return tabla.añadir(elemento);
 	}
 	
 	/**
