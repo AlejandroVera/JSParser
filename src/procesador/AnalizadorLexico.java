@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import procesador.EntradaTS.TipoEntradaTS;
@@ -85,18 +86,8 @@ public class AnalizadorLexico {
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
 
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
-
-			sinUtilizar.add((char)32);
-			char aux[]="&()[]{},+*>_".toCharArray();
-			for(int i=0; i<aux.length;i++){
-				sinUtilizar.add((char) aux[i]);
-			}
-			for(int i=47; i<=59;i++){
+			for(int i=32; i<=126;i++){
 				sinUtilizar.add((char) i);
-			}
-			for(int i=65; i<=90;i++){
-				sinUtilizar.add((char) i);
-				sinUtilizar.add((char) (i+32));
 			}
 
 			for(Transicion t :  tr){
@@ -108,9 +99,11 @@ public class AnalizadorLexico {
 					}
 				}
 				else if(t.accionSemantica!=null){ //otro caracter
-					for(Character s :  sinUtilizar){
+					Iterator<Character> it = sinUtilizar.iterator();
+					while(it.hasNext()){
+						char s = it.next();
 						casillaMatriz.get(estadoActual).put(s, new Casilla(t.nuevoEstado,t.accionSemantica));
-						sinUtilizar.remove(s);
+						it.remove();
 					}
 				}                       
 			}
@@ -137,7 +130,7 @@ public class AnalizadorLexico {
 		this.puntero=0;
 		this.cadena="";
 		this.numero="";
-		
+
 		//Se rellena la matriz de transicion
 		this.matriz = new Matriz();
 
@@ -219,7 +212,7 @@ public class AnalizadorLexico {
 		Casilla aux=matriz.obtenerCasilla(estado,buffer.get(puntero));
 		sol= doAccionSem(aux.accionSem);
 		estado=aux.siguienteEstado;
-		
+
 		return sol;
 	}
 
@@ -313,6 +306,8 @@ public class AnalizadorLexico {
 
 	public void emitirError(){
 		System.out.println("error, por ahora solo imprimo");
+		System.exit(0);
+
 	}
 
 
