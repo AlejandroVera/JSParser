@@ -131,6 +131,7 @@ public class AnalizadorLexico {
 		this.estado=0;
 		this.puntero=0;
 
+		//Se rellena la matriz de transicion
 		Matriz matriz = new Matriz();
 		
 		//*************estado 0********************
@@ -179,8 +180,8 @@ public class AnalizadorLexico {
 
 		//*************estado 7********************
 		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
-		tr7.add(new Transicion("/",  0, "a15"));
-		tr7.add(new Transicion(null, 6, "a16"));
+		tr7.add(new Transicion("/",  0, "a17"));
+		tr7.add(new Transicion(null, 6, "a18"));
 		matriz.definirTransiciones(tr7, 7);
 		
 		obtenerChars(fichero);
@@ -195,10 +196,11 @@ public class AnalizadorLexico {
 
 	/*+******************acciones semanticas*******************+*/
 	public Token accionSem(String accion){
+		Token token=null;
 		if(accion=="a1"){
 
 		}
-		return null;
+		return token;
 	}
 
 	public void emitirError(){
