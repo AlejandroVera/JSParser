@@ -212,12 +212,14 @@ public class AnalizadorLexico {
 	public Token dameToken(){
 		Token sol=null;
 		Casilla aux=matriz.obtenerCasilla(estado,buffer.get(puntero));
+		sol= doAccionSem(aux.accionSem);
+		estado=aux.siguienteEstado;
 		
 		return sol;
 	}
 
 	/*+******************acciones semanticas*******************+*/
-	public Token accionSem(String accion){
+	public Token doAccionSem(String accion){
 		Token token=null;
 		if(accion=="nada"){
 			puntero++;

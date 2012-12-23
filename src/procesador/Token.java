@@ -27,8 +27,8 @@ public class Token {
 		else if(valor instanceof Integer){
 			sol+=((Integer)valor).toString();
 		}
-		else{
-			
+		else if(valor instanceof EntradaTS){
+			sol+=((EntradaTS)valor).toString();
 		}
 		return sol;
 	}
