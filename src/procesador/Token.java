@@ -3,9 +3,9 @@ package procesador;
 public class Token {
 	
 	private TipoToken tipo;
-	private int valor;
+	private String valor;
 	
-	public Token(TipoToken tipo, int valor){
+	public Token(TipoToken tipo, String valor){
 		this.tipo=tipo;
 		this.valor=valor;
 	}
@@ -14,7 +14,7 @@ public class Token {
 		return this.tipo;
 	}
 	
-	public int getValor(){
+	public String getValor(){
 		return this.valor;
 	}
 }

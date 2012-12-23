@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 
@@ -28,11 +29,24 @@ public class AnalizadorLexico {
 	 */
 	private class Casilla{
 		private int siguienteEstado;
-		private Method accionSem;
+		private String accionSem;
 		//constructor
-		public Casilla(int siguienteEstado,Method accionSem){
+		public Casilla(int siguienteEstado,String accionSem){
 			this.siguienteEstado=siguienteEstado;
 			this.accionSem=accionSem;
+		}
+	}
+
+
+	private class Transicion{
+		private char[] simbolos;
+		private int nuevoEstado;
+		private String accionSemantica;
+		
+		private Transicion(String simbolos, int nuevoEstado, String accionSemantica){
+			this.nuevoEstado=nuevoEstado;
+			this.accionSemantica=accionSemantica;
+			this.simbolos= simbolos.toCharArray();
 		}
 	}
 
@@ -40,67 +54,41 @@ public class AnalizadorLexico {
 	/**Clase que representa una matriz de transicion
 	 *
 	 */
-	private class Matriz{
+	private static class Matriz{
 
-		private HashMap<String,Casilla>[] estados;
-		//constructor
-		private Matriz(){
-			try {
-				estados = new HashMap[29];
-				
+		private static HashMap<Character,Casilla>[] casillaMatriz;
 
-				Class[] arg1 = new Class[1];
-				arg1[0]=Class.forName("TipoToken");
-
-				estados[0]=new HashMap<String,Casilla>();
-				estados[0].put(";",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("[",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("]",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("(",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put(")",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("{",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("}",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put(",",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put(":",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("\"",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put(">",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put(digito,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",arg1)));
-				estados[0].put(letra,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",arg1)));
-				estados[0].put("+",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("&",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("/",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[0].put("*",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				
-				
-				estados[1].put(alfanum,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",arg1)));
-				
-				estados[2].put(digito,new Casilla(1,Class.forName("AnalizadorLexico").getMethod("a1",arg1)));
-				
-				estados[3].put("+",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				
-				estados[4].put("&",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				
-				estados[5].put("/",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				estados[5].put("*",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-				
-				estados[6].put("/",new Casilla(1,Class.forName("AnalizadorLexico").getMethod("accionSem1",arg1)));
-			
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+		private static void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
+			HashSet<Character> sinUtilizar = new HashSet<Character>();
+			sinUtilizar.add((char)32);
+			char aux[]="&()[]{},+*>_".toCharArray();
+			for(int i=0; i<aux.length;i++){
+				sinUtilizar.add((char) aux[i]);
+			}
+			for(int i=47; i<=59;i++){
+				sinUtilizar.add((char) i);
+			}
+			for(int i=65; i<=90;i++){
+				sinUtilizar.add((char) i);
+				sinUtilizar.add((char) (i+32));
 			}
 
+			HashSet<Character> utilizados = new HashSet<Character>();
+
+			for(Transicion t :  tr){
+				if(t.simbolos.length>0){
+					casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
+				}
+				else if(t.accionSemantica!=null){
+
+				}                       
+			}
+			if(!sinUtilizar.isEmpty()){
+				for(Character s :  sinUtilizar){
+					casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
+				}
+			}
 		}
-
-
-		//obtiene una casilla de la matriz
-		private Casilla getCasilla(int estado,char tipo ){
-			return null;
-		}
-
 	}
 
 	//******************************FIN CLASES PRIVADAS**********************************************
@@ -126,11 +114,15 @@ public class AnalizadorLexico {
 	}
 
 	/*+******************acciones semanticas*******************+*/
-	public Token accionSem1(TipoToken t){
-		if(t.equals(TipoToken.COMA)){
+	public Token accionSem(String accion){
+		if(accion=="a1"){
 
 		}
 		return null;
+	}
+
+	public void emitirError(){
+		System.out.println("error, por ahora solo imprimo");
 	}
 
 
