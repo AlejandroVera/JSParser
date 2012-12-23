@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import procesador.EntradaTS.TipoEntradaTS;
 
@@ -84,14 +85,14 @@ public class AnalizadorLexico {
 		 * @param estadoActual fila de la matriz
 		 */
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
-
+			System.out.println("tamaño tr: "+tr.size());
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
 			for(int i=32; i<=126;i++){
 				sinUtilizar.add((char) i);
 			}
 
+			casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 			for(Transicion t :  tr){
-				casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 				if(t.simbolos.length>0){
 					for(int i=0; i<t.simbolos.length;i++){
 						casillaMatriz.get(estadoActual).put(t.simbolos[i], new Casilla(t.nuevoEstado,t.accionSemantica));
@@ -109,7 +110,6 @@ public class AnalizadorLexico {
 			}
 			if(!sinUtilizar.isEmpty()){ //el caracter que no tiene asociado una transicion no es reconocido por el lenguaje
 				for(Character s :  sinUtilizar){
-					casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 					casillaMatriz.get(estadoActual).put(s, new Casilla(1,"emitirError"));
 				}
 			}
@@ -154,7 +154,6 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion(":", 0, "a29"));
 		tr0.add(new Transicion("\"", 0, "a30"));
 
-		System.out.println("HOLA");
 		matriz.definirTransiciones(tr0, 0);
 
 		//*************estado 1********************
@@ -203,6 +202,17 @@ public class AnalizadorLexico {
 		for(int i=0;i<buffer.size();i++){
 			System.out.println(buffer.get(i));
 		}
+		System.out.println("columnas imprimir: "+this.matriz.casillaMatriz.size());
+		for(int i=0;i<this.matriz.casillaMatriz.size();i++){
+			Set<Character> s=this.matriz.casillaMatriz.get(i).keySet();
+			Iterator<Character> it = s.iterator();
+			while(it.hasNext()){
+				char carac = it.next();
+				Casilla c=this.matriz.casillaMatriz.get(i).get(carac);
+				System.out.println(" fila: "+i+" columna: "+carac+" accSem: "+c.accionSem+" sigEstado: "+c.siguienteEstado);
+			}
+		}
+
 	}
 
 	/**Con este metodo se obtiene un token por parte del analizador sintáctico

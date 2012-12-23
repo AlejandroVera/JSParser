@@ -45,7 +45,6 @@ public class GestorTS {
 			case VARIABLE: entrada = (EntradaTS) new Variable(elemento); break;
 			default: entrada = (EntradaTS) new EntradaTS(elemento);
 		}
-		
 		return tabla.añadir(entrada);
 	}
 	
