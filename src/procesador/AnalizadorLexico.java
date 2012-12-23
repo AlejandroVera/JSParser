@@ -31,7 +31,7 @@ public class AnalizadorLexico {
 		private int siguienteEstado;
 		private String accionSem;
 		//constructor
-		public Casilla(int siguienteEstado,String accionSem){
+		private Casilla(int siguienteEstado,String accionSem){
 			this.siguienteEstado=siguienteEstado;
 			this.accionSem=accionSem;
 		}
@@ -54,12 +54,14 @@ public class AnalizadorLexico {
 	/**Clase que representa una matriz de transicion
 	 *
 	 */
-	private static class Matriz{
+	private class Matriz{
 
-		private static HashMap<Character,Casilla>[] casillaMatriz;
+		private  HashMap<Character,Casilla>[] casillaMatriz;
 
-		private static void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
+		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
+			
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
+			
 			sinUtilizar.add((char)32);
 			char aux[]="&()[]{},+*>_".toCharArray();
 			for(int i=0; i<aux.length;i++){
@@ -86,6 +88,7 @@ public class AnalizadorLexico {
 			if(!sinUtilizar.isEmpty()){
 				for(Character s :  sinUtilizar){
 					casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
+					casillaMatriz[estadoActual].put(s, new Casilla(1,"emitirError"));
 				}
 			}
 		}
