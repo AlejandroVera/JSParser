@@ -132,19 +132,57 @@ public class AnalizadorLexico {
 		this.puntero=0;
 
 		Matriz matriz = new Matriz();
-		//estado 0
-		ArrayList<Transicion> tr = new ArrayList<Transicion>();
-		tr.add(new Transicion(letra,  1, "a2"));
-		tr.add(new Transicion(digito,  2, "a3"));
-		tr.add(new Transicion("+", 3, "a4"));
-		tr.add(new Transicion("&", 4, "a5"));
-		tr.add(new Transicion("/", 5, "a6"));
-		tr.add(new Transicion(null, 0, "a1"));
 		
-		matriz.definirTransiciones(tr, 0);
+		//*************estado 0********************
+		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
+		tr0.add(new Transicion(letra,  1, "a2"));
+		tr0.add(new Transicion(digito,  2, "a3"));
+		tr0.add(new Transicion("+", 3, "a4"));
+		tr0.add(new Transicion("&", 4, "a5"));
+		tr0.add(new Transicion("/", 5, "a6"));
+		tr0.add(new Transicion(null, 0, "a1"));
+		matriz.definirTransiciones(tr0, 0);
+		
+		//*************estado 1********************
+		ArrayList<Transicion> tr1 = new ArrayList<Transicion>();
+		tr1.add(new Transicion(alfanum,  1, "a7"));
+		tr1.add(new Transicion(null, 0, "a8"));
+		matriz.definirTransiciones(tr1, 1);
+		
+		//*************estado 2********************
+		ArrayList<Transicion> tr2 = new ArrayList<Transicion>();
+		tr2.add(new Transicion(digito,  2, "a9"));
+		tr2.add(new Transicion(null, 0, "a10"));
+		matriz.definirTransiciones(tr2, 2);
+		
+		//*************estado 3********************
+		ArrayList<Transicion> tr3 = new ArrayList<Transicion>();
+		tr3.add(new Transicion("+",  0, "a11"));
+		tr3.add(new Transicion(null, 0, "a12"));
+		matriz.definirTransiciones(tr3, 3);
+		
+		//*************estado 4********************
+		ArrayList<Transicion> tr4 = new ArrayList<Transicion>();
+		tr4.add(new Transicion("&",  0, "a13"));
+		matriz.definirTransiciones(tr4, 4);
+		
+		//*************estado 5********************
+		ArrayList<Transicion> tr5 = new ArrayList<Transicion>();
+		tr5.add(new Transicion("*",  6, "a14"));
+		matriz.definirTransiciones(tr5, 5);
+		
+		//*************estado 6********************
+		ArrayList<Transicion> tr6 = new ArrayList<Transicion>();
+		tr6.add(new Transicion("*",  7, "a15"));
+		tr6.add(new Transicion(null, 6, "a16"));
+		matriz.definirTransiciones(tr6, 6);
 
-
-
+		//*************estado 7********************
+		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
+		tr7.add(new Transicion("/",  0, "a15"));
+		tr7.add(new Transicion(null, 6, "a16"));
+		matriz.definirTransiciones(tr7, 7);
+		
 		obtenerChars(fichero);
 	}
 
