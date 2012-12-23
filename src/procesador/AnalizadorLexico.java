@@ -48,7 +48,7 @@ public class AnalizadorLexico {
 		private Transicion(String simbolos, int nuevoEstado, String accionSemantica){
 			this.nuevoEstado=nuevoEstado;
 			this.accionSemantica=accionSemantica;
-			
+
 			if(simbolos!=null){
 				this.simbolos= simbolos.toCharArray();
 			}
@@ -133,7 +133,7 @@ public class AnalizadorLexico {
 
 		//Se rellena la matriz de transicion
 		Matriz matriz = new Matriz();
-		
+
 		//*************estado 0********************
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
 		tr0.add(new Transicion(letra,  1, "a2"));
@@ -141,37 +141,49 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion("+", 3, "a4"));
 		tr0.add(new Transicion("&", 4, "a5"));
 		tr0.add(new Transicion("/", 5, "a6"));
-		tr0.add(new Transicion(null, 0, "a1"));
-		matriz.definirTransiciones(tr0, 0);
+		//tr0.add(new Transicion("\n", 0, "a19"));
+		tr0.add(new Transicion(";", 0, "a20"));
+		tr0.add(new Transicion(">", 0, "a21"));
+		tr0.add(new Transicion("[", 0, "a22"));
+		tr0.add(new Transicion("]", 0, "a23"));
+		tr0.add(new Transicion("{", 0, "a24"));
+		tr0.add(new Transicion("}", 0, "a25"));
+		tr0.add(new Transicion("(", 0, "a26"));
+		tr0.add(new Transicion(")", 0, "a27"));
+		tr0.add(new Transicion(",", 0, "a28"));
+		tr0.add(new Transicion(":", 0, "a29"));
+		tr0.add(new Transicion("\"", 0, "a30"));
 		
+		matriz.definirTransiciones(tr0, 0);
+
 		//*************estado 1********************
 		ArrayList<Transicion> tr1 = new ArrayList<Transicion>();
 		tr1.add(new Transicion(alfanum,  1, "a7"));
 		tr1.add(new Transicion(null, 0, "a8"));
 		matriz.definirTransiciones(tr1, 1);
-		
+
 		//*************estado 2********************
 		ArrayList<Transicion> tr2 = new ArrayList<Transicion>();
 		tr2.add(new Transicion(digito,  2, "a9"));
 		tr2.add(new Transicion(null, 0, "a10"));
 		matriz.definirTransiciones(tr2, 2);
-		
+
 		//*************estado 3********************
 		ArrayList<Transicion> tr3 = new ArrayList<Transicion>();
 		tr3.add(new Transicion("+",  0, "a11"));
 		tr3.add(new Transicion(null, 0, "a12"));
 		matriz.definirTransiciones(tr3, 3);
-		
+
 		//*************estado 4********************
 		ArrayList<Transicion> tr4 = new ArrayList<Transicion>();
 		tr4.add(new Transicion("&",  0, "a13"));
 		matriz.definirTransiciones(tr4, 4);
-		
+
 		//*************estado 5********************
 		ArrayList<Transicion> tr5 = new ArrayList<Transicion>();
 		tr5.add(new Transicion("*",  6, "a14"));
 		matriz.definirTransiciones(tr5, 5);
-		
+
 		//*************estado 6********************
 		ArrayList<Transicion> tr6 = new ArrayList<Transicion>();
 		tr6.add(new Transicion("*",  7, "a15"));
@@ -183,7 +195,7 @@ public class AnalizadorLexico {
 		tr7.add(new Transicion("/",  0, "a17"));
 		tr7.add(new Transicion(null, 6, "a18"));
 		matriz.definirTransiciones(tr7, 7);
-		
+
 		obtenerChars(fichero);
 	}
 
@@ -197,9 +209,62 @@ public class AnalizadorLexico {
 	/*+******************acciones semanticas*******************+*/
 	public Token accionSem(String accion){
 		Token token=null;
-		if(accion=="a1"){
+		
+		if(accion=="a20"){
+			token = new Token(TipoToken.PUNTOYCOMA,null);
+		}
+		else if(accion=="a21"){
+			token = new Token(TipoToken.OPLOGICO,">");
+		}
+		else if(accion=="a22"){
+			token = new Token(TipoToken.CORCHETEAB,null);
+		}
+		else if(accion=="a23"){
+			token = new Token(TipoToken.CORCHETECE,null);
+		}
+		else if(accion=="a24"){
+			token = new Token(TipoToken.LLAVEAB,null);
+		}
+		else if(accion=="a25"){
+			token = new Token(TipoToken.LLAVECE,null);
+		}
+		else if(accion=="a25"){
+			token = new Token(TipoToken.PARENTESISAB,null);
+		}
+		else if(accion=="a27"){
+			token = new Token(TipoToken.PARENTESISCE,null);
+		}
+		else if(accion=="a28"){
+			token = new Token(TipoToken.COMA,null);
+		}
+		else if(accion=="a29"){
+			token = new Token(TipoToken.DOSPUNTOS,null);
+		}
+		else if(accion=="a30"){
+			token = new Token(TipoToken.COMILLAS,null);
+		}
+		else if(accion=="a10"){
 
 		}
+		else if(accion=="a11"){
+
+		}
+		else if(accion=="a12"){
+
+		}
+		else if(accion=="a13"){
+
+		}
+		else if(accion=="a14"){
+
+		}
+		else if(accion=="a15"){
+
+		}
+		else if(accion=="a16"){
+
+		}
+
 		return token;
 	}
 
