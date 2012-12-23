@@ -130,7 +130,7 @@ public class AnalizadorLexico {
 		this.puntero=0;
 		this.cadena="";
 		this.numero="";
-
+		this.buffer = new LinkedList<Character>();
 		//Se rellena la matriz de transicion
 		this.matriz = new Matriz();
 
@@ -198,6 +198,7 @@ public class AnalizadorLexico {
 		matriz.definirTransiciones(tr7, 7);
 
 		obtenerChars(fichero);
+
 		System.out.println("Caracteres del texto:");
 		for(int i=0;i<buffer.size();i++){
 			System.out.println(buffer.get(i));
@@ -315,10 +316,9 @@ public class AnalizadorLexico {
 	/*+******************metodos auxiliares*******************+*/
 
 	private void obtenerChars(File fichero){
-		File archivo = null;
 		FileReader fr = null;
 		try {
-			fr = new FileReader(archivo);
+			fr = new FileReader(fichero);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
