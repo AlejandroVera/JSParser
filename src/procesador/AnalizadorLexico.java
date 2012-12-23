@@ -24,7 +24,7 @@ public class AnalizadorLexico {
 	private final String alfanum= digito+letra;
 	private String cadena;
 	private String numero;
-
+	private Matriz matriz;
 
 	//*********************************CLASES PRIVADAS**********************************************
 
@@ -73,6 +73,9 @@ public class AnalizadorLexico {
 			casillaMatriz = new ArrayList<HashMap<Character,Casilla>>(8);
 		}
 
+		private Casilla obtenerCasilla(int fila, char columna){
+			return casillaMatriz.get(fila).get(columna);
+		}
 
 		/**
 		 * Completa la fila "estadoActual" de la matriz de transicion.
@@ -134,8 +137,9 @@ public class AnalizadorLexico {
 		this.puntero=0;
 		this.cadena="";
 		this.numero="";
+		
 		//Se rellena la matriz de transicion
-		Matriz matriz = new Matriz();
+		this.matriz = new Matriz();
 
 		//*************estado 0********************
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
@@ -206,7 +210,10 @@ public class AnalizadorLexico {
 	 * @return siguente token del texto
 	 */
 	public Token dameToken(){
-		return null;
+		Token sol=null;
+		Casilla aux=matriz.obtenerCasilla(estado,buffer.get(puntero));
+		
+		return sol;
 	}
 
 	/*+******************acciones semanticas*******************+*/
