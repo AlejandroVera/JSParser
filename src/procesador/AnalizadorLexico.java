@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import procesador.EntradaTS.TipoEntradaTS;
+
 
 
 /**Analizador lexico. Se encarga de leer el texto fuente y obtene los tokens
@@ -130,7 +132,8 @@ public class AnalizadorLexico {
 	public AnalizadorLexico(File fichero){
 		this.estado=0;
 		this.puntero=0;
-
+		this.cadena="";
+		this.numero="";
 		//Se rellena la matriz de transicion
 		Matriz matriz = new Matriz();
 
@@ -138,8 +141,8 @@ public class AnalizadorLexico {
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
 		tr0.add(new Transicion(letra,  1, "a2"));
 		tr0.add(new Transicion(digito,  2, "a3"));
-		tr0.add(new Transicion("+", 3, "a4"));
-		tr0.add(new Transicion("&", 4, "a5"));
+		tr0.add(new Transicion("+", 3, "non"));
+		tr0.add(new Transicion("&", 4, "non"));
 		tr0.add(new Transicion("/", 5, "a6"));
 		//tr0.add(new Transicion("\n", 0, "a19"));
 		tr0.add(new Transicion(";", 0, "a20"));
@@ -158,13 +161,13 @@ public class AnalizadorLexico {
 
 		//*************estado 1********************
 		ArrayList<Transicion> tr1 = new ArrayList<Transicion>();
-		tr1.add(new Transicion(alfanum,  1, "a7"));
-		tr1.add(new Transicion(null, 0, "a8"));
+		tr1.add(new Transicion(alfanum,  1, "a2"));
+		tr1.add(new Transicion(null, 0, "a4"));
 		matriz.definirTransiciones(tr1, 1);
 
 		//*************estado 2********************
 		ArrayList<Transicion> tr2 = new ArrayList<Transicion>();
-		tr2.add(new Transicion(digito,  2, "a9"));
+		tr2.add(new Transicion(digito,  2, "a3"));
 		tr2.add(new Transicion(null, 0, "a10"));
 		matriz.definirTransiciones(tr2, 2);
 
@@ -211,46 +214,62 @@ public class AnalizadorLexico {
 		Token token=null;
 		
 		if(accion=="a20"){
+			puntero++;
 			token = new Token(TipoToken.PUNTOYCOMA,null);
 		}
 		else if(accion=="a21"){
+			puntero++;
 			token = new Token(TipoToken.OPLOGICO,">");
 		}
 		else if(accion=="a22"){
+			puntero++;
 			token = new Token(TipoToken.CORCHETEAB,null);
 		}
 		else if(accion=="a23"){
+			puntero++;
 			token = new Token(TipoToken.CORCHETECE,null);
 		}
 		else if(accion=="a24"){
+			puntero++;
 			token = new Token(TipoToken.LLAVEAB,null);
 		}
 		else if(accion=="a25"){
+			puntero++;
 			token = new Token(TipoToken.LLAVECE,null);
 		}
-		else if(accion=="a25"){
+		else if(accion=="a26"){
+			puntero++;
 			token = new Token(TipoToken.PARENTESISAB,null);
 		}
 		else if(accion=="a27"){
+			puntero++;
 			token = new Token(TipoToken.PARENTESISCE,null);
 		}
 		else if(accion=="a28"){
+			puntero++;
 			token = new Token(TipoToken.COMA,null);
 		}
 		else if(accion=="a29"){
+			puntero++;
 			token = new Token(TipoToken.DOSPUNTOS,null);
 		}
 		else if(accion=="a30"){
+			puntero++;
 			token = new Token(TipoToken.COMILLAS,null);
 		}
-		else if(accion=="a10"){
-
+		else if(accion=="a2"){
+			puntero++;
+			cadena += buffer.get(puntero);
 		}
-		else if(accion=="a11"){
-
+		else if(accion=="a3"){
+			puntero++;
+			numero+=buffer.get(puntero);
 		}
-		else if(accion=="a12"){
-
+		else if(accion=="a4"){
+			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
+			if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
+				token = new Token(TipoToken.PALABRACLAVE, ets);
+			}
 		}
 		else if(accion=="a13"){
 
