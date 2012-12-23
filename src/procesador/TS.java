@@ -18,11 +18,10 @@ public class TS {
 	 * @param elemento
 	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
 	 */
-	public EntradaTS añadir(String elemento){
-		if(buscar(elemento) == null){
-			EntradaTS ent = new EntradaTS(elemento);
-			this.lista.put(elemento, ent);
-			return ent;
+	public EntradaTS añadir(EntradaTS elemento){
+		if(buscar(elemento.getNombre()) == null){
+			this.lista.put(elemento.getNombre(), elemento);
+			return elemento;
 		}else
 			return null;
 	}

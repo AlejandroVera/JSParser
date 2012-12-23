@@ -2,6 +2,8 @@ package procesador;
 
 import java.util.Stack;
 
+import procesador.EntradaTS.TipoEntradaTS;
+
 public class GestorTS {
 	
 	private Stack<MatBloquesEntry> matrizBloques;
@@ -17,6 +19,33 @@ public class GestorTS {
 		crearTabla();
 		this.tSGlobal = this.tSActual;
 		
+		//Inicializamos con las palabras reservadas
+		String[] array = {"if", "var", "array", "new", "prompt", "document.write", "switch", "case", "break", "true", "false"};
+		for(String s : array)
+			añadir(s, true, TipoEntradaTS.RESERVADA);
+		
+	}
+	
+	/**
+	 * Añade un elemento a la tabla de simbolos. Si ya está no hace nada.
+	 * @param elemento Nombre del elemento a añadir.
+	 * @param global True si se tiene que añadir a la TS global. False en caso contrario.
+	 * @param tipo Tipo de entrada a añadir.
+	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
+	 */
+	public EntradaTS añadir(String elemento, boolean global, TipoEntradaTS tipo){
+		
+		TS tabla = (global ? this.tSGlobal : this.tSActual);
+		
+		EntradaTS entrada;
+		switch(tipo){
+			case FUNCION: entrada = (EntradaTS) new Funcion(elemento); break;
+			case RESERVADA: entrada = (EntradaTS) new Reservada(elemento); break;
+			case VARIABLE: entrada = (EntradaTS) new Variable(elemento); break;
+			default: entrada = (EntradaTS) new EntradaTS(elemento);
+		}
+		
+		return tabla.añadir(entrada);
 	}
 	
 	/**
@@ -26,8 +55,7 @@ public class GestorTS {
 	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
 	 */
 	public EntradaTS añadir(String elemento, boolean global){
-		TS tabla = (global ? this.tSGlobal : this.tSActual);
-		return tabla.añadir(elemento);
+		return añadir(elemento, global, TipoEntradaTS.INDEFINIDO);
 	}
 	
 	/**
