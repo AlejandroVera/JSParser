@@ -156,7 +156,7 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion(",", 0, "a28"));
 		tr0.add(new Transicion(":", 0, "a29"));
 		tr0.add(new Transicion("\"", 0, "a30"));
-		
+
 		matriz.definirTransiciones(tr0, 0);
 
 		//*************estado 1********************
@@ -212,7 +212,7 @@ public class AnalizadorLexico {
 	/*+******************acciones semanticas*******************+*/
 	public Token accionSem(String accion){
 		Token token=null;
-		
+
 		if(accion=="a20"){
 			puntero++;
 			token = new Token(TipoToken.PUNTOYCOMA,null);
@@ -267,9 +267,15 @@ public class AnalizadorLexico {
 		}
 		else if(accion=="a4"){
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
-			if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
-				token = new Token(TipoToken.PALABRACLAVE, ets);
+			if(ets!=null){ //Está en la TS
+				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
+					token = new Token(TipoToken.PALABRACLAVE, ets);
+				}
 			}
+			else{//NO está
+				token = new Token(TipoToken.PALABRACLAVE, Procesador.getGestorTS().añadir(cadena, false));
+			}
+			cadena="";
 		}
 		else if(accion=="a13"){
 
