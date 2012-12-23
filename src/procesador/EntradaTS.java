@@ -31,5 +31,10 @@ public class EntradaTS {
 		return tipoEntrada;
 	}
 	
+	public String toString(){
+		String sol = null;
+		sol="tipoEntrada: "+tipoEntrada.toString()+"nombre :"+this.nombre;
+		return sol;
+	}
 
 }

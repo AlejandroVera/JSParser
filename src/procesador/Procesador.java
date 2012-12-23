@@ -33,7 +33,7 @@ public class Procesador {
 		errores = new GestorErrores(lexico);
 				
 		//Crear y lanzar el analizador sintatico-semantico
-		AnalizadorSS ss = new AnalizadorSS();
+		AnalizadorSS ss = new AnalizadorSS(lexico);
 	}
 	
 	public static GestorErrores getGestorErrores(){

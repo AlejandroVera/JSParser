@@ -7,6 +7,11 @@ package procesador;
  */
 public class AnalizadorSS {
 	
-	public AnalizadorSS(){}
-	//Ni idea todavia de que poner aquí xD
+	public AnalizadorSS(AnalizadorLexico lexico){
+		Token t;
+		while((t=lexico.dameToken())!=null){
+			t.getTipo().toString();
+		}
+	}
+	
 }
