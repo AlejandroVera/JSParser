@@ -20,6 +20,8 @@ public class AnalizadorLexico {
 	private final String digito= "1234567890";
 	private final String letra= "_ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnnopqrstuvwxyz";
 	private final String alfanum= digito+letra;
+	private String cadena;
+	private String numero;
 
 
 	//*********************************CLASES PRIVADAS**********************************************
@@ -46,7 +48,13 @@ public class AnalizadorLexico {
 		private Transicion(String simbolos, int nuevoEstado, String accionSemantica){
 			this.nuevoEstado=nuevoEstado;
 			this.accionSemantica=accionSemantica;
-			this.simbolos= simbolos.toCharArray();
+			
+			if(simbolos!=null){
+				this.simbolos= simbolos.toCharArray();
+			}
+			else{
+				this.simbolos = new char[0];
+			}
 		}
 	}
 
@@ -57,13 +65,13 @@ public class AnalizadorLexico {
 	private class Matriz{
 
 		private  ArrayList<HashMap<Character,Casilla>> casillaMatriz;
-	
-		
+
+
 		private Matriz(){
 			casillaMatriz = new ArrayList<HashMap<Character,Casilla>>(8);
 		}
-		
-		
+
+
 		/**
 		 * Completa la fila "estadoActual" de la matriz de transicion.
 		 * @param tr lista de transiciones
@@ -101,7 +109,7 @@ public class AnalizadorLexico {
 					}
 				}                       
 			}
-			if(!sinUtilizar.isEmpty()){
+			if(!sinUtilizar.isEmpty()){ //el caracter que no tiene asociado una transicion no es reconocido por el lenguaje
 				for(Character s :  sinUtilizar){
 					casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 					casillaMatriz.get(estadoActual).put(s, new Casilla(1,"emitirError"));
@@ -122,10 +130,21 @@ public class AnalizadorLexico {
 	public AnalizadorLexico(File fichero){
 		this.estado=0;
 		this.puntero=0;
+
+		Matriz matriz = new Matriz();
+		//estado 0
+		ArrayList<Transicion> tr = new ArrayList<Transicion>();
+		tr.add(new Transicion(letra,  1, "a2"));
+		tr.add(new Transicion(digito,  2, "a3"));
+		tr.add(new Transicion("+", 3, "a4"));
+		tr.add(new Transicion("&", 4, "a5"));
+		tr.add(new Transicion("/", 5, "a6"));
+		tr.add(new Transicion(null, 0, "a1"));
 		
-	//	new Transicion(String simbolos, int nuevoEstado, String accionSemantica)
-		
-		
+		matriz.definirTransiciones(tr, 0);
+
+
+
 		obtenerChars(fichero);
 	}
 
