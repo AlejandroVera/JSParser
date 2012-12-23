@@ -42,7 +42,7 @@ public class AnalizadorLexico {
 		private char[] simbolos;
 		private int nuevoEstado;
 		private String accionSemantica;
-		
+
 		private Transicion(String simbolos, int nuevoEstado, String accionSemantica){
 			this.nuevoEstado=nuevoEstado;
 			this.accionSemantica=accionSemantica;
@@ -59,9 +59,9 @@ public class AnalizadorLexico {
 		private  HashMap<Character,Casilla>[] casillaMatriz;
 
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
-			
+
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
-			
+
 			sinUtilizar.add((char)32);
 			char aux[]="&()[]{},+*>_".toCharArray();
 			for(int i=0; i<aux.length;i++){
@@ -75,14 +75,19 @@ public class AnalizadorLexico {
 				sinUtilizar.add((char) (i+32));
 			}
 
-			HashSet<Character> utilizados = new HashSet<Character>();
-
 			for(Transicion t :  tr){
+				casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
 				if(t.simbolos.length>0){
-					casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
+					for(int i=0; i<t.simbolos.length;i++){
+						casillaMatriz[estadoActual].put(t.simbolos[i], new Casilla(t.nuevoEstado,t.accionSemantica));
+						sinUtilizar.remove(t.simbolos[i]);
+					}
 				}
-				else if(t.accionSemantica!=null){
-
+				else if(t.accionSemantica!=null){ //otro caracter
+					for(Character s :  sinUtilizar){
+						casillaMatriz[estadoActual].put(s, new Casilla(t.nuevoEstado,t.accionSemantica));
+						sinUtilizar.remove(s);
+					}
 				}                       
 			}
 			if(!sinUtilizar.isEmpty()){
