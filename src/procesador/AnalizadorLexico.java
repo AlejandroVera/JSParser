@@ -56,8 +56,19 @@ public class AnalizadorLexico {
 	 */
 	private class Matriz{
 
-		private  HashMap<Character,Casilla>[] casillaMatriz;
-
+		private  ArrayList<HashMap<Character,Casilla>> casillaMatriz;
+	
+		
+		private Matriz(){
+			casillaMatriz = new ArrayList<HashMap<Character,Casilla>>(8);
+		}
+		
+		
+		/**
+		 * Completa la fila "estadoActual" de la matriz de transicion.
+		 * @param tr lista de transiciones
+		 * @param estadoActual fila de la matriz
+		 */
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
 
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
@@ -76,24 +87,24 @@ public class AnalizadorLexico {
 			}
 
 			for(Transicion t :  tr){
-				casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
+				casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 				if(t.simbolos.length>0){
 					for(int i=0; i<t.simbolos.length;i++){
-						casillaMatriz[estadoActual].put(t.simbolos[i], new Casilla(t.nuevoEstado,t.accionSemantica));
+						casillaMatriz.get(estadoActual).put(t.simbolos[i], new Casilla(t.nuevoEstado,t.accionSemantica));
 						sinUtilizar.remove(t.simbolos[i]);
 					}
 				}
 				else if(t.accionSemantica!=null){ //otro caracter
 					for(Character s :  sinUtilizar){
-						casillaMatriz[estadoActual].put(s, new Casilla(t.nuevoEstado,t.accionSemantica));
+						casillaMatriz.get(estadoActual).put(s, new Casilla(t.nuevoEstado,t.accionSemantica));
 						sinUtilizar.remove(s);
 					}
 				}                       
 			}
 			if(!sinUtilizar.isEmpty()){
 				for(Character s :  sinUtilizar){
-					casillaMatriz[estadoActual]=new  HashMap<Character,Casilla>();
-					casillaMatriz[estadoActual].put(s, new Casilla(1,"emitirError"));
+					casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
+					casillaMatriz.get(estadoActual).put(s, new Casilla(1,"emitirError"));
 				}
 			}
 		}
@@ -111,6 +122,10 @@ public class AnalizadorLexico {
 	public AnalizadorLexico(File fichero){
 		this.estado=0;
 		this.puntero=0;
+		
+	//	new Transicion(String simbolos, int nuevoEstado, String accionSemantica)
+		
+		
 		obtenerChars(fichero);
 	}
 
