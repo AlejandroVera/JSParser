@@ -7,6 +7,7 @@ public class Variable extends EntradaTS {
 	}
 	
 	private TipoVariable tipo;
+	private int valor;
 
 	public Variable(String nombre) {
 		super(nombre);
@@ -20,5 +21,15 @@ public class Variable extends EntradaTS {
 	public TipoVariable getTipo(){
 		return this.tipo;
 	}
+
+	public int getValor() {
+		return valor;
+	}
+
+	public void setValor(int valor) {
+		this.valor = valor;
+	}
+	
+	
 
 }

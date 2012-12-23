@@ -20,7 +20,8 @@ public class GestorTS {
 		this.tSGlobal = this.tSActual;
 		
 		//Inicializamos con las palabras reservadas
-		String[] array = {"if", "var", "array", "new", "prompt", "document.write", "switch", "case", "break", "true", "false"};
+		String[] array = {"if", "var", "array", "new", "prompt", "document.write",
+						  "switch", "case", "break", "true", "false", "function"};
 		for(String s : array)
 			añadir(s, true, TipoEntradaTS.RESERVADA);
 		
