@@ -141,9 +141,9 @@ public class AnalizadorLexico {
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
 		tr0.add(new Transicion(letra,  1, "a2"));
 		tr0.add(new Transicion(digito,  2, "a3"));
-		tr0.add(new Transicion("+", 3, "non"));
-		tr0.add(new Transicion("&", 4, "non"));
-		tr0.add(new Transicion("/", 5, "a6"));
+		tr0.add(new Transicion("+", 3, "nada"));
+		tr0.add(new Transicion("&", 4, "nada"));
+		tr0.add(new Transicion("/", 5, "nada"));
 		//tr0.add(new Transicion("\n", 0, "a19"));
 		tr0.add(new Transicion(";", 0, "a20"));
 		tr0.add(new Transicion(">", 0, "a21"));
@@ -168,35 +168,35 @@ public class AnalizadorLexico {
 		//*************estado 2********************
 		ArrayList<Transicion> tr2 = new ArrayList<Transicion>();
 		tr2.add(new Transicion(digito,  2, "a3"));
-		tr2.add(new Transicion(null, 0, "a10"));
+		tr2.add(new Transicion(null, 0, "a5"));
 		matriz.definirTransiciones(tr2, 2);
 
 		//*************estado 3********************
 		ArrayList<Transicion> tr3 = new ArrayList<Transicion>();
-		tr3.add(new Transicion("+",  0, "a11"));
-		tr3.add(new Transicion(null, 0, "a12"));
+		tr3.add(new Transicion("+",  0, "a6"));
+		tr3.add(new Transicion(null, 0, "a7"));
 		matriz.definirTransiciones(tr3, 3);
 
 		//*************estado 4********************
 		ArrayList<Transicion> tr4 = new ArrayList<Transicion>();
-		tr4.add(new Transicion("&",  0, "a13"));
+		tr4.add(new Transicion("&",  0, "a8"));
 		matriz.definirTransiciones(tr4, 4);
 
 		//*************estado 5********************
 		ArrayList<Transicion> tr5 = new ArrayList<Transicion>();
-		tr5.add(new Transicion("*",  6, "a14"));
+		tr5.add(new Transicion("*",  6, "a9"));
 		matriz.definirTransiciones(tr5, 5);
 
 		//*************estado 6********************
 		ArrayList<Transicion> tr6 = new ArrayList<Transicion>();
-		tr6.add(new Transicion("*",  7, "a15"));
-		tr6.add(new Transicion(null, 6, "a16"));
+		tr6.add(new Transicion("*",  7, "a10"));
+		tr6.add(new Transicion(null, 6, "a11"));
 		matriz.definirTransiciones(tr6, 6);
 
 		//*************estado 7********************
 		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
-		tr7.add(new Transicion("/",  0, "a17"));
-		tr7.add(new Transicion(null, 6, "a18"));
+		tr7.add(new Transicion("/",  0, "a12"));
+		tr7.add(new Transicion(null, 6, "a13"));
 		matriz.definirTransiciones(tr7, 7);
 
 		obtenerChars(fichero);
@@ -212,14 +212,13 @@ public class AnalizadorLexico {
 	/*+******************acciones semanticas*******************+*/
 	public Token accionSem(String accion){
 		Token token=null;
-
 		if(accion=="a20"){
 			puntero++;
 			token = new Token(TipoToken.PUNTOYCOMA,null);
 		}
 		else if(accion=="a21"){
 			puntero++;
-			token = new Token(TipoToken.OPLOGICO,">");
+			token = new Token(TipoToken.OPRELACIONAL,">");
 		}
 		else if(accion=="a22"){
 			puntero++;
@@ -230,7 +229,6 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.CORCHETECE,null);
 		}
 		else if(accion=="a24"){
-			puntero++;
 			token = new Token(TipoToken.LLAVEAB,null);
 		}
 		else if(accion=="a25"){
@@ -277,16 +275,27 @@ public class AnalizadorLexico {
 			}
 			cadena="";
 		}
-		else if(accion=="a13"){
-
+		else if(accion=="a5"){
+			token = new Token(TipoToken.ENTERO, Integer.valueOf(numero));
+			numero="";
 		}
-		else if(accion=="a14"){
-
+		else if(accion=="a6"){
+			puntero++;
+			token = new Token(TipoToken.OPESPECIAL, "++");
 		}
-		else if(accion=="a15"){
+		else if(accion=="a7"){
+			token = new Token(TipoToken.OPARITMETICO, "+");
+		}
+		else if(accion=="a8"){
+			token = new Token(TipoToken.OPLOGICO, "&&");
+		}
+		else if(accion=="a16"){
 
 		}
 		else if(accion=="a16"){
+
+		}
+		else if(accion=="a19"){
 
 		}
 
