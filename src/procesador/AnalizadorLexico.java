@@ -184,19 +184,19 @@ public class AnalizadorLexico {
 
 		//*************estado 5********************
 		ArrayList<Transicion> tr5 = new ArrayList<Transicion>();
-		tr5.add(new Transicion("*",  6, "a9"));
+		tr5.add(new Transicion("*",  6, "nada"));
 		matriz.definirTransiciones(tr5, 5);
 
 		//*************estado 6********************
 		ArrayList<Transicion> tr6 = new ArrayList<Transicion>();
-		tr6.add(new Transicion("*",  7, "a10"));
-		tr6.add(new Transicion(null, 6, "a11"));
+		tr6.add(new Transicion("*",  7, "nada"));
+		tr6.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr6, 6);
 
 		//*************estado 7********************
 		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
-		tr7.add(new Transicion("/",  0, "a12"));
-		tr7.add(new Transicion(null, 6, "a13"));
+		tr7.add(new Transicion("/",  0, "nada"));
+		tr7.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr7, 7);
 
 		obtenerChars(fichero);
@@ -212,7 +212,10 @@ public class AnalizadorLexico {
 	/*+******************acciones semanticas*******************+*/
 	public Token accionSem(String accion){
 		Token token=null;
-		if(accion=="a20"){
+		if(accion=="nada"){
+			puntero++;
+		}
+		else if(accion=="a20"){
 			puntero++;
 			token = new Token(TipoToken.PUNTOYCOMA,null);
 		}
@@ -287,16 +290,8 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.OPARITMETICO, "+");
 		}
 		else if(accion=="a8"){
+			puntero++;
 			token = new Token(TipoToken.OPLOGICO, "&&");
-		}
-		else if(accion=="a16"){
-
-		}
-		else if(accion=="a16"){
-
-		}
-		else if(accion=="a19"){
-
 		}
 
 		return token;
