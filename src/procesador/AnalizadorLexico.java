@@ -161,6 +161,7 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion(":", 0, "a29"));
 		tr0.add(new Transicion("\"", 0, "a30"));
 
+		System.out.println("HOLA");
 		matriz.definirTransiciones(tr0, 0);
 
 		//*************estado 1********************
@@ -204,6 +205,10 @@ public class AnalizadorLexico {
 		matriz.definirTransiciones(tr7, 7);
 
 		obtenerChars(fichero);
+		System.out.println("Caracteres del texto:");
+		for(int i=0;i<buffer.size();i++){
+			System.out.println(buffer.get(i));
+		}
 	}
 
 	/**Con este metodo se obtiene un token por parte del analizador sintáctico

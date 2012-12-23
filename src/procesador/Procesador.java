@@ -11,15 +11,15 @@ public class Procesador {
 	public static void main(String[] args) {
 		
 		//Comprobaciones del archivo
-		if(args.length < 2){
+		if(args.length < 1){
 			System.err.println("ERROR - El programa tiene que recibir como argumento" +
 					" la ruta del archivo con el codigo fuente a procesar.");
 			System.exit(1);
 		}
 		
-		File source = new File(args[1]);
+		File source = new File(args[0]);
 		if(!source.exists() || !source.canRead()){
-			System.err.println("No se ha podido leer el archivo: "+args[1]);
+			System.err.println("No se ha podido leer el archivo: "+args[0]);
 			System.exit(2);
 		}
 		
