@@ -223,7 +223,7 @@ public class AnalizadorLexico {
 	 */
 	public Token dameToken(){
 		Token sol;
-		System.out.println("generar casilla: "+estado+" "+(int)buffer.get(puntero));
+		System.out.println("obtengo casilla : "+estado+" "+(int)buffer.get(puntero));
 		while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){
 		}
 		return sol;
