@@ -237,14 +237,14 @@ public class AnalizadorLexico {
 	public Token doAccionSem(String accion){
 		Token token=null;
 		if(accion=="EOF"){
-			token = new Token(TipoToken.EOF,null);
+			token = new Token(TipoToken.EOF,"EOF");
 		}
 		else if(accion=="nada"){
 			puntero++;
 		}
 		else if(accion=="a20"){
 			puntero++;
-			token = new Token(TipoToken.PUNTOYCOMA,null);
+			token = new Token(TipoToken.PUNTOYCOMA,";");
 		}
 		else if(accion=="a21"){
 			puntero++;
@@ -252,47 +252,47 @@ public class AnalizadorLexico {
 		}
 		else if(accion=="a22"){
 			puntero++;
-			token = new Token(TipoToken.CORCHETEAB,null);
+			token = new Token(TipoToken.CORCHETEAB,"[");
 		}
 		else if(accion=="a23"){
 			puntero++;
-			token = new Token(TipoToken.CORCHETECE,null);
+			token = new Token(TipoToken.CORCHETECE,"]");
 		}
 		else if(accion=="a24"){
 			puntero++;
-			token = new Token(TipoToken.LLAVEAB,null);
+			token = new Token(TipoToken.LLAVEAB,"{");
 		}
 		else if(accion=="a25"){
 			puntero++;
-			token = new Token(TipoToken.LLAVECE,null);
+			token = new Token(TipoToken.LLAVECE,"}");
 		}
 		else if(accion=="a26"){
 			puntero++;
-			token = new Token(TipoToken.PARENTESISAB,null);
+			token = new Token(TipoToken.PARENTESISAB,"(");
 		}
 		else if(accion=="a27"){
 			puntero++;
-			token = new Token(TipoToken.PARENTESISCE,null);
+			token = new Token(TipoToken.PARENTESISCE,")");
 		}
 		else if(accion=="a28"){
 			puntero++;
-			token = new Token(TipoToken.COMA,null);
+			token = new Token(TipoToken.COMA,",");
 		}
 		else if(accion=="a29"){
 			puntero++;
-			token = new Token(TipoToken.DOSPUNTOS,null);
+			token = new Token(TipoToken.DOSPUNTOS,":");
 		}
 		else if(accion=="a30"){
 			puntero++;
-			token = new Token(TipoToken.COMILLAS,null);
+			token = new Token(TipoToken.COMILLAS,"\"");
 		}
 		else if(accion=="a31"){
 			puntero++;
-			token = new Token(TipoToken.OPASIGNACION,null);
+			token = new Token(TipoToken.OPASIGNACION,"=");
 		}
 		else if(accion=="a32"){
 			puntero++;
-			token = new Token(TipoToken.NEWLINE,null);
+			token = new Token(TipoToken.NEWLINE,"NL");
 		}
 		else if(accion=="a2"){
 			cadena += buffer.get(puntero);
