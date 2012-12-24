@@ -224,7 +224,7 @@ public class AnalizadorLexico {
 		sol= doAccionSem(aux.accionSem);
 		estado=aux.siguienteEstado;
 		if(sol==null)	
-			dameToken();
+			sol=dameToken();
 		
 		System.out.println("Token generado: <"+sol.getTipo()+","+sol.getValor()+">");
 		return sol;
