@@ -9,8 +9,11 @@ public class AnalizadorSS {
 	
 	public AnalizadorSS(AnalizadorLexico lexico){
 		Token t;
-		while(!((t=lexico.dameToken()).getTipo().equals(TipoToken.EOF))){
-			System.out.println(t.getTipo().toString());
+		while(true){
+			t=lexico.dameToken();
+			System.out.println(t.toString());
+			if(t.getTipo().equals(TipoToken.EOF))
+				break;
 		}
 	}
 	
