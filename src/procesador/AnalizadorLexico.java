@@ -89,6 +89,7 @@ public class AnalizadorLexico {
 			for(int i=32; i<=126;i++){
 				sinUtilizar.add((char) i);
 			}
+			sinUtilizar.add((char) 9);
 			sinUtilizar.add((char) 10);
 			
 			casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
@@ -157,6 +158,8 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion("=", 0, "a31"));
 		char espacio = (char)32;
 		tr0.add(new Transicion(String.valueOf(espacio), 0, "nada"));
+		char tab = (char)9;
+		tr0.add(new Transicion(String.valueOf(tab), 0, "nada"));
 		char newLine = (char)10;
 		tr0.add(new Transicion(String.valueOf(newLine), 0, "a32"));
 
