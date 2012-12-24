@@ -308,6 +308,9 @@ public class AnalizadorLexico {
 				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
 					token = new Token(TipoToken.PALABRACLAVE, ets);
 				}
+				else{
+					token = new Token(TipoToken.IDENTIFICADOR,ets);
+				}
 			}
 			else{//NO está
 				token = new Token(TipoToken.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
