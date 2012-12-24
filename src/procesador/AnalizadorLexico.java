@@ -22,7 +22,7 @@ import procesador.EntradaTS.TipoEntradaTS;
 public class AnalizadorLexico {
 
 	private final String digito= "1234567890";
-	private final String letra= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnnopqrstuvwxyz";
+	private final String letra= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
 	private final String alfanum= digito+letra+"_";
 	private String cadena;
 	private String numero;
