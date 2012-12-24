@@ -101,7 +101,9 @@ public class GestorTS {
 	 * Crea una nueva tabla cuyo padre es la tabla actual.
 	 */
 	public void crearTabla(){
-		this.matrizBloques.push(new MatBloquesEntry());
+		MatBloquesEntry bq = new MatBloquesEntry();
+		tSActual = bq.getTS();
+		this.matrizBloques.push(bq);
 	}
 	
 	
