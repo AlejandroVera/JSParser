@@ -85,7 +85,6 @@ public class AnalizadorLexico {
 		 * @param estadoActual fila de la matriz
 		 */
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
-			System.out.println("tamaño tr: "+tr.size());
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
 			for(int i=32; i<=126;i++){
 				sinUtilizar.add((char) i);
@@ -96,6 +95,7 @@ public class AnalizadorLexico {
 				if(t.simbolos.length>0){
 					for(int i=0; i<t.simbolos.length;i++){
 						casillaMatriz.get(estadoActual).put(t.simbolos[i], new Casilla(t.nuevoEstado,t.accionSemantica));
+						System.out.println("trans para el char: "+t.simbolos[i]);
 						sinUtilizar.remove(t.simbolos[i]);
 					}
 				}
@@ -110,9 +110,11 @@ public class AnalizadorLexico {
 			}
 			if(!sinUtilizar.isEmpty()){ //el caracter que no tiene asociado una transicion no es reconocido por el lenguaje
 				for(Character s :  sinUtilizar){
-					casillaMatriz.get(estadoActual).put(s, new Casilla(1,"emitirError"));
+					System.out.println("error para: "+ (int)s);
+					casillaMatriz.get(estadoActual).put(s, new Casilla(0,"emitirError"));
 				}
 			}
+			casillaMatriz.get(estadoActual).put((char) 0, new Casilla(0,"EOF"));
 		}
 	}
 
@@ -153,6 +155,11 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion(",", 0, "a28"));
 		tr0.add(new Transicion(":", 0, "a29"));
 		tr0.add(new Transicion("\"", 0, "a30"));
+		tr0.add(new Transicion("=", 0, "a31"));
+		char espacio = (char)32;
+		tr0.add(new Transicion(String.valueOf(espacio), 0, "nada"));
+		char newLine = (char)10;
+		tr0.add(new Transicion(String.valueOf(newLine), 0, "a32"));
 
 		matriz.definirTransiciones(tr0, 0);
 
@@ -198,18 +205,14 @@ public class AnalizadorLexico {
 
 		obtenerChars(fichero);
 
-		System.out.println("Caracteres del texto:");
-		for(int i=0;i<buffer.size();i++){
-			System.out.println(buffer.get(i));
-		}
-		System.out.println("columnas imprimir: "+this.matriz.casillaMatriz.size());
+
 		for(int i=0;i<this.matriz.casillaMatriz.size();i++){
 			Set<Character> s=this.matriz.casillaMatriz.get(i).keySet();
 			Iterator<Character> it = s.iterator();
 			while(it.hasNext()){
 				char carac = it.next();
 				Casilla c=this.matriz.casillaMatriz.get(i).get(carac);
-				System.out.println(" fila: "+i+" columna: "+carac+" accSem: "+c.accionSem+" sigEstado: "+c.siguienteEstado);
+				//System.out.println(" fila: "+i+" columna: "+carac+" accSem: "+c.accionSem+" sigEstado: "+c.siguienteEstado);
 			}
 		}
 
@@ -219,19 +222,26 @@ public class AnalizadorLexico {
 	 * @return siguente token del texto
 	 */
 	public Token dameToken(){
-		Token sol=null;
-		Casilla aux=matriz.obtenerCasilla(estado,buffer.get(puntero));
-		sol= doAccionSem(aux.accionSem);
-		estado=aux.siguienteEstado;
-		if(sol==null)	
-			sol=dameToken();
+		Token sol;
+		System.out.println("generar casilla: "+estado+" "+(int)buffer.get(puntero));
+		while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){
+		}
 		return sol;
+	}
+
+	private Token generaToken(Casilla aux){
+		estado=aux.siguienteEstado;
+		//System.out.println(" accion: "+aux.accionSem+" estado siguiente: "+estado);
+		return doAccionSem(aux.accionSem);
 	}
 
 	/*+******************acciones semanticas*******************+*/
 	public Token doAccionSem(String accion){
 		Token token=null;
-		if(accion=="nada"){
+		if(accion=="EOF"){
+			token = new Token(TipoToken.EOF,null);
+		}
+		else if(accion=="nada"){
 			puntero++;
 		}
 		else if(accion=="a20"){
@@ -251,6 +261,7 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.CORCHETECE,null);
 		}
 		else if(accion=="a24"){
+			puntero++;
 			token = new Token(TipoToken.LLAVEAB,null);
 		}
 		else if(accion=="a25"){
@@ -277,13 +288,21 @@ public class AnalizadorLexico {
 			puntero++;
 			token = new Token(TipoToken.COMILLAS,null);
 		}
-		else if(accion=="a2"){
+		else if(accion=="a31"){
 			puntero++;
+			token = new Token(TipoToken.OPASIGNACION,null);
+		}
+		else if(accion=="a32"){
+			puntero++;
+			token = new Token(TipoToken.NEWLINE,null);
+		}
+		else if(accion=="a2"){
 			cadena += buffer.get(puntero);
+			puntero++;
 		}
 		else if(accion=="a3"){
-			puntero++;
 			numero+=buffer.get(puntero);
+			puntero++;
 		}
 		else if(accion=="a4"){
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
@@ -293,8 +312,9 @@ public class AnalizadorLexico {
 				}
 			}
 			else{//NO está
-				token = new Token(TipoToken.PALABRACLAVE, Procesador.getGestorTS().añadir(cadena, true));
+				token = new Token(TipoToken.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
 			}
+			System.out.println(cadena);
 			cadena="";
 		}
 		else if(accion=="a5"){
@@ -312,12 +332,16 @@ public class AnalizadorLexico {
 			puntero++;
 			token = new Token(TipoToken.OPLOGICO, "&&");
 		}
+		else if(accion=="emitirError"){
+			
+			emitirError();
+		}
 
 		return token;
 	}
 
 	public void emitirError(){
-		System.out.println("error, por ahora solo imprimo");
+		System.out.println("error, por ahora solo imprimo puntero: "+buffer.get(puntero));
 		System.exit(0);
 
 	}
@@ -337,8 +361,10 @@ public class AnalizadorLexico {
 		try {
 			int c;
 			while((c=b.read())!=-1){
+				System.out.println("leido: "+c);
 				buffer.offer((char)c);
 			}
+			buffer.offer((char)0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
