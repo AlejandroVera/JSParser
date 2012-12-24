@@ -89,7 +89,8 @@ public class AnalizadorLexico {
 			for(int i=32; i<=126;i++){
 				sinUtilizar.add((char) i);
 			}
-
+			sinUtilizar.add((char) 10);
+			
 			casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 			for(Transicion t :  tr){
 				if(t.simbolos.length>0){
@@ -223,9 +224,7 @@ public class AnalizadorLexico {
 	 */
 	public Token dameToken(){
 		Token sol;
-		System.out.println("obtengo casilla : "+estado+" "+(int)buffer.get(puntero));
-		while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){
-		}
+		while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){}
 		return sol;
 	}
 
@@ -237,6 +236,7 @@ public class AnalizadorLexico {
 
 	/*+******************acciones semanticas*******************+*/
 	public Token doAccionSem(String accion){
+		System.out.println("entrada: "+(int)buffer.get(puntero));
 		Token token=null;
 		if(accion=="EOF"){
 			token = new Token(TipoToken.EOF,null);
@@ -297,7 +297,9 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.NEWLINE,null);
 		}
 		else if(accion=="a2"){
+			System.out.println(cadena);
 			cadena += buffer.get(puntero);
+			System.out.println(cadena);
 			puntero++;
 		}
 		else if(accion=="a3"){
@@ -314,7 +316,6 @@ public class AnalizadorLexico {
 			else{//NO está
 				token = new Token(TipoToken.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
 			}
-			System.out.println(cadena);
 			cadena="";
 		}
 		else if(accion=="a5"){
