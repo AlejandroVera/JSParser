@@ -223,7 +223,10 @@ public class AnalizadorLexico {
 		Casilla aux=matriz.obtenerCasilla(estado,buffer.get(puntero));
 		sol= doAccionSem(aux.accionSem);
 		estado=aux.siguienteEstado;
-
+		if(sol==null)	
+			dameToken();
+		
+		System.out.println("Token generado: <"+sol.getTipo()+","+sol.getValor()+">");
 		return sol;
 	}
 
@@ -292,7 +295,7 @@ public class AnalizadorLexico {
 				}
 			}
 			else{//NO está
-				token = new Token(TipoToken.PALABRACLAVE, Procesador.getGestorTS().añadir(cadena, false));
+				token = new Token(TipoToken.PALABRACLAVE, Procesador.getGestorTS().añadir(cadena, true));
 			}
 			cadena="";
 		}
