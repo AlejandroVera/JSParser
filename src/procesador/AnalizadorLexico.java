@@ -76,7 +76,35 @@ public class AnalizadorLexico {
 		}
 
 		private Casilla obtenerCasilla(int fila, char columna){
-			return casillaMatriz.get(fila).get(columna);
+			Casilla sol=casillaMatriz.get(fila).get(columna);
+			if(sol!=null){
+				return sol;
+			}
+			else if((sol==null) && estado==8){
+				sol= new Casilla(8,"a30");
+			}
+			else if((sol==null) && ((estado==6)||(estado==7)) ){
+				sol= new Casilla(6,"nada");
+			}
+			else{
+				emitirError();
+				int es=0;
+				String acc=null;
+				if(estado==0){
+					acc="nada";
+				}
+				else if(estado==1){
+					acc="a4";
+				}
+				else if(estado==2){
+					acc="a5";
+				}
+				else if(estado==3){
+					acc="a7";
+				}
+				sol=  new Casilla(es,acc);
+			}
+			return sol;
 		}
 
 		/**
@@ -86,9 +114,24 @@ public class AnalizadorLexico {
 		 */
 		private  void definirTransiciones(ArrayList<Transicion> tr, int estadoActual){
 			HashSet<Character> sinUtilizar = new HashSet<Character>();
-			for(int i=32; i<=126;i++){
+			sinUtilizar.add((char) 32);
+			sinUtilizar.add((char) 34);
+			sinUtilizar.add((char) 38);
+			for(int i=40; i<=44;i++){
 				sinUtilizar.add((char) i);
 			}
+			for(int i=47; i<=59;i++){
+				sinUtilizar.add((char) i);
+			}
+			sinUtilizar.add((char) 61);
+			sinUtilizar.add((char) 62);
+			for(int i=65; i<=91;i++){
+				sinUtilizar.add((char) i);
+				sinUtilizar.add((char) (i+32));
+			}
+			sinUtilizar.add((char) 92);
+			sinUtilizar.add((char) 93);
+			sinUtilizar.add((char) 125);
 			sinUtilizar.add((char) 9);
 			sinUtilizar.add((char) 10);
 			
@@ -109,11 +152,6 @@ public class AnalizadorLexico {
 					}
 				}                       
 			}
-			if(!sinUtilizar.isEmpty()){ //el caracter que no tiene asociado una transicion no es reconocido por el lenguaje
-				for(Character s :  sinUtilizar){
-					casillaMatriz.get(estadoActual).put(s, new Casilla(0,"emitirError"));
-				}
-			}
 			casillaMatriz.get(estadoActual).put((char) 0, new Casilla(0,"EOF"));
 		}
 	}
@@ -123,7 +161,7 @@ public class AnalizadorLexico {
 	private LinkedList<Character> buffer;
 	private int puntero;
 	private int estado;
-
+	
 	/**Constructor
 	 * 
 	 */
@@ -154,7 +192,7 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion(")", 0, "a27"));
 		tr0.add(new Transicion(",", 0, "a28"));
 		tr0.add(new Transicion(":", 0, "a29"));
-		tr0.add(new Transicion("\"", 0, "a30"));
+		tr0.add(new Transicion("\"", 8, "a30"));
 		tr0.add(new Transicion("=", 0, "a31"));
 		char espacio = (char)32;
 		tr0.add(new Transicion(String.valueOf(espacio), 0, "nada"));
@@ -204,6 +242,12 @@ public class AnalizadorLexico {
 		tr7.add(new Transicion("/",  0, "nada"));
 		tr7.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr7, 7);
+		
+		//*************estado 8********************
+		ArrayList<Transicion> tr8 = new ArrayList<Transicion>();
+		tr8.add(new Transicion("\"",  0, "a33"));
+		tr8.add(new Transicion(null, 8, "a30"));
+		matriz.definirTransiciones(tr8, 8);
 
 		obtenerChars(fichero);
 
@@ -283,8 +327,8 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.DOSPUNTOS,":");
 		}
 		else if(accion=="a30"){
+			cadena += buffer.get(puntero);
 			puntero++;
-			token = new Token(TipoToken.COMILLAS,"\"");
 		}
 		else if(accion=="a31"){
 			puntero++;
@@ -293,6 +337,11 @@ public class AnalizadorLexico {
 		else if(accion=="a32"){
 			puntero++;
 			token = new Token(TipoToken.NEWLINE,"NL");
+		}
+		else if(accion=="a33"){
+			puntero++;
+			token = new Token(TipoToken.CADENA,cadena);
+			cadena="";
 		}
 		else if(accion=="a2"){
 			cadena += buffer.get(puntero);
@@ -341,13 +390,10 @@ public class AnalizadorLexico {
 	}
 
 	public void emitirError(){
-		System.out.println("error, por ahora solo imprimo puntero: "+buffer.get(puntero));
-		System.exit(0);
+		Procesador.getGestorErrores().addError("lexico");
 
 	}
-
-
-
+	
 	/*+******************metodos auxiliares*******************+*/
 
 	private void obtenerChars(File fichero){
