@@ -336,10 +336,6 @@ public class AnalizadorLexico {
 					char aux = (char)34;
 					cadena += String.valueOf(aux);
 				}
-				else if(buffer.get(puntero)=='"'){
-					char aux = (char)34;
-					cadena += String.valueOf(aux);
-				}
 				else if(buffer.get(puntero)=='\''){
 					char aux = (char)39;
 					cadena += String.valueOf(aux);
