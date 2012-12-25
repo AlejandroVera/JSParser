@@ -15,7 +15,6 @@ public class AnalizadorSS {
 			if(t.getTipo().equals(TipoToken.EOF))
 				break;
 		}
-		 Procesador.getGestorErrores().imprimeErrores();
 	}
 	
 }
