@@ -129,7 +129,6 @@ public class AnalizadorLexico {
 				sinUtilizar.add((char) i);
 				sinUtilizar.add((char) (i+32));
 			}
-			sinUtilizar.add((char) 92);
 			sinUtilizar.add((char) 93);
 			sinUtilizar.add((char) 125);
 			sinUtilizar.add((char) 9);
@@ -327,8 +326,38 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.DOSPUNTOS,":");
 		}
 		else if(accion=="a30"){
-			cadena += buffer.get(puntero);
-			puntero++;
+			if(buffer.get(puntero)=='\\'){
+				puntero++;
+				if(buffer.get(puntero)=='t'){
+					char aux = (char)9;
+					cadena += String.valueOf(aux);
+				}
+				else if(buffer.get(puntero)=='"'){
+					char aux = (char)34;
+					cadena += String.valueOf(aux);
+				}
+				else if(buffer.get(puntero)=='"'){
+					char aux = (char)34;
+					cadena += String.valueOf(aux);
+				}
+				else if(buffer.get(puntero)=='\''){
+					char aux = (char)39;
+					cadena += String.valueOf(aux);
+				}
+				else if(buffer.get(puntero)=='n'){
+					char aux = (char)10;
+					cadena += String.valueOf(aux);
+				}
+				else{
+					cadena += "\\";
+					puntero--;
+				}
+				puntero++;
+			}
+			else{
+				cadena += buffer.get(puntero);	
+				puntero++;
+			}
 		}
 		else if(accion=="a31"){
 			puntero++;
@@ -340,7 +369,7 @@ public class AnalizadorLexico {
 		}
 		else if(accion=="a33"){
 			puntero++;
-			token = new Token(TipoToken.CADENA,cadena);
+			token = new Token(TipoToken.CADENA,cadena+"\"");
 			cadena="";
 		}
 		else if(accion=="a2"){
