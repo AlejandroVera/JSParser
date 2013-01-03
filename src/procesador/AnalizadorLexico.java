@@ -180,7 +180,6 @@ public class AnalizadorLexico {
 		tr0.add(new Transicion("+", 3, "nada"));
 		tr0.add(new Transicion("&", 4, "nada"));
 		tr0.add(new Transicion("/", 5, "nada"));
-		//tr0.add(new Transicion("\n", 0, "a19"));
 		tr0.add(new Transicion(";", 0, "a20"));
 		tr0.add(new Transicion(">", 0, "a21"));
 		tr0.add(new Transicion("[", 0, "a22"));
@@ -198,7 +197,7 @@ public class AnalizadorLexico {
 		char tab = (char)9;
 		tr0.add(new Transicion(String.valueOf(tab), 0, "nada"));
 		char newLine = (char)10;
-		tr0.add(new Transicion(String.valueOf(newLine), 0, "a32"));
+		tr0.add(new Transicion(String.valueOf(newLine), 9, "nada"));
 
 		matriz.definirTransiciones(tr0, 0);
 
@@ -247,7 +246,13 @@ public class AnalizadorLexico {
 		tr8.add(new Transicion("\"",  0, "a33"));
 		tr8.add(new Transicion(null, 8, "a30"));
 		matriz.definirTransiciones(tr8, 8);
-
+		
+		//*************estado 9********************
+		ArrayList<Transicion> tr9 = new ArrayList<Transicion>();
+		tr9.add(new Transicion(String.valueOf(newLine), 9, "nada"));
+		tr9.add(new Transicion(null, 0, "a32"));
+		matriz.definirTransiciones(tr9, 9);
+		
 		obtenerChars(fichero);
 
 
@@ -262,7 +267,8 @@ public class AnalizadorLexico {
 
 	}
 
-	/**Con este metodo se obtiene un token por parte del analizador sintáctico
+	/**Devuelve el siguiente tokens
+	 * Con este metodo se obtiene un token por parte del analizador sintáctico
 	 * @return siguente token del texto
 	 */
 	public Token dameToken(){
@@ -360,7 +366,6 @@ public class AnalizadorLexico {
 			token = new Token(TipoToken.OPASIGNACION,"=");
 		}
 		else if(accion=="a32"){
-			puntero++;
 			token = new Token(TipoToken.NEWLINE,"NL");
 		}
 		else if(accion=="a33"){
