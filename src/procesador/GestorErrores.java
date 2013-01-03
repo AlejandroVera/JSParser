@@ -1,17 +1,11 @@
 package procesador;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class GestorErrores {
-
-	private List<Error> errores;
 
 	private AnalizadorLexico aL;
 
 	public GestorErrores(AnalizadorLexico aL){
-		this.errores=new ArrayList<Error>();
 		this.aL=aL;
 	}
 
@@ -26,17 +20,7 @@ public class GestorErrores {
 		//linea=this.aL.getLinea();
 
 		Error error=new Error(tipo, nLinea, nCaracter, linea);
-		this.errores.add(error);
+		System.out.println(error.toString());
 	}
-
-	public void imprimeErrores(){
-		Iterator <Error> error=this.errores.iterator();
-
-		while (error.hasNext()){
-			System.out.println(error.next().toString());
-
-		}
-	}
-
-
+	
 }

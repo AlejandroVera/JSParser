@@ -1,0 +1,62 @@
+//// Gramática LR(1) del analizador Sintáctico
+Axioma = X
+
+NoTerminales = { X A O S D V F I W E Z P L N C B H R }
+
+Terminales = { eof \n var id , = ( ) + > ++ [ ] new Array if switch case break function return }
+
+Producciones = {
+	X -> A O
+	X -> O
+	
+	O -> eof
+	
+	A -> S D A
+	A -> D
+	
+	D -> \n
+	D -> ;
+	
+	S -> V		//// Definir variable
+	S -> F		//// Definir funcion
+	S -> I		//// If
+	S -> W		//// Switch case
+	S -> E		//// Expresion
+	
+	V -> var id
+		
+	//// Expresiones
+	E -> id = N 	//// Asignacion
+	E -> id ( P ) 	//// LLamada a funcion
+	E -> E + E		//// Suma
+	E -> E > E		//// Mayor que
+	E -> E ++		//// Postincremento
+	E -> ( E )		//// Para poner parentesis
+	E ->  id		//// un id
+	E ->  id [ E ]	//// Acceder a un elemento de un vector
+	
+	P -> Z			//// Parametros para funcion
+	P -> lambda
+	
+	Z -> E
+	Z -> E , Z
+	
+	N -> E			
+	N -> new Array ( E )	//// Array
+	
+	L -> \n				//// Salto de línea no necesario
+	L -> lambda
+	
+	I -> if ( E ) L S
+	
+	W -> switch ( E ) L { C L }
+	
+	C -> L case E : A L B
+	
+	F -> function id ( H ) L { A R L }
+	
+	R -> return E
+	R -> return
+	R -> lambda
+	
+}
