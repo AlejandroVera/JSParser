@@ -1,0 +1,204 @@
+/* Analizador ascendente */
+%language "Java"
+%name-prefix "AnalizadorAsc"
+%define parser_class_name "AnalizadorAsc"
+%define package procesador;
+%define public
+
+
+%code {
+
+   public static GestorErrores errores;
+	public static GestorTS tablaSimbolos;
+	public static AnalizadorLexico lexico;
+	
+	public static void main(String[] args) {
+		
+		//Comprobaciones del archivo
+		if(args.length < 1){
+			System.err.println("ERROR - El programa tiene que recibir como argumento" +
+					" la ruta del archivo con el codigo fuente a procesar.");
+			System.exit(1);
+		}
+		
+		File source = new File(args[0]);
+		if(!source.exists() || !source.canRead()){
+			System.err.println("No se ha podido leer el archivo: "+args[0]);
+			System.exit(2);
+		}
+		
+		//Creamos el analizador lexico
+		AnalizadorLexico lexico = new AnalizadorLexico(source);
+		
+		//Creamos la tabla de simbolos
+		tablaSimbolos = new GestorTS();
+		
+		//Creamos el gestor de errores
+		errores = new GestorErrores(lexico);
+		
+		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
+		analizador.parse();
+		//Crear y lanzar el analizador sintatico-semantico
+		//AnalizadorSS ss = new AnalizadorSS(lexico);
+	}
+	
+	public static GestorErrores getGestorErrores(){
+		return errores;
+	}
+	
+	public static GestorTS getGestorTS(){
+		return tablaSimbolos;
+	}
+
+}
+
+%code imports {
+  import java.io.File;
+}
+
+/* Bison Declarations */
+%token PUNTOYCOMA NEWLINE IF SWITCH CASE 
+%token BREAK NEW ARRAY FUNCTION DOCWRITE
+%token VAR PROMPT RETURN
+%token OPARITMETICO	OPRELACIONAL OPASIGNACION OPESPECIAL
+%token OPLOGICO CORCHETEAB CORCHETECE PARENTESISAB
+%token PARENTESISCE LLAVEAB LLAVECE COMA DOSPUNTOS
+%token <Integer> ENTERO
+%token <String> CADENA
+%token <EntradaTS> IDENTIFICADOR
+%type <Parametros> P P1 P2 P3 P4 P5 P6 P7 N H J Z 
+
+/* Grammar follows */
+%%
+X : A
+;
+
+A : S D A
+| D
+;
+
+D : NEWLINE
+| PUNTOYCOMA
+;
+
+S : V
+| F
+| I
+| W
+| P6
+;
+
+V : T IDENTIFICADOR { lexico.estadoDecV(false); }
+;
+
+T : VAR { lexico.estadoDecV(true); }
+;
+
+P : Z { $$.nParam = $1.nParam; }
+| { $$.nParam = 0; }
+;
+
+Z : P5 { $$.nParam = 1; }
+| P5 COMA Z { $$.nParam = $3.nParam + 1; }
+;
+
+P6 : IDENTIFICADOR OPASIGNACION N { if($3.tipo != TipoParam.ENTERO && $3.tipo != TipoParam.VECTOR ) errores.addError("Tipo incompatible");
+if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION) errores.addError("Error en la asignacion: tipo incompatible"); 
+$1.tipo = $3.tipo;
+$$.tipo = $1.tipo; }
+| P7 { $$.tipo = $1.tipo; }
+;
+
+P7 : P7 OPLOGICO P5 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador logico");
+$$.tipo = TipoParam.ENTERO; }
+| P5 { $$.tipo = $1.tipo; }
+;
+
+P5 : P5 OPRELACIONAL P4 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador relacional");
+$$.tipo = TipoParam.ENTERO; }
+| P4 { $$.tipo = $1.tipo; }
+;
+
+P4 : P4 OPARITMETICO P3 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador aritmetico");
+$$.tipo = TipoParam.ENTERO; }
+| P3 { $$.tipo = $1.tipo; }
+;
+
+P3 : OPESPECIAL P2 { if($2.tipo != TipoParam.ENTERO) errores.addError("Tipos de datos no validos para operador de incremento"); 
+$$.tipo = TipoParam.ENTERO; }
+| P2 { $$.tipo = $1.tipo }
+;
+
+P2 : PARENTESISAB P6 PARENTESISCE { $$.tipo = $2.tipo; }
+| P1 { $$.tipo = $1.tipo; }
+;
+
+P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE { if(!tablaSimbolos.buscarFuncionTS($1.getLVal().getNombre(), $3.nParam)) errores.addError("Funcion no definida"); 
+$$.tipo = TipoParam.ENTERO; }
+| IDENTIFICADOR CORCHETEAB P6 CORCHETECE { if(!($1.getLVal() instanceof Variable)) errores.addError("Variable no definida");
+Variable v = (Variable)$1.getLVal();
+if(v.getTipo() != Variable.TipoVariable.VECTOR) errores.addError("La variable no es de tipo vector.");
+if($3.tipo != TipoParam.ENTERO) errores.addError("Indice no es de tipo entero."); 
+$$.tipo = TipoParam.ENTERO; }
+| IDENTIFICADOR { if($1.getLVal().getTipo() == Variable.TipoVariable.ENTERO) $$.tipo = TipoParam.ENTERO;
+else if($1.getLVal().getTipo() == Variable.TipoVariable.VECTOR) $$.tipo = TipoParam.VECTOR;
+else errores.addError("Tipo no valido"); }
+| PROMPT PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
+| DOCWRITE PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
+| ENTERO  { $$.tipo = TipoParam.ENTERO; }
+;
+
+N : P5 { $$.tipo = $1.tipo; }
+| NEW ARRAY PARENTESISAB P6 PARENTESISCE { if($4.tipo != TipoParam.ENTERO) errores.addError("Tamaño de vector debe ser entero"); 
+$$.tipo = TipoParam.VECTOR; }
+;
+
+I : IF PARENTESISAB P6 PARENTESISCE L S { if($3.tipo != TipoParam.ENTERO) errores.addError("Condición debe ser entera"); }
+;
+
+W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE { if($3.tipo != TipoParam.ENTERO) errores.addError("Variable del Switch debe ser entera"); }
+;
+
+L : NEWLINE
+| 
+;
+
+C : L CASE P6 DOSPUNTOS A D B { if($3.tipo != TipoParam.ENTERO) errores.addError("Condición debe ser entera"); }
+;
+
+B : BREAK
+| 
+;
+
+F : FUNCTION F2 { lexico.estadoDecF(true); }
+;
+
+F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { lexico.estadoDecF(false); 
+tablaSimbolos.borrarTabla();}
+;
+
+H : IDENTIFICADOR PARENTESISAB J  { if(lexico.getEstadoDecF) errores.addError("No se admiten declaración recursiva de funciones."); 
+ else if(tablaSimbolos.buscarFuncionTS($1.getLVal().getNombre(), $3.nParam))
+	errores.addError("Funcion ya definida"); 
+tablaSimbolos.añadir($1.getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.crearTabla(); }
+| IDENTIFICADOR PARENTESISAB PARENTESISCE  {
+tablaSimbolos.añadir($1.getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.crearTabla(); }
+;
+
+J : IDENTIFICADOR PARENTESISCE { $$.nParam=1; }
+| IDENTIFICADOR COMA J { $$.nParam=$3.nParam+1; }
+;
+
+R : RETURN P6 { if($2.tipo != TipoParam.ENTERO) errores.addError("Funcion debe devolver un entero"); }
+| RETURN
+| 
+;
+
+/* User functions */
+%%
+
+
+
+

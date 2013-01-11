@@ -19,7 +19,7 @@ import procesador.EntradaTS.TipoEntradaTS;
 /**Analizador lexico. Se encarga de leer el texto fuente y obtene los tokens
  *
  */
-public class AnalizadorLexico {
+public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	private final String digito= "1234567890";
 	private final String letra= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
@@ -27,7 +27,9 @@ public class AnalizadorLexico {
 	private String cadena;
 	private String numero;
 	private Matriz matriz;
-
+	private boolean estadoDecV;
+	private boolean estadoDecF;
+	
 	//*********************************CLASES PRIVADAS**********************************************
 
 	/**Clase que representa un elemento de la matriz de transicion
@@ -424,6 +426,14 @@ public class AnalizadorLexico {
 
 	}
 	
+	public void estadoDecV(boolean v){
+		this.estadoDecV = v;
+	}
+	
+	public void estadoDecF(boolean v){
+		this.estadoDecF = v;
+	}
+	
 	/*+******************metodos auxiliares*******************+*/
 
 	private void obtenerChars(File fichero){
@@ -444,5 +454,31 @@ public class AnalizadorLexico {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+
+
+	  public void yyerror (String s)
+	  {
+	    AnalizadorAsc.errores.addError(s);
+	  }
+
+
+	  TipoParam yylval;
+
+	  public TipoParam getLVal() {
+	    return yylval;
+	  }
+
+	  public int yylex () throws IOException {
+		  Token t = dameToken();
+		  /*switch(t.getTipo()){
+		  	case TipoToken.
+		  }*/
+		  return AnalizadorAsc.EOF;
+	  }
+	  
+	  
 
 }

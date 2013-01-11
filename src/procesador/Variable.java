@@ -3,7 +3,7 @@ package procesador;
 public class Variable extends EntradaTS {
 	
 	public static enum TipoVariable{
-		ENTERO, BOOLEANO
+		ENTERO, VECTOR
 	}
 	
 	private TipoVariable tipo;
