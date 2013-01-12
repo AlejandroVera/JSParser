@@ -3,6 +3,7 @@
 %name-prefix "AnalizadorAsc"
 %define parser_class_name "AnalizadorAsc"
 %define package procesador;
+%define stype "Parametros"
 %define public
 
 
@@ -37,7 +38,12 @@
 		errores = new GestorErrores(lexico);
 		
 		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
-		analizador.parse();
+		try {
+			analizador.parse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Crear y lanzar el analizador sintatico-semantico
 		//AnalizadorSS ss = new AnalizadorSS(lexico);
 	}
@@ -53,7 +59,8 @@
 }
 
 %code imports {
-  import java.io.File;
+import java.io.File;
+import java.io.IOException;
 }
 
 /* Bison Declarations */
@@ -126,7 +133,7 @@ $$.tipo = TipoParam.ENTERO; }
 
 P3 : OPESPECIAL P2 { if($2.tipo != TipoParam.ENTERO) errores.addError("Tipos de datos no validos para operador de incremento"); 
 $$.tipo = TipoParam.ENTERO; }
-| P2 { $$.tipo = $1.tipo }
+| P2 { $$.tipo = $1.tipo; }
 ;
 
 P2 : PARENTESISAB P6 PARENTESISCE { $$.tipo = $2.tipo; }
