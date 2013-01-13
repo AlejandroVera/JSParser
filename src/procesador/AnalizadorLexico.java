@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import procesador.EntradaTS.TipoEntradaTS;
+import procesador.Variable.TipoVariable;
 
 
 
@@ -28,7 +28,12 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private String numero;
 	private Matriz matriz;
 	private boolean estadoDecV;
-	private boolean estadoDecF;
+	/**
+	 * Estado 0 signifca que no se está en la declaración de una función.<br>
+	 * Estado 1 significa que se está en la cabecera de la declaración de una función.<br>
+	 * Estado 2 significa que se está declarando el cuerpo (código) de la función, por lo que no se pueden declarar otras funciones.
+	 */
+	private int estadoDecF;
 	
 	//*********************************CLASES PRIVADAS**********************************************
 
@@ -288,50 +293,50 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	public Token doAccionSem(String accion){
 		Token token=null;
 		if(accion=="EOF"){
-			token = new Token(TipoToken.EOF,"EOF");
+			token = new Token(AnalizadorAsc.EOF,"EOF");
 		}
 		else if(accion=="nada"){
 			puntero++;
 		}
 		else if(accion=="a20"){
 			puntero++;
-			token = new Token(TipoToken.PUNTOYCOMA,";");
+			token = new Token(AnalizadorAsc.PUNTOYCOMA,";");
 		}
 		else if(accion=="a21"){
 			puntero++;
-			token = new Token(TipoToken.OPRELACIONAL,">");
+			token = new Token(AnalizadorAsc.OPRELACIONAL,">");
 		}
 		else if(accion=="a22"){
 			puntero++;
-			token = new Token(TipoToken.CORCHETEAB,"[");
+			token = new Token(AnalizadorAsc.CORCHETEAB,"[");
 		}
 		else if(accion=="a23"){
 			puntero++;
-			token = new Token(TipoToken.CORCHETECE,"]");
+			token = new Token(AnalizadorAsc.CORCHETECE,"]");
 		}
 		else if(accion=="a24"){
 			puntero++;
-			token = new Token(TipoToken.LLAVEAB,"{");
+			token = new Token(AnalizadorAsc.LLAVEAB,"{");
 		}
 		else if(accion=="a25"){
 			puntero++;
-			token = new Token(TipoToken.LLAVECE,"}");
+			token = new Token(AnalizadorAsc.LLAVECE,"}");
 		}
 		else if(accion=="a26"){
 			puntero++;
-			token = new Token(TipoToken.PARENTESISAB,"(");
+			token = new Token(AnalizadorAsc.PARENTESISAB,"(");
 		}
 		else if(accion=="a27"){
 			puntero++;
-			token = new Token(TipoToken.PARENTESISCE,")");
+			token = new Token(AnalizadorAsc.PARENTESISCE,")");
 		}
 		else if(accion=="a28"){
 			puntero++;
-			token = new Token(TipoToken.COMA,",");
+			token = new Token(AnalizadorAsc.COMA,",");
 		}
 		else if(accion=="a29"){
 			puntero++;
-			token = new Token(TipoToken.DOSPUNTOS,":");
+			token = new Token(AnalizadorAsc.DOSPUNTOS,":");
 		}
 		else if(accion=="a30"){
 			if(buffer.get(puntero)=='\\'){
@@ -365,14 +370,14 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a31"){
 			puntero++;
-			token = new Token(TipoToken.OPASIGNACION,"=");
+			token = new Token(AnalizadorAsc.OPASIGNACION,"=");
 		}
 		else if(accion=="a32"){
-			token = new Token(TipoToken.NEWLINE,"NL");
+			token = new Token(AnalizadorAsc.NEWLINE,"NL");
 		}
 		else if(accion=="a33"){
 			puntero++;
-			token = new Token(TipoToken.CADENA,cadena+"\"");
+			token = new Token(AnalizadorAsc.CADENA,cadena+"\"");
 			cadena="";
 		}
 		else if(accion=="a2"){
@@ -386,32 +391,55 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		else if(accion=="a4"){
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
 			if(ets!=null){ //Está en la TS
+				
+				//Si estamos declarando una variable que ya está declarada -> error
+				if(getEstadoDecV()){
+					Procesador.getGestorErrores().addError("Identificador \""+cadena+"\" ya declarado.");
+				}
+				
 				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
-					token = new Token(TipoToken.PALABRACLAVE, ets);
+					int tipo = 0;
+					switch(ets.getNombre()){
+						case "array": tipo = AnalizadorAsc.ARRAY; break;
+						case "break": tipo = AnalizadorAsc.BREAK; break;
+						case "case": tipo = AnalizadorAsc.CASE; break;
+						case "document.write": tipo = AnalizadorAsc.DOCWRITE; break;
+						case "function": tipo = AnalizadorAsc.FUNCTION; break;
+						case "if": tipo = AnalizadorAsc.IF; break;
+						case "new": tipo = AnalizadorAsc.NEW; break;
+						case "prompt": tipo = AnalizadorAsc.PROMPT; break;
+						case "return": tipo = AnalizadorAsc.RETURN; break;
+						case "switch": tipo = AnalizadorAsc.SWITCH; break;
+						case "var": tipo = AnalizadorAsc.VAR; break;
+					}
+					token = new Token(tipo, ets);
 				}
 				else{
-					token = new Token(TipoToken.IDENTIFICADOR,ets);
+					token = new Token(AnalizadorAsc.IDENTIFICADOR,ets);
 				}
 			}
 			else{//NO está
-				token = new Token(TipoToken.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
+				if(getEstadoDecF() != 1)
+					token = new Token(AnalizadorAsc.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
+				else //Estamos en la declaración del nombre y parametros de la funcion
+					token = new Token(AnalizadorAsc.IDENTIFICADOR, null);
 			}
 			cadena="";
 		}
 		else if(accion=="a5"){
-			token = new Token(TipoToken.ENTERO, Integer.valueOf(numero));
+			token = new Token(AnalizadorAsc.ENTERO, Integer.valueOf(numero));
 			numero="";
 		}
 		else if(accion=="a6"){
 			puntero++;
-			token = new Token(TipoToken.OPESPECIAL, "++");
+			token = new Token(AnalizadorAsc.OPESPECIAL, "++");
 		}
 		else if(accion=="a7"){
-			token = new Token(TipoToken.OPARITMETICO, "+");
+			token = new Token(AnalizadorAsc.OPARITMETICO, "+");
 		}
 		else if(accion=="a8"){
 			puntero++;
-			token = new Token(TipoToken.OPLOGICO, "&&");
+			token = new Token(AnalizadorAsc.OPLOGICO, "&&");
 		}
 		else if(accion=="emitirError"){
 			
@@ -430,7 +458,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		this.estadoDecV = v;
 	}
 	
-	public void setEstadoDecF(boolean v){
+	public void setEstadoDecF(int v){
 		this.estadoDecF = v;
 	}
 	
@@ -461,7 +489,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	  public void yyerror (String s)
 	  {
-	    AnalizadorAsc.errores.addError(s);
+	    Procesador.errores.addError(s);
 	  }
 
 
@@ -473,13 +501,32 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	  public int yylex () throws IOException {
 		  Token t = dameToken();
-		  /*switch(t.getTipo()){
-		  	case TipoToken.
-		  }*/
-		  return AnalizadorAsc.EOF;
-	  }
+		  yylval = new Parametros();
+		  int tokenid = t.getTipo();
+		  
+		  if(tokenid == AnalizadorAsc.IDENTIFICADOR){
+			  if(t.getValor() != null){
+				  EntradaTS entrada = (EntradaTS) t.getValor();
+				  yylval.entrada = entrada;
+				  yylval.nombre = entrada.getNombre();
+				  if(entrada instanceof Funcion)
+					  yylval.tipo = TipoParam.FUNCION;
+				  else if(entrada instanceof Variable){
+					  Variable v = (Variable) entrada;
+					  if(v.getTipo() == TipoVariable.ENTERO)
+						  yylval.tipo = TipoParam.ENTERO;
+					  else
+						  yylval.tipo = TipoParam.VECTOR;
+				  }else
+					  yylval.tipo = TipoParam.NULO;
+			  }
+		  }
+		  System.out.println("Pedido token "+t.getValor() + "numerito: "+tokenid);
+		  
+		  return tokenid;
+  	}
 
-	public boolean getEstadoDecF() {
+	public int getEstadoDecF() {
 		return estadoDecF;
 	}
 	

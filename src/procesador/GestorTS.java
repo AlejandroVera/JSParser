@@ -21,7 +21,7 @@ public class GestorTS {
 		
 		//Inicializamos con las palabras reservadas
 		String[] array = {"if", "var", "array", "new", "prompt", "document.write",
-						  "switch", "case", "break", "true", "false", "function"};
+						  "switch", "case", "break", "function", "return"};
 		for(String s : array)
 			añadir(s, true, TipoEntradaTS.RESERVADA);
 		
@@ -130,7 +130,7 @@ public class GestorTS {
 
 
 	public boolean buscarFuncionTS(String nombre, int nParam) {
-		// TODO Auto-generated method stub
+		// TODO Crear la funcion buscarFuncionTS
 		return false;
 	}
 

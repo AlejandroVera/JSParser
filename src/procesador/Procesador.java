@@ -1,12 +1,14 @@
 package procesador;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public class Procesador {
 
-	private static GestorErrores errores;
-	private static GestorTS tablaSimbolos;
+	public static GestorErrores errores;
+	public static GestorTS tablaSimbolos;
+	public static AnalizadorLexico lexico;
 	
 	public static void main(String[] args) {
 		
@@ -24,16 +26,21 @@ public class Procesador {
 		}
 		
 		//Creamos el analizador lexico
-		AnalizadorLexico lexico = new AnalizadorLexico(source);
+		lexico = new AnalizadorLexico(source);
 		
 		//Creamos la tabla de simbolos
 		tablaSimbolos = new GestorTS();
 		
 		//Creamos el gestor de errores
 		errores = new GestorErrores(lexico);
-				
-		//Crear y lanzar el analizador sintatico-semantico
-		AnalizadorSS ss = new AnalizadorSS(lexico);
+		
+		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
+		try {
+			analizador.parse();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static GestorErrores getGestorErrores(){

@@ -6,58 +6,6 @@
 %define stype "Parametros"
 %define public
 
-
-%code {
-
-   public static GestorErrores errores;
-	public static GestorTS tablaSimbolos;
-	public static AnalizadorLexico lexico;
-	
-	public static void main(String[] args) {
-		
-		//Comprobaciones del archivo
-		if(args.length < 1){
-			System.err.println("ERROR - El programa tiene que recibir como argumento" +
-					" la ruta del archivo con el codigo fuente a procesar.");
-			System.exit(1);
-		}
-		
-		File source = new File(args[0]);
-		if(!source.exists() || !source.canRead()){
-			System.err.println("No se ha podido leer el archivo: "+args[0]);
-			System.exit(2);
-		}
-		
-		//Creamos el analizador lexico
-		AnalizadorLexico lexico = new AnalizadorLexico(source);
-		
-		//Creamos la tabla de simbolos
-		tablaSimbolos = new GestorTS();
-		
-		//Creamos el gestor de errores
-		errores = new GestorErrores(lexico);
-		
-		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
-		try {
-			analizador.parse();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//Crear y lanzar el analizador sintatico-semantico
-		//AnalizadorSS ss = new AnalizadorSS(lexico);
-	}
-	
-	public static GestorErrores getGestorErrores(){
-		return errores;
-	}
-	
-	public static GestorTS getGestorTS(){
-		return tablaSimbolos;
-	}
-
-}
-
 %code imports {
 import java.io.File;
 import java.io.IOException;
@@ -88,6 +36,7 @@ D : NEWLINE
 | PUNTOYCOMA
 ;
 
+
 S : V
 | F
 | I
@@ -95,10 +44,10 @@ S : V
 | P6
 ;
 
-V : T IDENTIFICADOR { lexico.setEstadoDecV(false); }
+V : T IDENTIFICADOR { Procesador.lexico.setEstadoDecV(false); }
 ;
 
-T : VAR { lexico.setEstadoDecV(true); }
+T : VAR { Procesador.lexico.setEstadoDecV(true); }
 ;
 
 P : Z { $$.nParam = $1.nParam; }
@@ -109,30 +58,41 @@ Z : P5 { $$.nParam = 1; }
 | P5 COMA Z { $$.nParam = $3.nParam + 1; }
 ;
 
-P6 : IDENTIFICADOR OPASIGNACION N { if($3.tipo != TipoParam.ENTERO && $3.tipo != TipoParam.VECTOR ) errores.addError("Tipo incompatible");
-if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION) errores.addError("Error en la asignacion: tipo incompatible"); 
-$1.tipo = $3.tipo;
-$$.tipo = $1.tipo; }
+P6 : IDENTIFICADOR OPASIGNACION N { 
+	if($3.tipo != TipoParam.ENTERO && $3.tipo != TipoParam.VECTOR ) 
+		Procesador.errores.addError("Tipo incompatible");
+	if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION)
+		Procesador.errores.addError("Error en la asignacion: tipo incompatible"); 
+	$1.tipo = $3.tipo;
+	$$.tipo = $1.tipo; }
 | P7 { $$.tipo = $1.tipo; }
 ;
 
-P7 : P7 OPLOGICO P5 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador logico");
-$$.tipo = TipoParam.ENTERO; }
+P7 : P7 OPLOGICO P5 { 
+	if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) 
+		Procesador.errores.addError("Tipos de datos no validos para operador logico");
+	$$.tipo = TipoParam.ENTERO; }
 | P5 { $$.tipo = $1.tipo; }
 ;
 
-P5 : P5 OPRELACIONAL P4 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador relacional");
-$$.tipo = TipoParam.ENTERO; }
+P5 : P5 OPRELACIONAL P4 { 
+	if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) 
+		Procesador.errores.addError("Tipos de datos no validos para operador relacional");
+	$$.tipo = TipoParam.ENTERO; }
 | P4 { $$.tipo = $1.tipo; }
 ;
 
-P4 : P4 OPARITMETICO P3 { if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO)) errores.addError("Tipos de datos no validos para operador aritmetico");
-$$.tipo = TipoParam.ENTERO; }
+P4 : P4 OPARITMETICO P3 { 
+	if(!($1.tipo == $3.tipo && $1.tipo == TipoParam.ENTERO))
+		Procesador.errores.addError("Tipos de datos no validos para operador aritmetico");
+	$$.tipo = TipoParam.ENTERO; }
 | P3 { $$.tipo = $1.tipo; }
 ;
 
-P3 : OPESPECIAL P2 { if($2.tipo != TipoParam.ENTERO) errores.addError("Tipos de datos no validos para operador de incremento"); 
-$$.tipo = TipoParam.ENTERO; }
+P3 : OPESPECIAL P2 { 
+	if($2.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Tipos de datos no validos para operador de incremento"); 
+	$$.tipo = TipoParam.ENTERO; }
 | P2 { $$.tipo = $1.tipo; }
 ;
 
@@ -140,65 +100,90 @@ P2 : PARENTESISAB P6 PARENTESISCE { $$.tipo = $2.tipo; }
 | P1 { $$.tipo = $1.tipo; }
 ;
 
-P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE { if(!tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam)) errores.addError("Funcion no definida"); 
-$$.tipo = TipoParam.ENTERO; }
-| IDENTIFICADOR CORCHETEAB P6 CORCHETECE { if(!($1.entrada instanceof Variable)) errores.addError("Variable no definida");
-Variable v = (Variable)$1.entrada;
-if(v.getTipo() != Variable.TipoVariable.VECTOR) errores.addError("La variable no es de tipo vector.");
-if($3.tipo != TipoParam.ENTERO) errores.addError("Indice no es de tipo entero."); 
-$$.tipo = TipoParam.ENTERO; }
-| IDENTIFICADOR { if($1.entrada.getTipo() == Variable.TipoVariable.ENTERO) $$.tipo = TipoParam.ENTERO;
-else if($1.entrada.getTipo() == Variable.TipoVariable.VECTOR) $$.tipo = TipoParam.VECTOR;
-else errores.addError("Tipo no valido"); }
+P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE { 
+	if(!Procesador.tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam)) 
+		Procesador.errores.addError("Funcion no definida"); 
+	$$.tipo = TipoParam.ENTERO; }
+| IDENTIFICADOR CORCHETEAB P6 CORCHETECE { 
+	if($1.tipo == TipoParam.NULO) 
+		Procesador.errores.addError("Variable no definida");
+	if($1.tipo != TipoParam.VECTOR) 
+		Procesador.errores.addError("La variable no es de tipo vector.");
+	if($3.tipo != TipoParam.ENTERO) Procesador.errores.addError("Indice no es de tipo entero."); 
+	$$.tipo = TipoParam.ENTERO; }
+| IDENTIFICADOR { 
+	if($1.tipo == TipoParam.ENTERO) 
+		$$.tipo = TipoParam.ENTERO;
+	else if($1.tipo == TipoParam.VECTOR) 
+		$$.tipo = TipoParam.VECTOR;
+	else if($1.tipo == TipoParam.NULO)
+		Procesador.errores.addError("Tipo no definido");
+	else 
+		Procesador.errores.addError("Tipo no valido"); }
 | PROMPT PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
 | DOCWRITE PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
 | ENTERO  { $$.tipo = TipoParam.ENTERO; }
 ;
 
 N : P5 { $$.tipo = $1.tipo; }
-| NEW ARRAY PARENTESISAB P6 PARENTESISCE { if($4.tipo != TipoParam.ENTERO) errores.addError("Tamaño de vector debe ser entero"); 
-$$.tipo = TipoParam.VECTOR; }
+| NEW ARRAY PARENTESISAB P6 PARENTESISCE { 
+	if($4.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Tamaño de vector debe ser entero"); 
+	$$.tipo = TipoParam.VECTOR; }
 ;
 
-I : IF PARENTESISAB P6 PARENTESISCE L S { if($3.tipo != TipoParam.ENTERO) errores.addError("Condición debe ser entera"); }
+I : IF PARENTESISAB P6 PARENTESISCE L S { 
+	if($3.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Condición debe ser entera"); }
 ;
 
-W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE { if($3.tipo != TipoParam.ENTERO) errores.addError("Variable del Switch debe ser entera"); }
+W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE { 
+	if($3.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Variable del Switch debe ser entera"); }
 ;
 
 L : NEWLINE
 | 
 ;
 
-C : L CASE P6 DOSPUNTOS A D B { if($3.tipo != TipoParam.ENTERO) errores.addError("Condición debe ser entera"); }
+C : L CASE P6 DOSPUNTOS A D B { 
+	if($3.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Condición debe ser entera"); }
 ;
 
 B : BREAK
 | 
 ;
 
-F : FUNCTION F2 { lexico.setEstadoDecF(true); }
+F : FUNCTION F2 { Procesador.lexico.setEstadoDecF(1); }
 ;
 
-F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { lexico.setEstadoDecF(false); 
-tablaSimbolos.borrarTabla();}
+F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { 
+	Procesador.lexico.setEstadoDecF(0); 
+	Procesador.tablaSimbolos.borrarTabla();}
 ;
 
-H : IDENTIFICADOR PARENTESISAB J  { if(lexico.getEstadoDecF()) errores.addError("No se admiten declaración recursiva de funciones."); 
- else if(tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
-	errores.addError("Funcion ya definida"); 
-tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
-tablaSimbolos.crearTabla(); }
+H : IDENTIFICADOR PARENTESISAB J  { 
+	if(Procesador.lexico.getEstadoDecF() != 0) 
+		Procesador.errores.addError("No se admite la declaración anidada de funciones."); 
+	else if(Procesador.tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
+		Procesador.errores.addError("Funcion ya definida"); 
+	
+	Procesador.tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
+	Procesador.tablaSimbolos.crearTabla(); }
 | IDENTIFICADOR PARENTESISAB PARENTESISCE  {
-tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
-tablaSimbolos.crearTabla(); }
+	Procesador.tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
+	Procesador.tablaSimbolos.crearTabla();
+	Procesador.lexico.setEstadoDecF(2); }
 ;
 
 J : IDENTIFICADOR PARENTESISCE { $$.nParam=1; }
 | IDENTIFICADOR COMA J { $$.nParam=$3.nParam+1; }
 ;
 
-R : RETURN P6 { if($2.tipo != TipoParam.ENTERO) errores.addError("Funcion debe devolver un entero"); }
+R : RETURN P6 { 
+	if($2.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Funcion debe devolver un entero"); }
 | RETURN
 | 
 ;
