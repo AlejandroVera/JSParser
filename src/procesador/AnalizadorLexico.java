@@ -426,11 +426,11 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	}
 	
-	public void estadoDecV(boolean v){
+	public void setEstadoDecV(boolean v){
 		this.estadoDecV = v;
 	}
 	
-	public void estadoDecF(boolean v){
+	public void setEstadoDecF(boolean v){
 		this.estadoDecF = v;
 	}
 	
@@ -465,9 +465,9 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	  }
 
 
-	  TipoParam yylval;
+	  Parametros yylval;
 
-	  public TipoParam getLVal() {
+	  public Parametros getLVal() {
 	    return yylval;
 	  }
 
@@ -478,6 +478,14 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		  }*/
 		  return AnalizadorAsc.EOF;
 	  }
+
+	public boolean getEstadoDecF() {
+		return estadoDecF;
+	}
+	
+	public boolean getEstadoDecV() {
+		return estadoDecV;
+	}
 	  
 	  
 

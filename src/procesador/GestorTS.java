@@ -128,4 +128,10 @@ public class GestorTS {
 		
 	}
 
+
+	public boolean buscarFuncionTS(String nombre, int nParam) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

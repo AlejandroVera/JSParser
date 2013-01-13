@@ -72,7 +72,7 @@ import java.io.IOException;
 %token PARENTESISCE LLAVEAB LLAVECE COMA DOSPUNTOS
 %token <Integer> ENTERO
 %token <String> CADENA
-%token <EntradaTS> IDENTIFICADOR
+%token <Parametros> IDENTIFICADOR
 %type <Parametros> P P1 P2 P3 P4 P5 P6 P7 N H J Z 
 
 /* Grammar follows */
@@ -95,10 +95,10 @@ S : V
 | P6
 ;
 
-V : T IDENTIFICADOR { lexico.estadoDecV(false); }
+V : T IDENTIFICADOR { lexico.setEstadoDecV(false); }
 ;
 
-T : VAR { lexico.estadoDecV(true); }
+T : VAR { lexico.setEstadoDecV(true); }
 ;
 
 P : Z { $$.nParam = $1.nParam; }
@@ -140,15 +140,15 @@ P2 : PARENTESISAB P6 PARENTESISCE { $$.tipo = $2.tipo; }
 | P1 { $$.tipo = $1.tipo; }
 ;
 
-P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE { if(!tablaSimbolos.buscarFuncionTS($1.getLVal().getNombre(), $3.nParam)) errores.addError("Funcion no definida"); 
+P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE { if(!tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam)) errores.addError("Funcion no definida"); 
 $$.tipo = TipoParam.ENTERO; }
-| IDENTIFICADOR CORCHETEAB P6 CORCHETECE { if(!($1.getLVal() instanceof Variable)) errores.addError("Variable no definida");
-Variable v = (Variable)$1.getLVal();
+| IDENTIFICADOR CORCHETEAB P6 CORCHETECE { if(!($1.entrada instanceof Variable)) errores.addError("Variable no definida");
+Variable v = (Variable)$1.entrada;
 if(v.getTipo() != Variable.TipoVariable.VECTOR) errores.addError("La variable no es de tipo vector.");
 if($3.tipo != TipoParam.ENTERO) errores.addError("Indice no es de tipo entero."); 
 $$.tipo = TipoParam.ENTERO; }
-| IDENTIFICADOR { if($1.getLVal().getTipo() == Variable.TipoVariable.ENTERO) $$.tipo = TipoParam.ENTERO;
-else if($1.getLVal().getTipo() == Variable.TipoVariable.VECTOR) $$.tipo = TipoParam.VECTOR;
+| IDENTIFICADOR { if($1.entrada.getTipo() == Variable.TipoVariable.ENTERO) $$.tipo = TipoParam.ENTERO;
+else if($1.entrada.getTipo() == Variable.TipoVariable.VECTOR) $$.tipo = TipoParam.VECTOR;
 else errores.addError("Tipo no valido"); }
 | PROMPT PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
 | DOCWRITE PARENTESISAB CADENA PARENTESISCE { $$.tipo = TipoParam.ENTERO; }
@@ -177,20 +177,20 @@ B : BREAK
 | 
 ;
 
-F : FUNCTION F2 { lexico.estadoDecF(true); }
+F : FUNCTION F2 { lexico.setEstadoDecF(true); }
 ;
 
-F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { lexico.estadoDecF(false); 
+F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { lexico.setEstadoDecF(false); 
 tablaSimbolos.borrarTabla();}
 ;
 
-H : IDENTIFICADOR PARENTESISAB J  { if(lexico.getEstadoDecF) errores.addError("No se admiten declaración recursiva de funciones."); 
- else if(tablaSimbolos.buscarFuncionTS($1.getLVal().getNombre(), $3.nParam))
+H : IDENTIFICADOR PARENTESISAB J  { if(lexico.getEstadoDecF()) errores.addError("No se admiten declaración recursiva de funciones."); 
+ else if(tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
 	errores.addError("Funcion ya definida"); 
-tablaSimbolos.añadir($1.getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 tablaSimbolos.crearTabla(); }
 | IDENTIFICADOR PARENTESISAB PARENTESISCE  {
-tablaSimbolos.añadir($1.getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 tablaSimbolos.crearTabla(); }
 ;
 

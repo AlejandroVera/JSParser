@@ -343,7 +343,7 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 98 of "entradaBison"  */
-    { lexico.estadoDecV(false); };
+    { lexico.setEstadoDecV(false); };
   break;
     
 
@@ -352,7 +352,7 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 101 of "entradaBison"  */
-    { lexico.estadoDecV(true); };
+    { lexico.setEstadoDecV(true); };
   break;
     
 
@@ -398,9 +398,9 @@ public class AnalizadorAsc
 /* Line 351 of lalr1.java  */
 /* Line 112 of "entradaBison"  */
     { if(((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.ENTERO && ((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.VECTOR ) errores.addError("Tipo incompatible");
-if(((EntradaTS)(yystack.valueAt (3-(1)))).tipo == TipoParam.VECTOR || ((EntradaTS)(yystack.valueAt (3-(1)))).tipo == TipoParam.FUNCION) errores.addError("Error en la asignacion: tipo incompatible"); 
-((EntradaTS)(yystack.valueAt (3-(1)))).tipo = ((Parametros)(yystack.valueAt (3-(3)))).tipo;
-yyval.tipo = ((EntradaTS)(yystack.valueAt (3-(1)))).tipo; };
+if(((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.VECTOR || ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.FUNCION) errores.addError("Error en la asignacion: tipo incompatible"); 
+((Parametros)(yystack.valueAt (3-(1)))).tipo = ((Parametros)(yystack.valueAt (3-(3)))).tipo;
+yyval.tipo = ((Parametros)(yystack.valueAt (3-(1)))).tipo; };
   break;
     
 
@@ -512,7 +512,7 @@ yyval.tipo = TipoParam.ENTERO; };
     
 /* Line 351 of lalr1.java  */
 /* Line 143 of "entradaBison"  */
-    { if(!tablaSimbolos.buscarFuncionTS(((EntradaTS)(yystack.valueAt (4-(1)))).getLVal().getNombre(), ((Parametros)(yystack.valueAt (4-(3)))).nParam)) errores.addError("Funcion no definida"); 
+    { if(!tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (4-(1)))).nombre, ((Parametros)(yystack.valueAt (4-(3)))).nParam)) errores.addError("Funcion no definida"); 
 yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -522,8 +522,8 @@ yyval.tipo = TipoParam.ENTERO; };
     
 /* Line 351 of lalr1.java  */
 /* Line 145 of "entradaBison"  */
-    { if(!(((EntradaTS)(yystack.valueAt (4-(1)))).getLVal() instanceof Variable)) errores.addError("Variable no definida");
-Variable v = (Variable)((EntradaTS)(yystack.valueAt (4-(1)))).getLVal();
+    { if(!(((Parametros)(yystack.valueAt (4-(1)))).entrada instanceof Variable)) errores.addError("Variable no definida");
+Variable v = (Variable)((Parametros)(yystack.valueAt (4-(1)))).entrada;
 if(v.getTipo() != Variable.TipoVariable.VECTOR) errores.addError("La variable no es de tipo vector.");
 if(((Parametros)(yystack.valueAt (4-(3)))).tipo != TipoParam.ENTERO) errores.addError("Indice no es de tipo entero."); 
 yyval.tipo = TipoParam.ENTERO; };
@@ -535,8 +535,8 @@ yyval.tipo = TipoParam.ENTERO; };
     
 /* Line 351 of lalr1.java  */
 /* Line 150 of "entradaBison"  */
-    { if(((EntradaTS)(yystack.valueAt (1-(1)))).getLVal().getTipo() == Variable.TipoVariable.ENTERO) yyval.tipo = TipoParam.ENTERO;
-else if(((EntradaTS)(yystack.valueAt (1-(1)))).getLVal().getTipo() == Variable.TipoVariable.VECTOR) yyval.tipo = TipoParam.VECTOR;
+    { if(((Parametros)(yystack.valueAt (1-(1)))).entrada.getTipo() == Variable.TipoVariable.ENTERO) yyval.tipo = TipoParam.ENTERO;
+else if(((Parametros)(yystack.valueAt (1-(1)))).entrada.getTipo() == Variable.TipoVariable.VECTOR) yyval.tipo = TipoParam.VECTOR;
 else errores.addError("Tipo no valido"); };
   break;
     
@@ -619,7 +619,7 @@ yyval.tipo = TipoParam.VECTOR; };
     
 /* Line 351 of lalr1.java  */
 /* Line 180 of "entradaBison"  */
-    { lexico.estadoDecF(true); };
+    { lexico.setEstadoDecF(true); };
   break;
     
 
@@ -628,7 +628,7 @@ yyval.tipo = TipoParam.VECTOR; };
     
 /* Line 351 of lalr1.java  */
 /* Line 183 of "entradaBison"  */
-    { lexico.estadoDecF(false); 
+    { lexico.setEstadoDecF(false); 
 tablaSimbolos.borrarTabla();};
   break;
     
@@ -638,10 +638,10 @@ tablaSimbolos.borrarTabla();};
     
 /* Line 351 of lalr1.java  */
 /* Line 187 of "entradaBison"  */
-    { if(lexico.getEstadoDecF) errores.addError("No se admiten declaración recursiva de funciones."); 
- else if(tablaSimbolos.buscarFuncionTS(((EntradaTS)(yystack.valueAt (3-(1)))).getLVal().getNombre(), ((Parametros)(yystack.valueAt (3-(3)))).nParam))
+    { if(lexico.getEstadoDecF()) errores.addError("No se admiten declaración recursiva de funciones."); 
+ else if(tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
 	errores.addError("Funcion ya definida"); 
-tablaSimbolos.añadir(((EntradaTS)(yystack.valueAt (3-(1)))).getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 tablaSimbolos.crearTabla(); };
   break;
     
@@ -652,7 +652,7 @@ tablaSimbolos.crearTabla(); };
 /* Line 351 of lalr1.java  */
 /* Line 192 of "entradaBison"  */
     {
-tablaSimbolos.añadir(((EntradaTS)(yystack.valueAt (3-(1)))).getLVal().getNombre(),false,EntradaTS.TipoEntradaTS.FUNCION)
+tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 tablaSimbolos.crearTabla(); };
   break;
     
