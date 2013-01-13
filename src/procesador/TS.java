@@ -29,5 +29,9 @@ public class TS {
 	public EntradaTS buscar(String elemento){
 		return this.lista.get(elemento);
 	}
+	
+	public boolean borrar(String elemento){
+		return (this.lista.remove(elemento) != null);
+	}
 
 }

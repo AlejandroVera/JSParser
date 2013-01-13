@@ -3,6 +3,7 @@ package procesador;
 import java.util.Stack;
 
 import procesador.EntradaTS.TipoEntradaTS;
+import procesador.Variable.TipoVariable;
 
 public class GestorTS {
 	
@@ -96,6 +97,20 @@ public class GestorTS {
 		return resultado;
 	}
 	
+
+	public EntradaTS setTipoVariable(String elemento, TipoParam tipo){
+		EntradaTS resultado = null;
+		
+		if(tSActual.borrar(elemento)){
+			if(tipo == TipoParam.ENTERO)
+				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
+			else
+				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
+		}
+		
+		return resultado;
+	}
+	
 	
 	/**
 	 * Crea una nueva tabla cuyo padre es la tabla actual.
@@ -130,8 +145,14 @@ public class GestorTS {
 
 
 	public boolean buscarFuncionTS(String nombre, int nParam) {
-		// TODO Crear la funcion buscarFuncionTS
-		return false;
+		EntradaTS entrada = buscar(nombre);
+		boolean encontrado = false;
+		
+		if(entrada != null && entrada instanceof Funcion){
+			Funcion f = (Funcion) entrada;
+			encontrado = f.existsWithXParam(nParam);
+		}
+		return encontrado;
 	}
 
 }

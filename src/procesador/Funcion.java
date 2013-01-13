@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Funcion extends EntradaTS {
 
-	private List<Variable.TipoVariable> parametros;
+	private List<Integer> parametros;
 	
 	public Funcion(String nombre) {
 		super(nombre);
 		this.tipoEntrada = TipoEntradaTS.FUNCION;
-		this.parametros = new LinkedList<Variable.TipoVariable>();
+		this.parametros = new LinkedList<Integer>();
 	}
 	
-	public void addParametro(Variable.TipoVariable tipo){
-		this.parametros.add(tipo);
+	public void addFuncion(Integer nparams){
+		this.parametros.add(nparams);
 	}
 	
-	public List<Variable.TipoVariable> getParametros(){
-		return this.parametros; 
+	public boolean existsWithXParam(Integer x){
+		return this.parametros.contains(x); 
 	}
 
 }

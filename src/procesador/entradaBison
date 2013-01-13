@@ -64,6 +64,7 @@ P6 : IDENTIFICADOR OPASIGNACION N {
 	if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION)
 		Procesador.errores.addError("Error en la asignacion: tipo incompatible"); 
 	$1.tipo = $3.tipo;
+	Procesador.tablaSimbolos.setTipoVariable($1.nombre, $1.tipo);
 	$$.tipo = $1.tipo; }
 | P7 { $$.tipo = $1.tipo; }
 ;

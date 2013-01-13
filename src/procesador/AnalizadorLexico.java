@@ -413,8 +413,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 						case "var": tipo = AnalizadorAsc.VAR; break;
 					}
 					token = new Token(tipo, ets);
-				}
-				else{
+				}else{
 					token = new Token(AnalizadorAsc.IDENTIFICADOR,ets);
 				}
 			}
@@ -520,6 +519,8 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				  }else
 					  yylval.tipo = TipoParam.NULO;
 			  }
+		  }else if(tokenid == AnalizadorAsc.ENTERO){
+			  yylval.tipo = TipoParam.ENTERO;
 		  }
 		  System.out.println("Pedido token "+t.getValor() + "numerito: "+tokenid);
 		  

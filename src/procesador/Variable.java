@@ -14,6 +14,11 @@ public class Variable extends EntradaTS {
 		this.tipoEntrada = TipoEntradaTS.VARIABLE;
 	}
 	
+	public Variable(String nombre, TipoVariable tipo) {
+		this(nombre);
+		this.tipo = tipo;  
+	}
+	
 	public void setTipo(TipoVariable tipo){
 		this.tipo = tipo;  
 	}
