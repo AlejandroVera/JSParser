@@ -399,9 +399,9 @@ public class AnalizadorAsc
 /* Line 61 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.ENTERO && ((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.VECTOR ) 
-		Procesador.errores.addError("Tipo incompatible");
+		Procesador.errores.addError("Tipo incompatible",false);
 	if(((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.VECTOR || ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.FUNCION)
-		Procesador.errores.addError("Error en la asignacion: tipo incompatible"); 
+		Procesador.errores.addError("Error en la asignacion: tipo incompatible",false); 
 	((Parametros)(yystack.valueAt (3-(1)))).tipo = ((Parametros)(yystack.valueAt (3-(3)))).tipo;
 	Procesador.tablaSimbolos.setTipoVariable(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(1)))).tipo);
 	yyval.tipo = ((Parametros)(yystack.valueAt (3-(1)))).tipo; };
@@ -424,7 +424,7 @@ public class AnalizadorAsc
 /* Line 72 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO)) 
-		Procesador.errores.addError("Tipos de datos no validos para operador logico");
+		Procesador.errores.addError("Tipos de datos no validos para operador logico",false);
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -445,7 +445,7 @@ public class AnalizadorAsc
 /* Line 79 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO)) 
-		Procesador.errores.addError("Tipos de datos no validos para operador relacional");
+		Procesador.errores.addError("Tipos de datos no validos para operador relacional",false);
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -466,7 +466,7 @@ public class AnalizadorAsc
 /* Line 86 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO))
-		Procesador.errores.addError("Tipos de datos no validos para operador aritmetico");
+		Procesador.errores.addError("Tipos de datos no validos para operador aritmetico",false);
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -487,7 +487,7 @@ public class AnalizadorAsc
 /* Line 93 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (2-(2)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Tipos de datos no validos para operador de incremento"); 
+		Procesador.errores.addError("Tipos de datos no validos para operador de incremento",false); 
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -526,7 +526,7 @@ public class AnalizadorAsc
 /* Line 104 of "entradaBison"  */
     { 
 	if(!Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (4-(1)))).nombre, ((Parametros)(yystack.valueAt (4-(3)))).nParam)) 
-		Procesador.errores.addError("Funcion no definida"); 
+		Procesador.errores.addError("Funcion no definida",false); 
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -538,10 +538,10 @@ public class AnalizadorAsc
 /* Line 108 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (4-(1)))).tipo == TipoParam.NULO) 
-		Procesador.errores.addError("Variable no definida");
+		Procesador.errores.addError("Variable no definida",false);
 	if(((Parametros)(yystack.valueAt (4-(1)))).tipo != TipoParam.VECTOR) 
-		Procesador.errores.addError("La variable no es de tipo vector.");
-	if(((Parametros)(yystack.valueAt (4-(3)))).tipo != TipoParam.ENTERO) Procesador.errores.addError("Indice no es de tipo entero."); 
+		Procesador.errores.addError("La variable no es de tipo vector.",false);
+	if(((Parametros)(yystack.valueAt (4-(3)))).tipo != TipoParam.ENTERO) Procesador.errores.addError("Indice no es de tipo entero.",false); 
 	yyval.tipo = TipoParam.ENTERO; };
   break;
     
@@ -557,9 +557,9 @@ public class AnalizadorAsc
 	else if(((Parametros)(yystack.valueAt (1-(1)))).tipo == TipoParam.VECTOR) 
 		yyval.tipo = TipoParam.VECTOR;
 	else if(((Parametros)(yystack.valueAt (1-(1)))).tipo == TipoParam.NULO)
-		Procesador.errores.addError("Tipo no definido");
+		Procesador.errores.addError("Tipo no definido",false);
 	else 
-		Procesador.errores.addError("Tipo no valido"); };
+		Procesador.errores.addError("Tipo no valido",false); };
   break;
     
 
@@ -606,7 +606,7 @@ public class AnalizadorAsc
 /* Line 130 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (5-(4)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Tamaño de vector debe ser entero"); 
+		Procesador.errores.addError("Tamaño de vector debe ser entero",false); 
 	yyval.tipo = TipoParam.VECTOR; };
   break;
     
@@ -618,7 +618,7 @@ public class AnalizadorAsc
 /* Line 136 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (6-(3)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Condición debe ser entera"); };
+		Procesador.errores.addError("Condición debe ser entera",false); };
   break;
     
 
@@ -629,7 +629,7 @@ public class AnalizadorAsc
 /* Line 141 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (9-(3)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Variable del Switch debe ser entera"); };
+		Procesador.errores.addError("Variable del Switch debe ser entera",false); };
   break;
     
 
@@ -640,7 +640,7 @@ public class AnalizadorAsc
 /* Line 150 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (7-(3)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Condición debe ser entera"); };
+		Procesador.errores.addError("Condición debe ser entera",false); };
   break;
     
 
@@ -671,9 +671,9 @@ public class AnalizadorAsc
 /* Line 167 of "entradaBison"  */
     { 
 	if(Procesador.lexico.getEstadoDecF() != 0) 
-		Procesador.errores.addError("No se admite la declaración anidada de funciones."); 
+		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
 	else if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
-		Procesador.errores.addError("Funcion ya definida"); 
+		Procesador.errores.addError("Funcion ya definida",false); 
 	
 	Procesador.tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 	Procesador.tablaSimbolos.crearTabla(); };
@@ -717,7 +717,7 @@ public class AnalizadorAsc
 /* Line 185 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (2-(2)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Funcion debe devolver un entero"); };
+		Procesador.errores.addError("Funcion debe devolver un entero",false); };
   break;
     
 

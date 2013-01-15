@@ -28,6 +28,9 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private String numero;
 	private Matriz matriz;
 	private boolean estadoDecV;
+	private int nlineaActual;
+	private int nCaracterActual;
+	
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>
 	 * Estado 1 significa que se está en la cabecera de la declaración de una función.<br>
@@ -172,6 +175,8 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	 * 
 	 */
 	public AnalizadorLexico(File fichero){
+		this.nlineaActual=0;
+		this.nCaracterActual=0;
 		this.estado=0;
 		this.puntero=0;
 		this.cadena="";
@@ -204,7 +209,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		char tab = (char)9;
 		tr0.add(new Transicion(String.valueOf(tab), 0, "nada"));
 		char newLine = (char)10;
-		tr0.add(new Transicion(String.valueOf(newLine), 9, "nada"));
+		tr0.add(new Transicion(String.valueOf(newLine), 9, "a1"));
 
 		matriz.definirTransiciones(tr0, 0);
 
@@ -256,13 +261,13 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		
 		//*************estado 9********************
 		ArrayList<Transicion> tr9 = new ArrayList<Transicion>();
-		tr9.add(new Transicion(String.valueOf(newLine), 9, "nada"));
+		tr9.add(new Transicion(String.valueOf(newLine), 9, "a1"));
 		tr9.add(new Transicion(null, 0, "a32"));
 		matriz.definirTransiciones(tr9, 9);
 		
 		obtenerChars(fichero);
 
-
+/**
 		for(int i=0;i<this.matriz.casillaMatriz.size();i++){
 			Set<Character> s=this.matriz.casillaMatriz.get(i).keySet();
 			Iterator<Character> it = s.iterator();
@@ -270,7 +275,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				char carac = it.next();
 				Casilla c=this.matriz.casillaMatriz.get(i).get(carac);
 			}
-		}
+		} **/
 
 	}
 
@@ -297,50 +302,66 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="nada"){
 			puntero++;
+			nCaracterActual++;
+		}
+		else if(accion=="a1"){
+			nlineaActual++;
 		}
 		else if(accion=="a20"){
 			puntero++;
+			nCaracterActual++;
+			
 			token = new Token(AnalizadorAsc.PUNTOYCOMA,";");
 		}
 		else if(accion=="a21"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.OPRELACIONAL,">");
 		}
 		else if(accion=="a22"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.CORCHETEAB,"[");
 		}
 		else if(accion=="a23"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.CORCHETECE,"]");
 		}
 		else if(accion=="a24"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.LLAVEAB,"{");
 		}
 		else if(accion=="a25"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.LLAVECE,"}");
 		}
 		else if(accion=="a26"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.PARENTESISAB,"(");
 		}
 		else if(accion=="a27"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.PARENTESISCE,")");
 		}
 		else if(accion=="a28"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.COMA,",");
 		}
 		else if(accion=="a29"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.DOSPUNTOS,":");
 		}
 		else if(accion=="a30"){
 			if(buffer.get(puntero)=='\\'){
 				puntero++;
+				nCaracterActual++;
 				if(buffer.get(puntero)=='t'){
 					char aux = (char)9;
 					cadena += String.valueOf(aux);
@@ -362,31 +383,38 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 					puntero--;
 				}
 				puntero++;
+				nCaracterActual++;
 			}
 			else{
 				cadena += buffer.get(puntero);	
 				puntero++;
+				nCaracterActual++;
 			}
 		}
 		else if(accion=="a31"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.OPASIGNACION,"=");
 		}
 		else if(accion=="a32"){
+			this.nCaracterActual=0;
 			token = new Token(AnalizadorAsc.NEWLINE,"NL");
 		}
 		else if(accion=="a33"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.CADENA,cadena+"\"");
 			cadena="";
 		}
 		else if(accion=="a2"){
 			cadena += buffer.get(puntero);
 			puntero++;
+			nCaracterActual++;
 		}
 		else if(accion=="a3"){
 			numero+=buffer.get(puntero);
 			puntero++;
+			nCaracterActual++;
 		}
 		else if(accion=="a4"){
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
@@ -394,7 +422,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				
 				//Si estamos declarando una variable que ya está declarada -> error
 				if(getEstadoDecV()){
-					Procesador.getGestorErrores().addError("Identificador \""+cadena+"\" ya declarado.");
+					Procesador.getGestorErrores().addError("Identificador \""+cadena+"\" ya declarado.",true);
 				}
 				
 				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
@@ -431,6 +459,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a6"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.OPESPECIAL, "++");
 		}
 		else if(accion=="a7"){
@@ -438,6 +467,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a8"){
 			puntero++;
+			nCaracterActual++;
 			token = new Token(AnalizadorAsc.OPLOGICO, "&&");
 		}
 		else if(accion=="emitirError"){
@@ -449,7 +479,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	}
 
 	public void emitirError(){
-		Procesador.getGestorErrores().addError("lexico");
+		Procesador.getGestorErrores().addError("lexico",true);
 
 	}
 	
@@ -488,7 +518,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	  public void yyerror (String s)
 	  {
-	    Procesador.errores.addError(s);
+	    Procesador.errores.addError(s,true);
 	  }
 
 
@@ -534,7 +564,36 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	public boolean getEstadoDecV() {
 		return estadoDecV;
 	}
-	  
+
+	public int getNLinea() {
+		return nlineaActual;
+	}
+
+	public int getNCaracter() {
+		return nCaracterActual;
+	}
+	public String getLinea(){
+		String trozo1 = "",trozo2 = "";
+		
+		boolean cond = true;
+		for(int inicio=this.puntero;cond;inicio--){
+			if((((int)buffer.get(inicio))==10)||inicio==0){//es el caracter \n ?
+				cond=false;
+				break;
+			}
+			trozo1+=buffer.get(inicio); 
+		}
+		cond = true;
+		for(int fin=this.puntero;cond;fin++){
+			if(((int)buffer.get(fin))==10){//es el caracter \n ?
+				cond=false;	
+				break;
+			}
+			trozo2+=buffer.get(fin);
+		}
+		
+		return trozo1+trozo2;
+	}
 	  
 
 }

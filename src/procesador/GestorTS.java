@@ -64,6 +64,7 @@ public class GestorTS {
 	 * @return True si se ha podido borrar. False si no había tablas que borrar.
 	 */
 	public boolean borrarTabla(){
+		imprimirTS();
 		if(this.matrizBloques.size() == 0)
 			return false;
 		
@@ -81,6 +82,11 @@ public class GestorTS {
 		return true;
 	}
 	
+	private void imprimirTS() {
+		
+		
+	}
+
 	/**
 	 * Realiza una búsqueda por todas las tablas de simbolos empezando por la actual y acabando por la global.
 	 * @param elemento Elemento a buscar

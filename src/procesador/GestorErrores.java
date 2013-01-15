@@ -9,18 +9,18 @@ public class GestorErrores {
 		this.aL=aL;
 	}
 
-	public void addError(String tipo){
+	public void addError(String tipo, boolean esLexico){
 		int nLinea=-1, nCaracter=-1;
 		String linea = null;
-
-
-		//Para cuando se acabe el sintactico
-		//nLinea=this.aL.getNLinea();
-		//nLinea=this.aL.getNCaracter();
-		//linea=this.aL.getLinea();
+		nLinea=this.aL.getNLinea();
+		nCaracter=this.aL.getNCaracter();
+		linea=this.aL.getLinea();
 
 		Error error=new Error(tipo, nLinea, nCaracter, linea);
-		System.out.println(error.toString());
+		if(esLexico)
+			System.out.println(error.toString());
+		else 
+			System.out.println(error.toStringSin());
 	}
-	
+
 }
