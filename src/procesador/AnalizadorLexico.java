@@ -98,7 +98,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				sol= new Casilla(6,"nada");
 			}
 			else{
-				emitirError();
+				emitirError("Caracter no valido");
 				int es=0;
 				String acc=null;
 				if(estado==0){
@@ -456,6 +456,9 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			cadena="";
 		}
 		else if(accion=="a5"){
+			if(Math.abs( Integer.valueOf(numero))>32768){
+				emitirError("Entero fuera de rango");
+			}
 			token = new Token(AnalizadorAsc.ENTERO, Integer.valueOf(numero));
 			numero="";
 		}
@@ -473,15 +476,14 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			token = new Token(AnalizadorAsc.OPLOGICO, "&&");
 		}
 		else if(accion=="emitirError"){
-			
-			emitirError();
+			emitirError("caracter no valido");
 		}
 
 		return token;
 	}
 
-	public void emitirError(){
-		Procesador.getGestorErrores().addError("lexico",true);
+	public void emitirError( String mensaje){
+		Procesador.getGestorErrores().addError(mensaje,true);
 
 	}
 	

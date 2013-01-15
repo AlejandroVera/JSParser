@@ -18,7 +18,7 @@ public class Error {
 
 	@Override
 	public String toString() {
-		return tipo + " (Linea "+ nLinea + ", Caracter"
+		return tipo + " (Linea "+ nLinea + ", Caracter "
 				+ nCaracter + "):\n"+ linea +"\n";
 	}
 	public String toStringSin() {
