@@ -41,7 +41,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	//*********************************CLASES PRIVADAS**********************************************
 
 	/**Clase que representa un elemento de la matriz de transicion
-	 *
+	 * Cada casilla contiene el siguiente estado en el autómata y la acción semántica correspondiente
 	 */
 	private class Casilla{
 		private int siguienteEstado;
@@ -575,7 +575,6 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		return nCaracterActual;
 	}
 	public String getLinea(){
-		System.out.println("hojojo");
 		String trozo1 = "",trozo2 = "";
 		
 		boolean cond = true;
@@ -587,7 +586,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			trozo1+=buffer.get(inicio); 
 		}
 		cond = true;
-		for(int fin=this.puntero;cond;fin++){
+		for(int fin=this.puntero;cond&&fin<buffer.size();fin++){
 			if(((int)buffer.get(fin))==10){//es el caracter \n ?
 				cond=false;	
 				break;
