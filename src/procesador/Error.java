@@ -14,7 +14,7 @@ public class Error {
 		this.nLinea=nLinea;
 		this.linea=linea;
 	}
-
+	
 
 	@Override
 	public String toString() {

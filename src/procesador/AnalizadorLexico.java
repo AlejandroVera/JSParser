@@ -30,6 +30,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private boolean estadoDecV;
 	private int nlineaActual;
 	private int nCaracterActual;
+	private File fichero;
 	
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>
@@ -175,7 +176,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	 * 
 	 */
 	public AnalizadorLexico(File fichero){
-		this.nlineaActual=0;
+		this.nlineaActual=1;
 		this.nCaracterActual=0;
 		this.estado=0;
 		this.puntero=0;
@@ -496,15 +497,16 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	private void obtenerChars(File fichero){
 		FileReader fr = null;
+		this.fichero=fichero;
 		try {
 			fr = new FileReader(fichero);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		BufferedReader b = new BufferedReader(fr);
+		BufferedReader lineaReader = new BufferedReader(fr);
 		try {
 			int c;
-			while((c=b.read())!=-1){
+			while((c=lineaReader.read())!=-1){
 				buffer.offer((char)c);
 			}
 			buffer.offer((char)0);
@@ -575,26 +577,24 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		return nCaracterActual;
 	}
 	public String getLinea(){
-		String trozo1 = "",trozo2 = "";
-		
-		boolean cond = true;
-		for(int inicio=this.puntero;cond;inicio--){
-			if((((int)buffer.get(inicio))==10)||inicio==0){//es el caracter \n ?
-				cond=false;
-				break;
-			}
-			trozo1+=buffer.get(inicio); 
+		String sol=null;
+		int i=1;
+		FileReader fr=null;
+		try {
+			fr = new FileReader(this.fichero);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
 		}
-		cond = true;
-		for(int fin=this.puntero;cond&&fin<buffer.size();fin++){
-			if(((int)buffer.get(fin))==10){//es el caracter \n ?
-				cond=false;	
-				break;
+		BufferedReader b = new BufferedReader(fr);
+		while(i<=nlineaActual){
+			try {
+				sol= b.readLine();
+				i++;
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			trozo2+=buffer.get(fin);
 		}
-		
-		return trozo1+trozo2;
+		return sol;
 	}
 	  
 
