@@ -28,17 +28,26 @@ import java.io.IOException;
 X : A
 ;
 
-A : S D A
-| D
+A : S1 A
+| S1
+;
+
+S1 : S D
 ;
 
 D : Q
-| PUNTOYCOMA Q
+| Q2
+;
+
+Q2 : PUNTOYCOMA
+
+L : Q
+| 
 ;
 
 Q : NEWLINE
 ;
-
+ 
 S : V
 | F
 | I
@@ -150,9 +159,6 @@ W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE {
 		Procesador.errores.addError("Variable del Switch debe ser entera",false); }
 ;
 
-L : Q
-| 
-;
 
 C : L CASE P6 DOSPUNTOS A D B { 
 	if($3.tipo != TipoParam.ENTERO) 
@@ -170,6 +176,7 @@ F2 : H L LLAVEAB A R L LLAVECE {
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();}
 ;
+
 
 H : IDENTIFICADOR PARENTESISAB J  { 
 	if(Procesador.lexico.getEstadoDecF() != 0) 
