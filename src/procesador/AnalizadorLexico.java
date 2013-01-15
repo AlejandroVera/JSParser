@@ -305,6 +305,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			nCaracterActual++;
 		}
 		else if(accion=="a1"){
+			puntero++;
 			nlineaActual++;
 		}
 		else if(accion=="a20"){
@@ -573,6 +574,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		return nCaracterActual;
 	}
 	public String getLinea(){
+		System.out.println("hojojo");
 		String trozo1 = "",trozo2 = "";
 		
 		boolean cond = true;
