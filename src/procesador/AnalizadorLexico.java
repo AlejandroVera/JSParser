@@ -552,8 +552,9 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			  }
 		  }else if(tokenid == AnalizadorAsc.ENTERO){
 			  yylval.tipo = TipoParam.ENTERO;
-		  }
-		  System.out.println("Pedido token "+t.getValor() + "numerito: "+tokenid);
+		  }else if(tokenid == AnalizadorAsc.CADENA)
+			  yylval.tipo = TipoParam.CADENA;
+		  System.out.println("Pedido token "+t.getValor() + " numerito: "+tokenid);
 		  
 		  return tokenid;
   	}
