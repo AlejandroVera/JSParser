@@ -21,6 +21,8 @@ public class GestorErrores {
 			System.out.println(error.toString());
 		else 
 			System.out.println(error.toStringSin());
+		
+		System.exit(1);
 	}
 
 }
