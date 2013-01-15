@@ -123,10 +123,10 @@ P1 : IDENTIFICADOR PARENTESISAB P PARENTESISCE {
 		Procesador.errores.addError("Tipo no definido",false);
 	else 
 		Procesador.errores.addError("Tipo no valido",false); }
-| PROMPT P2 { if ($2.tipo!=TipoParam.CADENA) 
+| PROMPT PARENTESISAB P6 PARENTESISCE { if ($3.tipo!=TipoParam.CADENA) 
 				Procesador.errores.addError("El parametro de prompt debe ser una cadena.",false); 
 			$$.tipo = TipoParam.ENTERO; }
-| DOCWRITE P2 { if ($2.tipo!=TipoParam.CADENA) 
+| DOCWRITE PARENTESISAB P6 PARENTESISCE { if ($3.tipo!=TipoParam.CADENA) 
 				Procesador.errores.addError("El parametro de Document.write debe ser una cadena.",false); 
 			  $$.tipo = TipoParam.ENTERO; }
 | ENTERO  { $$.tipo = TipoParam.ENTERO; }
@@ -166,7 +166,7 @@ B : BREAK
 F : FUNCTION F2 { Procesador.lexico.setEstadoDecF(1); }
 ;
 
-F2 : IDENTIFICADOR PARENTESISAB H L LLAVEAB A R L LLAVECE { 
+F2 : H L LLAVEAB A R L LLAVECE { 
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();}
 ;
