@@ -206,7 +206,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			archivoParse.createNewFile();
 			
 			FileWriter textParse;
-			textParse = new FileWriter(archivo, true);
+			textParse = new FileWriter(archivoParse, true);
 			textParse.write("Ascendente");
 			textParse.close();			
 
@@ -641,6 +641,16 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		return sol;
 	}
-
+	
+	public void addParse (int i){
+		FileWriter textParse;
+		try {
+			textParse = new FileWriter(archivoParse, true);
+			textParse.write(" "+i);
+			textParse.close();	
+		} catch (IOException e) {
+			}
+		
+	}
 
 }
