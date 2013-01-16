@@ -33,8 +33,8 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private int nCaracterActual;
 	private File fichero;
 	private Token anterior;
-	File archivo = null;
-	File archivoParse = null;
+	private File archivo = null;
+	private File archivoParse = null;
 
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>

@@ -1,5 +1,25 @@
-var a
-b= a+2
+var bb
+bb=2
+x=bb+z
+switch(2){
+	case 1: xx = prompt("Cual ha salido?");
+	case 2: xx = prompt("Estas seguro?"); break
 
-if(d>5)
- prompt("hola");
+}
+
+function ola(a, b){
+	var z
+	var c
+	var k
+	k = new Array(2)
+	w = 1
+	c = a + b
+	z=3+(4+5)+6
+	if(1>1)
+		c = 2
+	return c
+}
+
+ola(1,2)
+/*falla */
+vvv=1

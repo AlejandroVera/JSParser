@@ -39,6 +39,11 @@ public class Procesador {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		try {
+			errores.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static GestorErrores getGestorErrores(){

@@ -1,0 +1,2 @@
+Tipo no definido (Linea 4)
+ En la linea: switch(2){
