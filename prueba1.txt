@@ -4,6 +4,8 @@ switch(2){
 	case 2: xx = prompt("Estas seguro?"); break
 }
 
+
+
 function ola(a, b){
 	var z
 	var c
@@ -18,6 +20,12 @@ function ola(a, b){
 }
 
 ola(1,2)
+
+
 /* Probamos a llamar a una variable global que se ha declarado dentro de una funcion */ 
+
+
+
 w=2;
+
 

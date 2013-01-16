@@ -31,14 +31,15 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private int nlineaActual;
 	private int nCaracterActual;
 	private File fichero;
-	
+	private Token anterior;
+
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>
 	 * Estado 1 significa que se está en la cabecera de la declaración de una función.<br>
 	 * Estado 2 significa que se está declarando el cuerpo (código) de la función, por lo que no se pueden declarar otras funciones.
 	 */
 	private int estadoDecF;
-	
+
 	//*********************************CLASES PRIVADAS**********************************************
 
 	/**Clase que representa un elemento de la matriz de transicion
@@ -144,7 +145,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			sinUtilizar.add((char) 125);
 			sinUtilizar.add((char) 9);
 			sinUtilizar.add((char) 10);
-			
+
 			casillaMatriz.add(estadoActual,new  HashMap<Character,Casilla>());
 			for(Transicion t :  tr){
 				if(t.simbolos.length>0){
@@ -171,7 +172,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private LinkedList<Character> buffer;
 	private int puntero;
 	private int estado;
-	
+
 	/**Constructor
 	 * 
 	 */
@@ -185,6 +186,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		this.buffer = new LinkedList<Character>();
 		//Se rellena la matriz de transicion
 		this.matriz = new Matriz();
+		this.anterior=new Token(AnalizadorAsc.OPRELACIONAL,">");//evita nullpointerexception
 
 		//*************estado 0********************
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
@@ -210,7 +212,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		char tab = (char)9;
 		tr0.add(new Transicion(String.valueOf(tab), 0, "nada"));
 		char newLine = (char)10;
-		tr0.add(new Transicion(String.valueOf(newLine), 9, "a1"));
+		tr0.add(new Transicion(String.valueOf(newLine), 0, "a32"));
 
 		matriz.definirTransiciones(tr0, 0);
 
@@ -253,22 +255,17 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		tr7.add(new Transicion("/",  0, "nada"));
 		tr7.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr7, 7);
-		
+
 		//*************estado 8********************
 		ArrayList<Transicion> tr8 = new ArrayList<Transicion>();
 		tr8.add(new Transicion("\"",  0, "a33"));
 		tr8.add(new Transicion(null, 8, "a30"));
 		matriz.definirTransiciones(tr8, 8);
-		
-		//*************estado 9********************
-		ArrayList<Transicion> tr9 = new ArrayList<Transicion>();
-		tr9.add(new Transicion(String.valueOf(newLine), 9, "a1"));
-		tr9.add(new Transicion(null, 0, "a32"));
-		matriz.definirTransiciones(tr9, 9);
-		
+
+
 		obtenerChars(fichero);
 
-/**
+		/**
 		for(int i=0;i<this.matriz.casillaMatriz.size();i++){
 			Set<Character> s=this.matriz.casillaMatriz.get(i).keySet();
 			Iterator<Character> it = s.iterator();
@@ -285,8 +282,15 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	 * @return siguente token del texto
 	 */
 	public Token dameToken(){
-		Token sol;
-		while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){}
+		Token sol=null;
+		boolean cond =true;
+		while(cond){
+			while((sol=generaToken(matriz.obtenerCasilla(estado,buffer.get(puntero))))==null){}
+			if(this.anterior.getTipo()!=AnalizadorAsc.NEWLINE || sol.getTipo()!=AnalizadorAsc.NEWLINE){
+				cond=false;
+			}
+			anterior=sol;
+		}
 		return sol;
 	}
 
@@ -305,14 +309,10 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			puntero++;
 			nCaracterActual++;
 		}
-		else if(accion=="a1"){
-			puntero++;
-			nlineaActual++;
-		}
 		else if(accion=="a20"){
 			puntero++;
 			nCaracterActual++;
-			
+
 			token = new Token(AnalizadorAsc.PUNTOYCOMA,";");
 		}
 		else if(accion=="a21"){
@@ -400,6 +400,8 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a32"){
 			this.nCaracterActual=0;
+			nlineaActual++;
+			puntero++;
 			token = new Token(AnalizadorAsc.NEWLINE,"NL");
 		}
 		else if(accion=="a33"){
@@ -422,27 +424,27 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
 			if(ets!=null){ //Está en la TS
 				if(cadena.contains(".")){
-					
+
 				}
 				//Si estamos declarando una variable que ya está declarada -> error
 				if(getEstadoDecV()){
 					Procesador.getGestorErrores().addError("Identificador \""+cadena+"\" ya declarado.",true);
 				}
-				
+
 				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
 					int tipo = 0;
 					switch(ets.getNombre()){
-						case "Array": tipo = AnalizadorAsc.ARRAY; break;
-						case "break": tipo = AnalizadorAsc.BREAK; break;
-						case "case": tipo = AnalizadorAsc.CASE; break;
-						case "document.write": tipo = AnalizadorAsc.DOCWRITE; break;
-						case "function": tipo = AnalizadorAsc.FUNCTION; break;
-						case "if": tipo = AnalizadorAsc.IF; break;
-						case "new": tipo = AnalizadorAsc.NEW; break;
-						case "prompt": tipo = AnalizadorAsc.PROMPT; break;
-						case "return": tipo = AnalizadorAsc.RETURN; break;
-						case "switch": tipo = AnalizadorAsc.SWITCH; break;
-						case "var": tipo = AnalizadorAsc.VAR; break;
+					case "Array": tipo = AnalizadorAsc.ARRAY; break;
+					case "break": tipo = AnalizadorAsc.BREAK; break;
+					case "case": tipo = AnalizadorAsc.CASE; break;
+					case "document.write": tipo = AnalizadorAsc.DOCWRITE; break;
+					case "function": tipo = AnalizadorAsc.FUNCTION; break;
+					case "if": tipo = AnalizadorAsc.IF; break;
+					case "new": tipo = AnalizadorAsc.NEW; break;
+					case "prompt": tipo = AnalizadorAsc.PROMPT; break;
+					case "return": tipo = AnalizadorAsc.RETURN; break;
+					case "switch": tipo = AnalizadorAsc.SWITCH; break;
+					case "var": tipo = AnalizadorAsc.VAR; break;
 					}
 					token = new Token(tipo, ets);
 				}else{
@@ -487,17 +489,17 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		return token;
 	}
 
-	
+
 	public void setEstadoDecV(boolean v){
 		System.out.println("Cambiamos estado de declaracion de var a "+v);
 		this.estadoDecV = v;
 	}
-	
+
 	public void setEstadoDecF(int v){
 		System.out.println("Cambiamos estado de declaracion de funcion a "+v);
 		this.estadoDecF = v;
 	}
-	
+
 	/*+******************metodos auxiliares*******************+*/
 
 	private void obtenerChars(File fichero){
@@ -519,62 +521,62 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 
 
-	  public void yyerror (String s)
-	  {
-	    Procesador.errores.addError(s,true);
-	  }
 
 
-	  Parametros yylval;
 
-	  public Parametros getLVal() {
-	    return yylval;
-	  }
+	public void yyerror (String s)
+	{
+		Procesador.errores.addError(s,true);
+	}
 
-	  public int yylex () throws IOException {
-		  Token t = dameToken();
-		  System.out.println(t.toString());
-		  yylval = new Parametros();
-		  int tokenid = t.getTipo();
-		  
-		  if(t.getValor() instanceof String)
-			  yylval.nombre = (String) t.getValor();
-		  
-		  if(tokenid == AnalizadorAsc.IDENTIFICADOR){
-			  if(t.getValor() != null && !(t.getValor() instanceof String)){
-				  EntradaTS entrada = (EntradaTS) t.getValor();
-				  yylval.entrada = entrada;
-				  yylval.nombre = entrada.getNombre();
-				  if(entrada instanceof Funcion)
-					  yylval.tipo = TipoParam.FUNCION;
-				  else if(entrada instanceof Variable){
-					  Variable v = (Variable) entrada;
-					  if(v.getTipo() == TipoVariable.ENTERO)
-						  yylval.tipo = TipoParam.ENTERO;
-					  else if(v.getTipo() == TipoVariable.VECTOR)
-						  yylval.tipo = TipoParam.VECTOR;
-					  else
-						  yylval.tipo = TipoParam.NULO;
-				  }
-			  }
-		  }else if(tokenid == AnalizadorAsc.ENTERO){
-			  yylval.tipo = TipoParam.ENTERO;
-		  }else if(tokenid == AnalizadorAsc.CADENA)
-			  yylval.tipo = TipoParam.CADENA;
-		  System.out.println("Pedido token "+t.getValor() + " numerito: "+tokenid);
-		  
-		  return tokenid;
-  	}
+
+	Parametros yylval;
+
+	public Parametros getLVal() {
+		return yylval;
+	}
+
+	public int yylex () throws IOException {
+		Token t = dameToken();
+		System.out.println(t.toString());
+		yylval = new Parametros();
+		int tokenid = t.getTipo();
+
+		if(t.getValor() instanceof String)
+			yylval.nombre = (String) t.getValor();
+
+		if(tokenid == AnalizadorAsc.IDENTIFICADOR){
+			if(t.getValor() != null && !(t.getValor() instanceof String)){
+				EntradaTS entrada = (EntradaTS) t.getValor();
+				yylval.entrada = entrada;
+				yylval.nombre = entrada.getNombre();
+				if(entrada instanceof Funcion)
+					yylval.tipo = TipoParam.FUNCION;
+				else if(entrada instanceof Variable){
+					Variable v = (Variable) entrada;
+					if(v.getTipo() == TipoVariable.ENTERO)
+						yylval.tipo = TipoParam.ENTERO;
+					else if(v.getTipo() == TipoVariable.VECTOR)
+						yylval.tipo = TipoParam.VECTOR;
+					else
+						yylval.tipo = TipoParam.NULO;
+				}
+			}
+		}else if(tokenid == AnalizadorAsc.ENTERO){
+			yylval.tipo = TipoParam.ENTERO;
+		}else if(tokenid == AnalizadorAsc.CADENA)
+			yylval.tipo = TipoParam.CADENA;
+		System.out.println("Pedido token "+t.getValor() + " numerito: "+tokenid);
+
+		return tokenid;
+	}
 
 	public int getEstadoDecF() {
 		return estadoDecF;
 	}
-	
+
 	public boolean getEstadoDecV() {
 		return estadoDecV;
 	}
@@ -606,6 +608,6 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		return sol;
 	}
-	  
+
 
 }
