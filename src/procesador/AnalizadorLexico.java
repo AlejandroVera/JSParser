@@ -33,6 +33,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private int nCaracterActual;
 	private File fichero;
 	private Token anterior;
+	File archivo = null;
 
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>
@@ -189,6 +190,17 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		this.matriz = new Matriz();
 		this.anterior=new Token(AnalizadorAsc.OPRELACIONAL,">");//evita nullpointerexception
 
+		String homeUsuario = System.getProperty("user.home");
+		String barraSistema = System.getProperty("file.separator");
+		archivo = new File(homeUsuario+barraSistema+"tokens.txt");
+		try{
+			if(archivo.exists()){
+				archivo.delete();
+			}
+			archivo.createNewFile();
+
+		}catch(Exception e){e.printStackTrace();}
+
 		//*************estado 0********************
 		ArrayList<Transicion> tr0 = new ArrayList<Transicion>();
 		tr0.add(new Transicion(letra,  1, "a2"));
@@ -294,17 +306,10 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		//WRITE TOKEN 
 		try{
-		File archivo = null;
-		String homeUsuario = System.getProperty("user.home");
-		String barraSistema = System.getProperty("file.separator");
-		archivo = new File(homeUsuario+barraSistema+"tokens.txt");
-		if(!archivo.exists()){
-			archivo.createNewFile();
-		}
-		FileWriter TextOut;
-		TextOut = new FileWriter(archivo, true);
-		TextOut.write(sol.toString()+"\n");
-		TextOut.close();
+			FileWriter TextOut;
+			TextOut = new FileWriter(archivo, true);
+			TextOut.write(sol.toString()+"\n");
+			TextOut.close();
 		}catch(Exception e){e.printStackTrace();}
 
 
