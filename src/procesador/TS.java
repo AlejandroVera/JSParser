@@ -14,7 +14,7 @@ public class TS {
 	
 	public TS(){
 		this.lista = new HashMap<String, EntradaTS>();
-		this.numeroTS = ++totalTS;
+		this.numeroTS = totalTS++;
 	}
 	
 	public int getNumeroTS() {
