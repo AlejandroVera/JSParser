@@ -635,48 +635,25 @@ public class AnalizadorAsc
   break;
     
 
-  case 45:
-  if (yyn == 45)
+  case 47:
+  if (yyn == 47)
     
 /* Line 351 of lalr1.java  */
-/* Line 159 of "entradaBison"  */
+/* Line 163 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (9-(3)))).tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Variable del Switch debe ser entera",false); };
   break;
     
 
-  case 47:
-  if (yyn == 47)
+  case 49:
+  if (yyn == 49)
     
 /* Line 351 of lalr1.java  */
-/* Line 168 of "entradaBison"  */
+/* Line 172 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (1-(1)))).tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Condición debe ser entera",false); };
-  break;
-    
-
-  case 52:
-  if (yyn == 52)
-    
-/* Line 351 of lalr1.java  */
-/* Line 181 of "entradaBison"  */
-    { 
-	Procesador.lexico.setEstadoDecF(0); 
-	Procesador.tablaSimbolos.borrarTabla();};
-  break;
-    
-
-  case 53:
-  if (yyn == 53)
-    
-/* Line 351 of lalr1.java  */
-/* Line 186 of "entradaBison"  */
-    { 
-	if(Procesador.lexico.getEstadoDecF() != 0) 
-		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
-	Procesador.lexico.setEstadoDecF(1); };
   break;
     
 
@@ -684,7 +661,30 @@ public class AnalizadorAsc
   if (yyn == 54)
     
 /* Line 351 of lalr1.java  */
-/* Line 192 of "entradaBison"  */
+/* Line 185 of "entradaBison"  */
+    { 
+	Procesador.lexico.setEstadoDecF(0); 
+	Procesador.tablaSimbolos.borrarTabla();};
+  break;
+    
+
+  case 55:
+  if (yyn == 55)
+    
+/* Line 351 of lalr1.java  */
+/* Line 190 of "entradaBison"  */
+    { 
+	if(Procesador.lexico.getEstadoDecF() != 0) 
+		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
+	Procesador.lexico.setEstadoDecF(1); };
+  break;
+    
+
+  case 56:
+  if (yyn == 56)
+    
+/* Line 351 of lalr1.java  */
+/* Line 196 of "entradaBison"  */
     { 
 	
 	if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
@@ -696,33 +696,15 @@ public class AnalizadorAsc
   break;
     
 
-  case 55:
-  if (yyn == 55)
+  case 57:
+  if (yyn == 57)
     
 /* Line 351 of lalr1.java  */
-/* Line 200 of "entradaBison"  */
+/* Line 204 of "entradaBison"  */
     {
 	Procesador.tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 	Procesador.tablaSimbolos.crearTabla();
 	Procesador.lexico.setEstadoDecF(2); };
-  break;
-    
-
-  case 59:
-  if (yyn == 59)
-    
-/* Line 351 of lalr1.java  */
-/* Line 211 of "entradaBison"  */
-    { yyval.nParam=1; };
-  break;
-    
-
-  case 60:
-  if (yyn == 60)
-    
-/* Line 351 of lalr1.java  */
-/* Line 212 of "entradaBison"  */
-    { yyval.nParam=((Parametros)(yystack.valueAt (3-(3)))).nParam+1; };
   break;
     
 
@@ -731,6 +713,24 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 215 of "entradaBison"  */
+    { yyval.nParam=1; };
+  break;
+    
+
+  case 62:
+  if (yyn == 62)
+    
+/* Line 351 of lalr1.java  */
+/* Line 216 of "entradaBison"  */
+    { yyval.nParam=((Parametros)(yystack.valueAt (3-(3)))).nParam+1; };
+  break;
+    
+
+  case 63:
+  if (yyn == 63)
+    
+/* Line 351 of lalr1.java  */
+/* Line 219 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (2-(2)))).tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Funcion debe devolver un entero",false); };
@@ -1147,21 +1147,21 @@ public class AnalizadorAsc
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-  private static final byte yypact_ninf_ = -65;
+  private static final byte yypact_ninf_ = -85;
   private static final byte yypact_[] =
   {
-        60,   -14,     2,   -65,     5,   -65,    17,     4,    89,   -65,
-     -65,    18,    42,   -65,    60,    16,   -65,    15,   -65,    28,
-      38,    40,   -65,   -65,   -65,   -65,   -65,   -65,    26,    89,
-      89,    89,    89,   -11,   -65,    35,    86,    89,   109,   -65,
-     -65,   -65,   -65,   -65,   -65,   -65,   -65,   109,   109,   109,
-      37,    57,    43,    53,    54,    56,   -65,    71,    38,   -65,
-      41,    58,   -65,   -12,    38,    40,   -65,     7,    59,   -65,
-      57,    57,   -65,   -65,    63,   -65,   -65,   109,   -65,   -16,
-     -65,    57,    60,    62,    89,   -65,   -65,    33,    39,   -65,
-      57,    64,   -65,    89,    -1,    66,    57,    87,   -65,   -65,
-     -65,    57,   -65,   -65,    89,    67,   -65,   -65,    74,   -65,
-      60,    57,    91,    57,    87,   -65,   -65,   -65
+        59,    -9,    -5,   -85,    14,   -85,    17,     3,    95,   -85,
+     -85,   -12,    27,   -85,    59,    54,   -85,    10,   -85,    24,
+      42,    38,   -85,   -85,   -85,   -85,   -85,   -85,    30,    95,
+      95,    95,    95,    32,   -85,    39,    82,    95,   108,   -85,
+     -85,   -85,   -85,   -85,   -85,   -85,   -85,   108,   108,   108,
+      46,    58,    50,    53,    55,    56,   -85,    73,    42,   -85,
+      62,    61,   -85,    -7,    42,    38,   -85,     7,    67,   -85,
+      58,    58,   -85,   -85,    63,   -85,   -85,   108,   -85,    12,
+     -85,    58,    37,    68,    95,   -85,   -85,    64,    37,    95,
+     -85,   -85,   -85,    58,    76,   -85,     4,    71,    58,   -85,
+      80,   -85,   -85,    58,   -85,   -85,    95,    77,   -85,   -85,
+      74,   -85,    59,    58,    96,    58,    80,   -85,   -85,   -85
   };
 
   /* YYDEFACT[S] -- default reduction number in state S.  Performed when
@@ -1169,27 +1169,27 @@ public class AnalizadorAsc
      default is an error.  */
   private static final byte yydefact_[] =
   {
-         0,     0,     0,    53,     0,    18,     0,     0,     0,    40,
+         0,     0,     0,    55,     0,    18,     0,     0,     0,    40,
       41,    37,     0,     2,     4,     0,    12,     0,    16,    24,
       26,    28,    30,    32,    34,    14,    15,    13,     0,     0,
        0,     0,     0,    37,    31,     0,     0,     0,    20,     1,
        3,     8,    11,     5,     7,     6,    17,     0,     0,     0,
        0,    10,     0,     0,     0,     0,    33,     0,    42,    23,
        0,     0,    19,    21,    25,    27,    29,     0,     0,     9,
-      10,    10,    39,    38,     0,    36,    35,     0,    55,     0,
-      54,    10,     0,     0,     0,    22,    59,     0,     0,    44,
-      10,     0,    60,    62,    10,     0,    10,     0,    43,    61,
-      57,    10,    52,    58,     0,     0,    56,    47,     0,    45,
-       0,    10,    51,    10,    49,    50,    48,    46
+      10,    10,    39,    38,     0,    36,    35,     0,    57,     0,
+      56,    10,     0,     0,     0,    22,    61,     0,     0,    64,
+      45,    44,    46,    10,     0,    62,    10,     0,    10,    63,
+       0,    43,    59,    10,    54,    60,     0,     0,    58,    49,
+       0,    47,     0,    10,    53,    10,    51,    52,    50,    48
   };
 
   /* YYPGOTO[NTERM-NUM].  */
   private static final byte yypgoto_[] =
   {
-       -65,   -65,   -13,   -65,   -65,   -65,   -64,    92,    22,   -65,
-     -65,   -65,    29,    -8,   -65,   -34,    65,    61,   104,   -65,
-     -65,   -65,   -65,     0,   -65,   -65,   -65,   -65,   -65,   -65,
-     -65,    44,    30
+       -85,   -85,   -13,   -85,   -85,   -85,   -68,    91,    26,   -85,
+     -85,   -85,    33,    -8,   -85,   -31,    69,    66,   109,   -85,
+     -85,   -85,   -85,   -85,     5,   -85,   -85,   -85,   -85,   -85,
+     -85,   -85,    36,   -84
   };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -1198,8 +1198,8 @@ public class AnalizadorAsc
   {
         -1,    12,    13,    14,    43,    44,    68,    69,    15,    16,
       17,    61,    62,    18,    19,    20,    21,    22,    23,    24,
-      59,    25,    26,   105,   108,   117,   114,    27,    28,    51,
-      95,    80,    96
+      59,    25,    91,    26,   107,   110,   119,   116,    27,    28,
+      51,    97,    80,    92
   };
 
   /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -1209,42 +1209,40 @@ public class AnalizadorAsc
   private static final byte
   yytable_[] =
   {
-        35,    40,    58,    42,    63,    48,    82,    83,    86,    29,
-      37,    87,    38,    64,    93,    77,     4,    88,     6,    41,
-      42,    52,    53,    54,    55,    30,    97,     8,    31,    60,
-     100,    78,   103,     9,    10,    33,    36,   106,    79,    37,
-      32,    38,    39,    63,     1,     2,    46,   112,    47,   115,
-       3,     4,     5,     6,    93,    48,    49,    50,     7,    56,
-      67,    42,     8,    75,    79,     1,     2,    70,     9,    10,
-      11,     3,     4,     5,     6,    94,    91,    71,    72,     7,
-      73,    74,    76,     8,    81,    99,    84,    90,    98,     9,
-      10,    11,   102,   109,   104,    57,   107,   111,     4,   113,
-       6,     4,   110,     6,    89,     7,    85,    45,     7,     8,
-      66,    34,     8,    65,   116,     9,    10,    33,     9,    10,
-      11,     4,     0,     6,   101,     0,     0,     0,     7,     0,
-       0,    92,     8,     0,     0,     0,     0,     0,     9,    10,
-      33
+        35,    40,    82,    83,    98,    58,    36,    63,    42,    37,
+      48,    38,   103,    88,    29,     4,    64,     6,    30,    89,
+      77,    52,    53,    54,    55,   100,     8,    39,   102,    60,
+     105,    78,     9,    10,    33,   108,    86,    31,    79,    87,
+      32,    46,     1,     2,    47,   114,    63,   117,     3,     4,
+       5,     6,    89,    37,    49,    38,     7,    41,    42,    48,
+       8,    50,    42,    56,     1,     2,     9,    10,    11,    67,
+       3,     4,     5,     6,    70,    96,    94,    71,     7,    72,
+      73,    99,     8,    74,    75,    76,    84,   106,     9,    10,
+      11,    57,    81,    93,     4,    79,     6,   104,   109,   113,
+     101,     7,   112,   111,   115,     8,    45,     4,    90,     6,
+      85,     9,    10,    33,     7,    66,    34,    65,     8,     0,
+       4,   118,     6,    95,     9,    10,    11,     7,     0,     0,
+       0,     8,     0,     0,     0,     0,     0,     9,    10,    33
   };
 
   /* YYCHECK.  */
   private static final byte
   yycheck_[] =
   {
-         8,    14,    36,     4,    38,    17,    70,    71,    24,    23,
-      21,    27,    23,    47,    15,    27,    12,    81,    14,     3,
-       4,    29,    30,    31,    32,    23,    90,    23,    23,    37,
-      94,    24,    96,    29,    30,    31,    18,   101,    31,    21,
-      23,    23,     0,    77,     5,     6,    31,   111,    20,   113,
-      11,    12,    13,    14,    15,    17,    16,    31,    19,    24,
-      23,     4,    23,    22,    31,     5,     6,    24,    29,    30,
-      31,    11,    12,    13,    14,    88,    84,    24,    24,    19,
-      24,    10,    24,    23,    25,    93,    23,    25,    24,    29,
-      30,    31,    26,    26,     7,     9,   104,   110,    12,     8,
-      14,    12,    28,    14,    82,    19,    77,    15,    19,    23,
-      49,     7,    23,    48,   114,    29,    30,    31,    29,    30,
-      31,    12,    -1,    14,    94,    -1,    -1,    -1,    19,    -1,
-      -1,    87,    23,    -1,    -1,    -1,    -1,    -1,    29,    30,
-      31
+         8,    14,    70,    71,    88,    36,    18,    38,     4,    21,
+      17,    23,    96,    81,    23,    12,    47,    14,    23,    15,
+      27,    29,    30,    31,    32,    93,    23,     0,    96,    37,
+      98,    24,    29,    30,    31,   103,    24,    23,    31,    27,
+      23,    31,     5,     6,    20,   113,    77,   115,    11,    12,
+      13,    14,    15,    21,    16,    23,    19,     3,     4,    17,
+      23,    31,     4,    24,     5,     6,    29,    30,    31,    23,
+      11,    12,    13,    14,    24,    88,    84,    24,    19,    24,
+      24,    89,    23,    10,    22,    24,    23,     7,    29,    30,
+      31,     9,    25,    25,    12,    31,    14,    26,   106,   112,
+      24,    19,    28,    26,     8,    23,    15,    12,    82,    14,
+      77,    29,    30,    31,    19,    49,     7,    48,    23,    -1,
+      12,   116,    14,    87,    29,    30,    31,    19,    -1,    -1,
+      -1,    23,    -1,    -1,    -1,    -1,    -1,    29,    30,    31
   };
 
   /* STOS_[STATE-NUM] -- The (internal number of the) accessing
@@ -1254,16 +1252,16 @@ public class AnalizadorAsc
   {
          0,     5,     6,    11,    12,    13,    14,    19,    23,    29,
       30,    31,    33,    34,    35,    40,    41,    42,    45,    46,
-      47,    48,    49,    50,    51,    53,    54,    59,    60,    23,
+      47,    48,    49,    50,    51,    53,    55,    60,    61,    23,
       23,    23,    23,    31,    50,    45,    18,    21,    23,     0,
       34,     3,     4,    36,    37,    39,    31,    20,    17,    16,
-      31,    61,    45,    45,    45,    45,    24,     9,    47,    52,
+      31,    62,    45,    45,    45,    45,    24,     9,    47,    52,
       45,    43,    44,    47,    47,    48,    49,    23,    38,    39,
       24,    24,    24,    24,    10,    22,    24,    27,    24,    31,
-      63,    25,    38,    38,    23,    44,    24,    27,    38,    40,
-      25,    45,    63,    15,    34,    62,    64,    38,    24,    45,
-      38,    64,    26,    38,     7,    55,    38,    45,    56,    26,
-      28,    34,    38,     8,    58,    38,    55,    57
+      64,    25,    38,    38,    23,    44,    24,    27,    38,    15,
+      40,    54,    65,    25,    45,    64,    34,    63,    65,    45,
+      38,    24,    38,    65,    26,    38,     7,    56,    38,    45,
+      57,    26,    28,    34,    38,     8,    59,    38,    56,    58
   };
 
   /* TOKEN_NUMBER_[YYLEX-NUM] -- Internal symbol number corresponding
@@ -1285,9 +1283,9 @@ public class AnalizadorAsc
       38,    39,    40,    40,    40,    40,    40,    41,    42,    43,
       43,    44,    44,    45,    45,    46,    46,    47,    47,    48,
       48,    49,    49,    50,    50,    51,    51,    51,    51,    51,
-      51,    51,    52,    52,    53,    54,    55,    56,    57,    57,
-      58,    58,    59,    60,    61,    61,    62,    62,    62,    63,
-      63,    64,    64
+      51,    51,    52,    52,    53,    54,    54,    55,    56,    57,
+      58,    58,    59,    59,    60,    61,    62,    62,    63,    63,
+      63,    64,    64,    65,    65
   };
 
   /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -1298,9 +1296,9 @@ public class AnalizadorAsc
        0,     1,     1,     1,     1,     1,     1,     2,     1,     1,
        0,     1,     3,     3,     1,     3,     1,     3,     1,     3,
        1,     2,     1,     3,     1,     4,     4,     1,     4,     4,
-       1,     1,     1,     5,     6,     9,     7,     1,     1,     0,
-       2,     0,     7,     1,     3,     3,     3,     2,     2,     2,
-       3,     2,     1
+       1,     1,     1,     5,     6,     1,     1,     9,     7,     1,
+       1,     0,     2,     0,     7,     1,     3,     3,     3,     2,
+       2,     2,     3,     2,     1
   };
 
   /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
@@ -1314,7 +1312,7 @@ public class AnalizadorAsc
   "LLAVEAB", "LLAVECE", "COMA", "DOSPUNTOS", "ENTERO", "CADENA",
   "IDENTIFICADOR", "$accept", "X", "A", "S1", "D", "Q2", "L", "Q", "S",
   "V", "T", "P", "Z", "P6", "P7", "P5", "P4", "P3", "P2", "P1", "N", "I",
-  "W", "C", "C1", "C2", "B", "F", "F2", "H", "AS", "J", "R", null
+  "I2", "W", "C", "C1", "C2", "B", "F", "F2", "H", "AS", "J", "R", null
   };
 
   /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -1322,8 +1320,8 @@ public class AnalizadorAsc
   {
         33,     0,    -1,    34,    -1,    35,    34,    -1,    35,    -1,
       40,    36,    -1,    39,    -1,    37,    -1,     3,    -1,    39,
-      -1,    -1,     4,    -1,    41,    -1,    59,    -1,    53,    -1,
-      54,    -1,    45,    -1,    42,    31,    -1,    13,    -1,    44,
+      -1,    -1,     4,    -1,    41,    -1,    60,    -1,    53,    -1,
+      55,    -1,    45,    -1,    42,    31,    -1,    13,    -1,    44,
       -1,    -1,    47,    -1,    47,    27,    44,    -1,    31,    18,
       52,    -1,    46,    -1,    46,    20,    47,    -1,    47,    -1,
       47,    17,    48,    -1,    48,    -1,    48,    16,    49,    -1,
@@ -1332,14 +1330,14 @@ public class AnalizadorAsc
       45,    22,    -1,    31,    -1,    14,    23,    45,    24,    -1,
       12,    23,    45,    24,    -1,    29,    -1,    30,    -1,    47,
       -1,     9,    10,    23,    45,    24,    -1,     5,    23,    45,
-      24,    38,    40,    -1,     6,    23,    45,    24,    38,    25,
-      38,    55,    26,    -1,     7,    56,    28,    34,    38,    58,
-      57,    -1,    45,    -1,    55,    -1,    -1,     8,    38,    -1,
-      -1,    60,    61,    38,    25,    38,    62,    26,    -1,    11,
-      -1,    31,    23,    63,    -1,    31,    23,    24,    -1,    34,
-      64,    38,    -1,    34,    38,    -1,    64,    38,    -1,    31,
-      24,    -1,    31,    27,    63,    -1,    15,    45,    -1,    15,
-      -1
+      24,    38,    54,    -1,    40,    -1,    65,    -1,     6,    23,
+      45,    24,    38,    25,    38,    56,    26,    -1,     7,    57,
+      28,    34,    38,    59,    58,    -1,    45,    -1,    56,    -1,
+      -1,     8,    38,    -1,    -1,    61,    62,    38,    25,    38,
+      63,    26,    -1,    11,    -1,    31,    23,    64,    -1,    31,
+      23,    24,    -1,    34,    65,    38,    -1,    34,    38,    -1,
+      65,    38,    -1,    31,    24,    -1,    31,    27,    64,    -1,
+      15,    45,    -1,    15,    -1
   };
 
   /* YYPRHS[YYN] -- Index of the first RHS symbol of rule number YYN in
@@ -1350,9 +1348,9 @@ public class AnalizadorAsc
       21,    22,    24,    26,    28,    30,    32,    34,    37,    39,
       41,    42,    44,    48,    52,    54,    58,    60,    64,    66,
       70,    72,    75,    77,    81,    83,    88,    93,    95,   100,
-     105,   107,   109,   111,   117,   124,   134,   142,   144,   146,
-     147,   150,   151,   159,   161,   165,   169,   173,   176,   179,
-     182,   186,   189
+     105,   107,   109,   111,   117,   124,   126,   128,   138,   146,
+     148,   150,   151,   154,   155,   163,   165,   169,   173,   177,
+     180,   183,   186,   190,   193
   };
 
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
@@ -1362,9 +1360,9 @@ public class AnalizadorAsc
       47,    50,    53,    54,    55,    56,    57,    60,    63,    66,
       67,    70,    71,    74,    82,    85,    89,    92,    96,    99,
      103,   106,   110,   113,   114,   117,   121,   128,   137,   140,
-     143,   144,   147,   148,   154,   159,   165,   168,   173,   174,
-     177,   178,   181,   186,   192,   200,   206,   207,   208,   211,
-     212,   215,   218
+     143,   144,   147,   148,   154,   159,   160,   163,   169,   172,
+     177,   178,   181,   182,   185,   190,   196,   204,   210,   211,
+     212,   215,   216,   219,   222
   };
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
@@ -1428,8 +1426,8 @@ public class AnalizadorAsc
       return yyundef_token_;
   }
 
-  private static final int yylast_ = 140;
-  private static final int yynnts_ = 33;
+  private static final int yylast_ = 139;
+  private static final int yynnts_ = 34;
   private static final int yyempty_ = -2;
   private static final int yyfinal_ = 39;
   private static final int yyterror_ = 1;
@@ -1445,7 +1443,7 @@ public class AnalizadorAsc
 
 
 /* Line 931 of lalr1.java  */
-/* Line 222 of "entradaBison"  */
+/* Line 226 of "entradaBison"  */
 
 
 

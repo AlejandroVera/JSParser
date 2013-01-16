@@ -151,9 +151,13 @@ N : P5 { $$.tipo = $1.tipo; }
 	$$.tipo = TipoParam.VECTOR; }
 ;
 
-I : IF PARENTESISAB P6 PARENTESISCE L S { 
+I : IF PARENTESISAB P6 PARENTESISCE L I2 { 
 	if($3.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Condición debe ser entera",false); }
+;
+
+I2 : S
+|R
 ;
 
 W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L C LLAVECE { 
