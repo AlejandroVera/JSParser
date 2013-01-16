@@ -121,7 +121,7 @@ public class GestorTS {
 			if(tipo == TipoParam.ENTERO)
 				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
 			else
-				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
+				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.VECTOR));
 		}
 		
 		return resultado;

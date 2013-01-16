@@ -22,7 +22,7 @@ public class Error {
 				+ nCaracter + "):\n"+ linea +"\n";
 	}
 	public String toStringSin() {
-		return tipo + " (Linea "+ nLinea + "\n En la linea: "+ linea +"\n";
+		return tipo + " (Linea "+ nLinea +")" + "\n En la linea: "+ linea +"\n";
 	}
 	
 

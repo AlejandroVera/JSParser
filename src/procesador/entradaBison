@@ -82,20 +82,21 @@ P6 : IDENTIFICADOR OPASIGNACION N {
 	if($3.tipo != TipoParam.ENTERO && $3.tipo != TipoParam.VECTOR ) 
 		Procesador.errores.addError("Tipo incompatible",false);
 	if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION)
-		Procesador.errores.addError("Error en la asignacion: tipo incompatible",false); 
+		Procesador.errores.addError("Error en la asignacion: tipo incompatible",false);
 	$1.tipo = $3.tipo;
 	EntradaTS ent;
 	if((ent = Procesador.tablaSimbolos.setTipoVariable($1.nombre, $1.tipo)) != null)
 		$1.entrada = ent;
 	$$.tipo = $1.tipo; }
+	
 |   IDENTIFICADOR CORCHETEAB P6 CORCHETECE OPASIGNACION N { 
+	
 	if($6.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Tipo incompatible",false);
 	if($3.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("El indice debe ser de tipo entero",false);	
 	if($1.tipo != TipoParam.VECTOR)
 		Procesador.errores.addError("Error en la asignacion: accediendo a indice de un elemento no vector",false); 
-	EntradaTS ent;
 	$$.tipo = TipoParam.ENTERO; }
 | P7 { $$.tipo = $1.tipo; }
 ;
@@ -166,7 +167,8 @@ N : P5 { $$.tipo = $1.tipo; }
 | NEW ARRAY PARENTESISAB P6 PARENTESISCE { 
 	if($4.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Tamaño de vector debe ser entero",false); 
-	$$.tipo = TipoParam.VECTOR; }
+	$$.tipo = TipoParam.VECTOR;	
+	}
 ;
 
 I : IF PARENTESISAB P6 PARENTESISCE L I2 { 
