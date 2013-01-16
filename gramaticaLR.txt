@@ -1,7 +1,11 @@
 //// Gramatica LR(1) del analizador Sintactico
 Axioma = $accept
 
-NoTerminales = { X A S D V F I I2 W E Z P L N C C1 B H R S1 Q Q2 T P1 P2 P3 P4 P5 P6 P7}
+NoTerminales = { X A S D V F I I2 
+				W E Z P L N C C1 C2 
+				B H R S1 Q Q2 T 
+				P1 P2 P3 P4 P5 P6 P7
+				H AS F2 J}
 
 Terminales = { \n var id ; , = ( ) + > ++ [ ] { } new
 				Array if switch case break function
@@ -81,12 +85,32 @@ Producciones = {
 	
 	W -> switch ( P6 ) L { C L }
 	
-	C -> L case C1 : A L B
+	C -> L case C1 : A L B C2
 	
-	F -> function id ( H ) L { A R L }
+	C1 -> P6
 	
-	R -> return E
+	C2 -> C
+	C2 -> lambda
+	
+	B -> break L
+	B -> lambda
+	
+	F -> F2 H L { L AS }
+	
+	F2 -> function
+	
+	H -> id ( J
+    H -> id ( )
+    
+    AS -> A R L
+    AS -> A L
+    AS -> R L
+    
+    J -> id )
+    J -> id , J
+    
+	
+	R -> return P6
 	R -> return
-	R -> lambda
-	
+		
 }

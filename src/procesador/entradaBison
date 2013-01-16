@@ -33,7 +33,6 @@ A : S1 A
 ;
 
 S1 : S D
-/*| S Con esto funciona a pesar de los conflictos!!*/
 ;
 
 D : Q
