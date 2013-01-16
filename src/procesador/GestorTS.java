@@ -32,7 +32,7 @@ public class GestorTS {
 			añadir(s, true, TipoEntradaTS.RESERVADA);
 
 
-		String homeUsuario = System.getProperty("user.home");
+		String homeUsuario = System.getProperty("user.dir");
 		String barraSistema = System.getProperty("file.separator");
 		archivo = new File(homeUsuario+barraSistema+"tablaSimbolos.txt");
 		try{

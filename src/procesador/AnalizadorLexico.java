@@ -191,7 +191,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		this.matriz = new Matriz();
 		this.anterior=new Token(AnalizadorAsc.OPRELACIONAL,">");//evita nullpointerexception
 
-		String homeUsuario = System.getProperty("user.home");
+		String homeUsuario = System.getProperty("user.dir");
 		String barraSistema = System.getProperty("file.separator");
 		archivo = new File(homeUsuario+barraSistema+"tokens.txt");
 		archivoParse= new File(homeUsuario+barraSistema+"parse.txt");
