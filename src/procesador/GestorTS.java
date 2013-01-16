@@ -118,7 +118,6 @@ public class GestorTS {
 		EntradaTS resultado = null;
 		
 		if(tSActual.borrar(elemento)){
-			System.out.println("CAmbiando tipo...");
 			if(tipo == TipoParam.ENTERO)
 				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
 			else
