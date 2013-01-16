@@ -100,14 +100,14 @@ public class GestorTS {
 		TS aux=this.matrizBloques.pop().getTS();
 		Collection<EntradaTS> entradas = aux.getEntradas();
 		Iterator<EntradaTS> it = entradas.iterator();
-
-		System.out.println("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++");
 		try{
+			FileWriter TextOut;
+			TextOut = new FileWriter(archivo, true);
+			TextOut.write("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++"+'\n');
+
 			while(it.hasNext()){
 				EntradaTS ets = it.next();
 
-				FileWriter TextOut;
-				TextOut = new FileWriter(archivo, true);
 				TextOut.write("TIPO: "+ets.getTipoEntrada()+"   ");
 				TextOut.write("NOMBRE "+ets.getNombre()+"   ");
 				if(ets instanceof Funcion){
@@ -117,9 +117,10 @@ public class GestorTS {
 					TextOut.write("TIPO VARIABLE: "+((Variable)ets).getTipo()+"   ");
 				}
 				TextOut.write('\n');
-				TextOut.close();
-			}
 
+			}
+			TextOut.write("+++++++++++++++++++++++++++++++++++FIN TABLA+++++++++++++++++++++++++++++++++"+'\n');
+			TextOut.close();
 		}catch(Exception e){e.printStackTrace();}
 	}
 
