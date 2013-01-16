@@ -1,6 +1,5 @@
 package procesador;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Stack;
@@ -44,7 +43,7 @@ public class GestorTS {
 		
 		EntradaTS entrada;
 		switch(tipo){
-			case FUNCION: entrada = (EntradaTS) new Funcion(elemento); System.out.println("AÑADIENDO FUNCION "+entrada);break;
+			case FUNCION: entrada = (EntradaTS) new Funcion(elemento); break;
 			case RESERVADA: entrada = (EntradaTS) new Reservada(elemento); break;
 			case VARIABLE: entrada = (EntradaTS) new Variable(elemento); break;
 			default: entrada = (EntradaTS) new EntradaTS(elemento);

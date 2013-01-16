@@ -3,7 +3,7 @@ package procesador;
 public class Reservada extends EntradaTS {
 
 	public Reservada(String nombre) {
-		super(nombre.toLowerCase());
+		super(nombre);
 		this.tipoEntrada = TipoEntradaTS.RESERVADA;
 	}
 
