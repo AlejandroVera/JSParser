@@ -57,7 +57,8 @@ S : V
 | P6
 ;
 
-V : T IDENTIFICADOR { Procesador.lexico.setEstadoDecV(false); }
+V : T IDENTIFICADOR { 
+	Procesador.lexico.setEstadoDecV(false);}
 ;
 
 T : VAR { Procesador.lexico.setEstadoDecV(true); }
@@ -67,8 +68,14 @@ P : Z { $$.nParam = $1.nParam; }
 | { $$.nParam = 0; }
 ;
 
-Z : P5 { $$.nParam = 1; }
-| P5 COMA Z { $$.nParam = $3.nParam + 1; }
+Z : P5 { 
+	$$.nParam = 1;
+	if($1.tipo != TipoParam.ENTERO)
+		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false); }
+| P5 COMA Z { 
+	$$.nParam = $3.nParam + 1;
+	if($1.tipo != TipoParam.ENTERO)
+		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false); }
 ;
 
 P6 : IDENTIFICADOR OPASIGNACION N { 
@@ -77,7 +84,9 @@ P6 : IDENTIFICADOR OPASIGNACION N {
 	if($1.tipo == TipoParam.VECTOR || $1.tipo == TipoParam.FUNCION)
 		Procesador.errores.addError("Error en la asignacion: tipo incompatible",false); 
 	$1.tipo = $3.tipo;
-	Procesador.tablaSimbolos.setTipoVariable($1.nombre, $1.tipo);
+	EntradaTS ent;
+	if((ent = Procesador.tablaSimbolos.setTipoVariable($1.nombre, $1.tipo)) != null)
+		$1.entrada = ent;
 	$$.tipo = $1.tipo; }
 | P7 { $$.tipo = $1.tipo; }
 ;
@@ -193,14 +202,23 @@ F2 : FUNCTION {
 	Procesador.lexico.setEstadoDecF(1); }
 ;
 
-H : IDENTIFICADOR PARENTESISAB J  { 
+H : IDENTIFICADOR PARENTESISAB J { 
 	
 	if(Procesador.tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
 		Procesador.errores.addError("Funcion ya definida",false); 
 	
-	Procesador.tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
+	if($1.entrada == null)
+		$1.entrada = Procesador.tablaSimbolos.añadir($1.nombre,true,EntradaTS.TipoEntradaTS.FUNCION);
+	
+	((Funcion)$1.entrada).addFuncion($3.nParam);
+	
 	Procesador.tablaSimbolos.crearTabla(); 
-	Procesador.lexico.setEstadoDecF(2); }
+	Procesador.lexico.setEstadoDecF(2);
+	for (String s : $3.listaP){
+		Procesador.tablaSimbolos.añadir(s,false,EntradaTS.TipoEntradaTS.VARIABLE);
+		Procesador.tablaSimbolos.setTipoVariable(s, TipoParam.ENTERO);
+	}
+	}
 | IDENTIFICADOR PARENTESISAB PARENTESISCE  {
 	Procesador.tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 	Procesador.tablaSimbolos.crearTabla();
@@ -212,8 +230,14 @@ AS : A R L
 | R L
 ;
 
-J : IDENTIFICADOR PARENTESISCE { $$.nParam=1; }
-| IDENTIFICADOR COMA J { $$.nParam=$3.nParam+1; }
+J : IDENTIFICADOR PARENTESISCE { 
+	$$.nParam=1; 
+	$$.listaP.add($1.nombre); }
+| IDENTIFICADOR COMA J {
+	$$.nParam=$3.nParam+1;
+	$1.tipo = TipoParam.ENTERO; 
+	$3.listaP.add($1.nombre);
+	$$.listaP = $3.listaP; }
 ;
 
 R : RETURN P6 { 

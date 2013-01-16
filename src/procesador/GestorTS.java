@@ -44,7 +44,7 @@ public class GestorTS {
 		
 		EntradaTS entrada;
 		switch(tipo){
-			case FUNCION: entrada = (EntradaTS) new Funcion(elemento); break;
+			case FUNCION: entrada = (EntradaTS) new Funcion(elemento); System.out.println("AÑADIENDO FUNCION "+entrada);break;
 			case RESERVADA: entrada = (EntradaTS) new Reservada(elemento); break;
 			case VARIABLE: entrada = (EntradaTS) new Variable(elemento); break;
 			default: entrada = (EntradaTS) new EntradaTS(elemento);
@@ -118,6 +118,7 @@ public class GestorTS {
 		EntradaTS resultado = null;
 		
 		if(tSActual.borrar(elemento)){
+			System.out.println("CAmbiando tipo...");
 			if(tipo == TipoParam.ENTERO)
 				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
 			else

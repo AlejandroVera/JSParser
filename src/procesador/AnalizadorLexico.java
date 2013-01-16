@@ -448,10 +448,13 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				}
 			}
 			else{//NO está
-				if(getEstadoDecF() != 1)
-					token = new Token(AnalizadorAsc.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
-				else //Estamos en la declaración del nombre y parametros de la funcion
-					token = new Token(AnalizadorAsc.IDENTIFICADOR, null);
+				if(getEstadoDecF() != 1){
+					if(getEstadoDecV())
+						token = new Token(AnalizadorAsc.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, false));
+					else
+						token = new Token(AnalizadorAsc.IDENTIFICADOR, Procesador.getGestorTS().añadir(cadena, true));
+				}else //Estamos en la declaración del nombre y parametros de la funcion
+					token = new Token(AnalizadorAsc.IDENTIFICADOR, cadena);
 			}
 			cadena="";
 		}
@@ -540,8 +543,11 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		  yylval = new Parametros();
 		  int tokenid = t.getTipo();
 		  
+		  if(t.getValor() instanceof String)
+			  yylval.nombre = (String) t.getValor();
+		  
 		  if(tokenid == AnalizadorAsc.IDENTIFICADOR){
-			  if(t.getValor() != null){
+			  if(t.getValor() != null && !(t.getValor() instanceof String)){
 				  EntradaTS entrada = (EntradaTS) t.getValor();
 				  yylval.entrada = entrada;
 				  yylval.nombre = entrada.getNombre();
