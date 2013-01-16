@@ -488,10 +488,12 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	}
 	
 	public void setEstadoDecV(boolean v){
+		System.out.println("Cambiamos estado de declaracion de var a "+v);
 		this.estadoDecV = v;
 	}
 	
 	public void setEstadoDecF(int v){
+		System.out.println("Cambiamos estado de declaracion de funcion a "+v);
 		this.estadoDecF = v;
 	}
 	

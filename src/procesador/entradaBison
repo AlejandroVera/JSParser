@@ -178,7 +178,9 @@ B : BREAK L
 | 
 ;
 
-F2 : FUNCTION { Procesador.lexico.setEstadoDecF(1); }
+F2 : FUNCTION { if(Procesador.lexico.getEstadoDecF() != 0) 
+				Procesador.errores.addError("No se admite la declaración anidada de funciones.",false);
+				Procesador.lexico.setEstadoDecF(1); }
 ;
 
 F : F2 H L LLAVEAB L AS LLAVECE { 
@@ -191,10 +193,8 @@ AS : A R L
 | R L
 ;
 
-H : IDENTIFICADOR PARENTESISAB J  { 
-	if(Procesador.lexico.getEstadoDecF() != 0) 
-		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
-	else if(Procesador.tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
+H : IDENTIFICADOR PARENTESISAB J  {	 
+	 if(Procesador.tablaSimbolos.buscarFuncionTS($1.nombre, $3.nParam))
 		Procesador.errores.addError("Funcion ya definida",false); 
 	
 	Procesador.tablaSimbolos.añadir($1.nombre,false,EntradaTS.TipoEntradaTS.FUNCION);

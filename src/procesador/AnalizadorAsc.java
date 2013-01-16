@@ -662,7 +662,9 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 181 of "entradaBison"  */
-    { Procesador.lexico.setEstadoDecF(1); };
+    { if(Procesador.lexico.getEstadoDecF() != 0) 
+				Procesador.errores.addError("No se admite la declaración anidada de funciones.",false);
+				Procesador.lexico.setEstadoDecF(1); };
   break;
     
 
@@ -670,7 +672,7 @@ public class AnalizadorAsc
   if (yyn == 53)
     
 /* Line 351 of lalr1.java  */
-/* Line 184 of "entradaBison"  */
+/* Line 186 of "entradaBison"  */
     { 
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();};
@@ -681,11 +683,9 @@ public class AnalizadorAsc
   if (yyn == 57)
     
 /* Line 351 of lalr1.java  */
-/* Line 194 of "entradaBison"  */
-    { 
-	if(Procesador.lexico.getEstadoDecF() != 0) 
-		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
-	else if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
+/* Line 196 of "entradaBison"  */
+    {	 
+	 if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
 		Procesador.errores.addError("Funcion ya definida",false); 
 	
 	Procesador.tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
@@ -1360,7 +1360,7 @@ public class AnalizadorAsc
       67,    70,    71,    74,    82,    85,    89,    92,    96,    99,
      103,   106,   110,   113,   114,   117,   121,   128,   137,   140,
      143,   144,   147,   148,   154,   159,   165,   168,   173,   174,
-     177,   178,   181,   184,   189,   190,   191,   194,   202,   208,
+     177,   178,   181,   186,   191,   192,   193,   196,   202,   208,
      209,   212,   215
   };
 
