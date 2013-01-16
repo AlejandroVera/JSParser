@@ -17,5 +17,6 @@ function ola(a, b){
 }
 
 ola(1,2)
+/* Probamos a llamar a una variable global que se ha declarado dentro de una funcion */ 
 w=2;
 
