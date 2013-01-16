@@ -250,7 +250,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 		//*************estado 7********************
 		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
-		tr7.add(new Transicion("/",  0, "casinada"));
+		tr7.add(new Transicion("/",  0, "nada"));
 		tr7.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr7, 7);
 		
@@ -303,11 +303,6 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="nada"){
 			puntero++;
-			nCaracterActual++;
-		}
-		else if(accion=="casinada"){
-			if(buffer.get(puntero+1)==10)
-				puntero++;
 			nCaracterActual++;
 		}
 		else if(accion=="a1"){
