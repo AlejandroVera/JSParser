@@ -66,29 +66,34 @@ Gramática
 
    43 I: IF PARENTESISAB P6 PARENTESISCE L S
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L C LLAVECE
 
-   45 C: L CASE P6 DOSPUNTOS A D B
+   45 C: CASE C1 DOSPUNTOS A L B C2
 
-   46 B: BREAK
-   47  | /* vacío */
+   46 C1: P6
 
-   48 F2: FUNCTION
+   47 C2: C
+   48   | /* vacío */
 
-   49 F: F2 H L LLAVEAB L AS LLAVECE
+   49 B: BREAK L
+   50  | /* vacío */
 
-   50 AS: A R L
-   51   | A L
-   52   | R L
+   51 F2: FUNCTION
 
-   53 H: IDENTIFICADOR PARENTESISAB J
-   54  | IDENTIFICADOR PARENTESISAB PARENTESISCE
+   52 F: F2 H L LLAVEAB L AS LLAVECE
 
-   55 J: IDENTIFICADOR PARENTESISCE
-   56  | IDENTIFICADOR COMA J
+   53 AS: A R L
+   54   | A L
+   55   | R L
 
-   57 R: RETURN P6
-   58  | RETURN
+   56 H: IDENTIFICADOR PARENTESISAB J
+   57  | IDENTIFICADOR PARENTESISAB PARENTESISCE
+
+   58 J: IDENTIFICADOR PARENTESISCE
+   59  | IDENTIFICADOR COMA J
+
+   60 R: RETURN P6
+   61  | RETURN
 
 
 Terminales con las reglas donde aparecen
@@ -100,14 +105,14 @@ NEWLINE (259) 10
 IF (260) 43
 SWITCH (261) 44
 CASE (262) 45
-BREAK (263) 46
+BREAK (263) 49
 NEW (264) 42
 ARRAY (265) 42
-FUNCTION (266) 48
+FUNCTION (266) 51
 DOCWRITE (267) 38
 VAR (268) 17
 PROMPT (269) 37
-RETURN (270) 57 58
+RETURN (270) 60 61
 OPARITMETICO (271) 28
 OPRELACIONAL (272) 26
 OPASIGNACION (273) 22
@@ -115,15 +120,15 @@ OPESPECIAL (274) 30
 OPLOGICO (275) 24
 CORCHETEAB (276) 35
 CORCHETECE (277) 35
-PARENTESISAB (278) 32 34 37 38 42 43 44 53 54
-PARENTESISCE (279) 32 34 37 38 42 43 44 54 55
-LLAVEAB (280) 44 49
-LLAVECE (281) 44 49
-COMA (282) 21 56
+PARENTESISAB (278) 32 34 37 38 42 43 44 56 57
+PARENTESISCE (279) 32 34 37 38 42 43 44 57 58
+LLAVEAB (280) 44 52
+LLAVECE (281) 44 52
+COMA (282) 21 59
 DOSPUNTOS (283) 45
 ENTERO (284) 39
 CADENA (285) 40
-IDENTIFICADOR (286) 16 22 34 35 36 53 54 55 56
+IDENTIFICADOR (286) 16 22 34 35 36 56 57 58 59
 
 
 No terminales con las reglas donde aparecen
@@ -133,15 +138,15 @@ $accept (32)
 X (33)
     en la izquierda: 1, en la derecha: 0
 A (34)
-    en la izquierda: 2 3, en la derecha: 1 2 45 50 51
+    en la izquierda: 2 3, en la derecha: 1 2 45 53 54
 S1 (35)
     en la izquierda: 4, en la derecha: 2 3
 D (36)
-    en la izquierda: 5 6, en la derecha: 4 45
+    en la izquierda: 5 6, en la derecha: 4
 Q2 (37)
     en la izquierda: 7, en la derecha: 6
 L (38)
-    en la izquierda: 8 9, en la derecha: 43 44 45 49 50 51 52
+    en la izquierda: 8 9, en la derecha: 43 44 45 49 52 53 54 55
 Q (39)
     en la izquierda: 10, en la derecha: 5 8
 S (40)
@@ -156,7 +161,7 @@ Z (44)
     en la izquierda: 20 21, en la derecha: 18 21
 P6 (45)
     en la izquierda: 22 23, en la derecha: 15 32 35 37 38 42 43 44
-    45 57
+    46 60
 P7 (46)
     en la izquierda: 24 25, en la derecha: 23 24
 P5 (47)
@@ -176,21 +181,25 @@ I (53)
 W (54)
     en la izquierda: 44, en la derecha: 14
 C (55)
-    en la izquierda: 45, en la derecha: 44
-B (56)
-    en la izquierda: 46 47, en la derecha: 45
-F2 (57)
-    en la izquierda: 48, en la derecha: 49
-F (58)
-    en la izquierda: 49, en la derecha: 12
-AS (59)
-    en la izquierda: 50 51 52, en la derecha: 49
-H (60)
-    en la izquierda: 53 54, en la derecha: 49
-J (61)
-    en la izquierda: 55 56, en la derecha: 53 56
-R (62)
-    en la izquierda: 57 58, en la derecha: 50 52
+    en la izquierda: 45, en la derecha: 44 47
+C1 (56)
+    en la izquierda: 46, en la derecha: 45
+C2 (57)
+    en la izquierda: 47 48, en la derecha: 45
+B (58)
+    en la izquierda: 49 50, en la derecha: 45
+F2 (59)
+    en la izquierda: 51, en la derecha: 52
+F (60)
+    en la izquierda: 52, en la derecha: 12
+AS (61)
+    en la izquierda: 53 54 55, en la derecha: 52
+H (62)
+    en la izquierda: 56 57, en la derecha: 52
+J (63)
+    en la izquierda: 58 59, en la derecha: 56 59
+R (64)
+    en la izquierda: 60 61, en la derecha: 53 55
 
 
 estado 0
@@ -237,16 +246,16 @@ estado 1
 
 estado 2
 
-   44 W: SWITCH . PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE
+   44 W: SWITCH . PARENTESISAB P6 PARENTESISCE L LLAVEAB L C LLAVECE
 
     PARENTESISAB  desplazar e ir al estado 30
 
 
 estado 3
 
-   48 F2: FUNCTION .
+   51 F2: FUNCTION .
 
-    $default  reduce usando la regla 48 (F2)
+    $default  reduce usando la regla 51 (F2)
 
 
 estado 4
@@ -485,7 +494,7 @@ estado 26
 
 estado 27
 
-   49 F: F2 . H L LLAVEAB L AS LLAVECE
+   52 F: F2 . H L LLAVEAB L AS LLAVECE
 
     IDENTIFICADOR  desplazar e ir al estado 50
 
@@ -522,7 +531,7 @@ estado 29
 
 estado 30
 
-   44 W: SWITCH PARENTESISAB . P6 PARENTESISCE L LLAVEAB C L LLAVECE
+   44 W: SWITCH PARENTESISAB . P6 PARENTESISCE L LLAVEAB L C LLAVECE
 
     DOCWRITE       desplazar e ir al estado 4
     PROMPT         desplazar e ir al estado 6
@@ -786,15 +795,15 @@ estado 49
 
 estado 50
 
-   53 H: IDENTIFICADOR . PARENTESISAB J
-   54  | IDENTIFICADOR . PARENTESISAB PARENTESISCE
+   56 H: IDENTIFICADOR . PARENTESISAB J
+   57  | IDENTIFICADOR . PARENTESISAB PARENTESISCE
 
     PARENTESISAB  desplazar e ir al estado 67
 
 
 estado 51
 
-   49 F: F2 H . L LLAVEAB L AS LLAVECE
+   52 F: F2 H . L LLAVEAB L AS LLAVECE
 
     NEWLINE  desplazar e ir al estado 42
 
@@ -813,7 +822,7 @@ estado 52
 
 estado 53
 
-   44 W: SWITCH PARENTESISAB P6 . PARENTESISCE L LLAVEAB C L LLAVECE
+   44 W: SWITCH PARENTESISAB P6 . PARENTESISCE L LLAVEAB L C LLAVECE
 
     PARENTESISCE  desplazar e ir al estado 71
 
@@ -925,8 +934,8 @@ estado 66
 
 estado 67
 
-   53 H: IDENTIFICADOR PARENTESISAB . J
-   54  | IDENTIFICADOR PARENTESISAB . PARENTESISCE
+   56 H: IDENTIFICADOR PARENTESISAB . J
+   57  | IDENTIFICADOR PARENTESISAB . PARENTESISCE
 
     PARENTESISCE   desplazar e ir al estado 78
     IDENTIFICADOR  desplazar e ir al estado 79
@@ -936,7 +945,7 @@ estado 67
 
 estado 68
 
-   49 F: F2 H L . LLAVEAB L AS LLAVECE
+   52 F: F2 H L . LLAVEAB L AS LLAVECE
 
     LLAVEAB  desplazar e ir al estado 81
 
@@ -962,7 +971,7 @@ estado 70
 
 estado 71
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE . L LLAVEAB C L LLAVECE
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE . L LLAVEAB L C LLAVECE
 
     NEWLINE  desplazar e ir al estado 42
 
@@ -1029,15 +1038,15 @@ estado 77
 
 estado 78
 
-   54 H: IDENTIFICADOR PARENTESISAB PARENTESISCE .
+   57 H: IDENTIFICADOR PARENTESISAB PARENTESISCE .
 
-    $default  reduce usando la regla 54 (H)
+    $default  reduce usando la regla 57 (H)
 
 
 estado 79
 
-   55 J: IDENTIFICADOR . PARENTESISCE
-   56  | IDENTIFICADOR . COMA J
+   58 J: IDENTIFICADOR . PARENTESISCE
+   59  | IDENTIFICADOR . COMA J
 
     PARENTESISCE  desplazar e ir al estado 86
     COMA          desplazar e ir al estado 87
@@ -1045,14 +1054,14 @@ estado 79
 
 estado 80
 
-   53 H: IDENTIFICADOR PARENTESISAB J .
+   56 H: IDENTIFICADOR PARENTESISAB J .
 
-    $default  reduce usando la regla 53 (H)
+    $default  reduce usando la regla 56 (H)
 
 
 estado 81
 
-   49 F: F2 H L LLAVEAB . L AS LLAVECE
+   52 F: F2 H L LLAVEAB . L AS LLAVECE
 
     NEWLINE  desplazar e ir al estado 42
 
@@ -1096,7 +1105,7 @@ estado 82
 
 estado 83
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L . LLAVEAB C L LLAVECE
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L . LLAVEAB L C LLAVECE
 
     LLAVEAB  desplazar e ir al estado 90
 
@@ -1131,14 +1140,14 @@ estado 85
 
 estado 86
 
-   55 J: IDENTIFICADOR PARENTESISCE .
+   58 J: IDENTIFICADOR PARENTESISCE .
 
-    $default  reduce usando la regla 55 (J)
+    $default  reduce usando la regla 58 (J)
 
 
 estado 87
 
-   56 J: IDENTIFICADOR COMA . J
+   59 J: IDENTIFICADOR COMA . J
 
     IDENTIFICADOR  desplazar e ir al estado 79
 
@@ -1147,7 +1156,7 @@ estado 87
 
 estado 88
 
-   49 F: F2 H L LLAVEAB L . AS LLAVECE
+   52 F: F2 H L LLAVEAB L . AS LLAVECE
 
     IF             desplazar e ir al estado 1
     SWITCH         desplazar e ir al estado 2
@@ -1191,7 +1200,7 @@ estado 89
 
 estado 90
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB . C L LLAVECE
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB . L C LLAVECE
 
     NEWLINE  desplazar e ir al estado 42
 
@@ -1199,27 +1208,26 @@ estado 90
 
     L  ir al estado 97
     Q  ir al estado 69
-    C  ir al estado 98
 
 
 estado 91
 
    42 N: NEW ARRAY PARENTESISAB P6 . PARENTESISCE
 
-    PARENTESISCE  desplazar e ir al estado 99
+    PARENTESISCE  desplazar e ir al estado 98
 
 
 estado 92
 
-   56 J: IDENTIFICADOR COMA J .
+   59 J: IDENTIFICADOR COMA J .
 
-    $default  reduce usando la regla 56 (J)
+    $default  reduce usando la regla 59 (J)
 
 
 estado 93
 
-   57 R: RETURN . P6
-   58  | RETURN .
+   60 R: RETURN . P6
+   61  | RETURN .
 
     DOCWRITE       desplazar e ir al estado 4
     PROMPT         desplazar e ir al estado 6
@@ -1229,9 +1237,9 @@ estado 93
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    $default  reduce usando la regla 58 (R)
+    $default  reduce usando la regla 61 (R)
 
-    P6  ir al estado 100
+    P6  ir al estado 99
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -1242,48 +1250,71 @@ estado 93
 
 estado 94
 
-   50 AS: A . R L
-   51   | A . L
+   53 AS: A . R L
+   54   | A . L
 
     NEWLINE  desplazar e ir al estado 42
     RETURN   desplazar e ir al estado 93
 
     $default  reduce usando la regla 9 (L)
 
-    L  ir al estado 101
+    L  ir al estado 100
     Q  ir al estado 69
-    R  ir al estado 102
+    R  ir al estado 101
 
 
 estado 95
 
-   49 F: F2 H L LLAVEAB L AS . LLAVECE
+   52 F: F2 H L LLAVEAB L AS . LLAVECE
 
-    LLAVECE  desplazar e ir al estado 103
+    LLAVECE  desplazar e ir al estado 102
 
 
 estado 96
 
-   52 AS: R . L
+   55 AS: R . L
 
     NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
-    L  ir al estado 104
+    L  ir al estado 103
     Q  ir al estado 69
 
 
 estado 97
 
-   45 C: L . CASE P6 DOSPUNTOS A D B
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L . C LLAVECE
 
-    CASE  desplazar e ir al estado 105
+    CASE  desplazar e ir al estado 104
+
+    C  ir al estado 105
 
 
 estado 98
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C . L LLAVECE
+   42 N: NEW ARRAY PARENTESISAB P6 PARENTESISCE .
+
+    $default  reduce usando la regla 42 (N)
+
+
+estado 99
+
+   60 R: RETURN P6 .
+
+    $default  reduce usando la regla 60 (R)
+
+
+estado 100
+
+   54 AS: A L .
+
+    $default  reduce usando la regla 54 (AS)
+
+
+estado 101
+
+   53 AS: A R . L
 
     NEWLINE  desplazar e ir al estado 42
 
@@ -1293,56 +1324,23 @@ estado 98
     Q  ir al estado 69
 
 
-estado 99
-
-   42 N: NEW ARRAY PARENTESISAB P6 PARENTESISCE .
-
-    $default  reduce usando la regla 42 (N)
-
-
-estado 100
-
-   57 R: RETURN P6 .
-
-    $default  reduce usando la regla 57 (R)
-
-
-estado 101
-
-   51 AS: A L .
-
-    $default  reduce usando la regla 51 (AS)
-
-
 estado 102
 
-   50 AS: A R . L
+   52 F: F2 H L LLAVEAB L AS LLAVECE .
 
-    NEWLINE  desplazar e ir al estado 42
-
-    $default  reduce usando la regla 9 (L)
-
-    L  ir al estado 107
-    Q  ir al estado 69
+    $default  reduce usando la regla 52 (F)
 
 
 estado 103
 
-   49 F: F2 H L LLAVEAB L AS LLAVECE .
+   55 AS: R L .
 
-    $default  reduce usando la regla 49 (F)
+    $default  reduce usando la regla 55 (AS)
 
 
 estado 104
 
-   52 AS: R L .
-
-    $default  reduce usando la regla 52 (AS)
-
-
-estado 105
-
-   45 C: L CASE . P6 DOSPUNTOS A D B
+   45 C: CASE . C1 DOSPUNTOS A L B C2
 
     DOCWRITE       desplazar e ir al estado 4
     PROMPT         desplazar e ir al estado 6
@@ -1352,46 +1350,54 @@ estado 105
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    P6  ir al estado 108
+    P6  ir al estado 107
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
+    C1  ir al estado 108
 
 
-estado 106
+estado 105
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L . LLAVECE
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L C . LLAVECE
 
     LLAVECE  desplazar e ir al estado 109
 
 
+estado 106
+
+   53 AS: A R L .
+
+    $default  reduce usando la regla 53 (AS)
+
+
 estado 107
 
-   50 AS: A R L .
+   46 C1: P6 .
 
-    $default  reduce usando la regla 50 (AS)
+    $default  reduce usando la regla 46 (C1)
 
 
 estado 108
 
-   45 C: L CASE P6 . DOSPUNTOS A D B
+   45 C: CASE C1 . DOSPUNTOS A L B C2
 
     DOSPUNTOS  desplazar e ir al estado 110
 
 
 estado 109
 
-   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE .
+   44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L C LLAVECE .
 
     $default  reduce usando la regla 44 (W)
 
 
 estado 110
 
-   45 C: L CASE P6 DOSPUNTOS . A D B
+   45 C: CASE C1 DOSPUNTOS . A L B C2
 
     IF             desplazar e ir al estado 1
     SWITCH         desplazar e ir al estado 2
@@ -1425,36 +1431,67 @@ estado 110
 
 estado 111
 
-   45 C: L CASE P6 DOSPUNTOS A . D B
+   45 C: CASE C1 DOSPUNTOS A . L B C2
 
-    PUNTOYCOMA  desplazar e ir al estado 41
-    NEWLINE     desplazar e ir al estado 42
+    NEWLINE  desplazar e ir al estado 42
 
-    D   ir al estado 112
-    Q2  ir al estado 44
-    Q   ir al estado 45
+    $default  reduce usando la regla 9 (L)
+
+    L  ir al estado 112
+    Q  ir al estado 69
 
 
 estado 112
 
-   45 C: L CASE P6 DOSPUNTOS A D . B
+   45 C: CASE C1 DOSPUNTOS A L . B C2
 
     BREAK  desplazar e ir al estado 113
 
-    $default  reduce usando la regla 47 (B)
+    $default  reduce usando la regla 50 (B)
 
     B  ir al estado 114
 
 
 estado 113
 
-   46 B: BREAK .
+   49 B: BREAK . L
 
-    $default  reduce usando la regla 46 (B)
+    NEWLINE  desplazar e ir al estado 42
+
+    $default  reduce usando la regla 9 (L)
+
+    L  ir al estado 115
+    Q  ir al estado 69
 
 
 estado 114
 
-   45 C: L CASE P6 DOSPUNTOS A D B .
+   45 C: CASE C1 DOSPUNTOS A L B . C2
+
+    CASE  desplazar e ir al estado 104
+
+    $default  reduce usando la regla 48 (C2)
+
+    C   ir al estado 116
+    C2  ir al estado 117
+
+
+estado 115
+
+   49 B: BREAK L .
+
+    $default  reduce usando la regla 49 (B)
+
+
+estado 116
+
+   47 C2: C .
+
+    $default  reduce usando la regla 47 (C2)
+
+
+estado 117
+
+   45 C: CASE C1 DOSPUNTOS A L B C2 .
 
     $default  reduce usando la regla 45 (C)

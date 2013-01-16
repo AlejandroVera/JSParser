@@ -1,5 +1,9 @@
 var bb
 var xx
+switch(2){
+case 1: xx = prompt("Cual ha salido?");
+case 2: xx = prompt("Estas seguro?"); break
+}
 function ola(a, b){
 var z
 z=3+(4+5)+6

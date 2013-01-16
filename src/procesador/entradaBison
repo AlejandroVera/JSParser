@@ -21,7 +21,7 @@ import java.io.IOException;
 %token <Integer> ENTERO
 %token <String> CADENA
 %token <Parametros> IDENTIFICADOR
-%type <Parametros> P P1 P2 P3 P4 P5 P6 P7 N H J Z 
+%type <Parametros> P P1 P2 P3 P4 P5 P6 P7 N H J Z C1
 
 /* Grammar follows */
 %%
@@ -39,6 +39,7 @@ S1 : S D
 D : Q
 | Q2
 ;
+
 
 Q2 : PUNTOYCOMA
 
@@ -155,18 +156,25 @@ I : IF PARENTESISAB P6 PARENTESISCE L S {
 		Procesador.errores.addError("Condición debe ser entera",false); }
 ;
 
-W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE { 
+W : SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB L C LLAVECE { 
 	if($3.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Variable del Switch debe ser entera",false); }
 ;
 
 
-C : L CASE P6 DOSPUNTOS A D B { 
-	if($3.tipo != TipoParam.ENTERO) 
+C : CASE C1 DOSPUNTOS A /* D */ L B C2
+;
+
+C1 : P6 { 
+	if($1.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Condición debe ser entera",false); }
 ;
 
-B : BREAK
+C2 : C
+|
+;
+
+B : BREAK L
 | 
 ;
 
