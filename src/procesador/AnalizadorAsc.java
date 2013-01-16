@@ -662,15 +662,9 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 181 of "entradaBison"  */
-<<<<<<< .mine
     { 
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();};
-=======
-    { if(Procesador.lexico.getEstadoDecF() != 0) 
-				Procesador.errores.addError("No se admite la declaración anidada de funciones.",false);
-				Procesador.lexico.setEstadoDecF(1); };
->>>>>>> .r76
   break;
     
 
@@ -690,16 +684,10 @@ public class AnalizadorAsc
   if (yyn == 54)
     
 /* Line 351 of lalr1.java  */
-<<<<<<< .mine
 /* Line 192 of "entradaBison"  */
     { 
 	
 	if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
-=======
-/* Line 196 of "entradaBison"  */
-    {	 
-	 if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
->>>>>>> .r76
 		Procesador.errores.addError("Funcion ya definida",false); 
 	
 	Procesador.tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
@@ -1375,13 +1363,8 @@ public class AnalizadorAsc
       67,    70,    71,    74,    82,    85,    89,    92,    96,    99,
      103,   106,   110,   113,   114,   117,   121,   128,   137,   140,
      143,   144,   147,   148,   154,   159,   165,   168,   173,   174,
-<<<<<<< .mine
      177,   178,   181,   186,   192,   200,   206,   207,   208,   211,
      212,   215,   218
-=======
-     177,   178,   181,   186,   191,   192,   193,   196,   202,   208,
-     209,   212,   215
->>>>>>> .r76
   };
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
