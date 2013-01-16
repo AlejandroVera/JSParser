@@ -9,11 +9,18 @@ import java.util.HashMap;
 public class TS {
 	
 	private HashMap<String, EntradaTS> lista;
+	private static int totalTS = 0;
+	private int numeroTS;
 	
 	public TS(){
 		this.lista = new HashMap<String, EntradaTS>();
+		this.numeroTS = ++totalTS;
 	}
 	
+	public int getNumeroTS() {
+		return numeroTS;
+	}
+
 	public Collection<EntradaTS> getEntradas(){
 		return this.lista.values();
 	}
