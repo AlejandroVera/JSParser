@@ -87,12 +87,12 @@ public class GestorTS {
 		System.out.println("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++");
 		while(it.hasNext()){
 			EntradaTS ets = it.next();
-			System.out.println("TIPO: "+ets.getTipoEntrada()+"   ");	
+			System.out.print("TIPO: "+ets.getTipoEntrada()+"   ");	
 			System.out.print("NOMBRE "+ets.getNombre()+"   ");	
 			if(ets instanceof Funcion){
 				System.out.print("NUMERO DE PARAMETROS: "+((Funcion)ets).getNumParmametros()+"   ");		
 			}
-			
+			System.out.println();
 		}
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}

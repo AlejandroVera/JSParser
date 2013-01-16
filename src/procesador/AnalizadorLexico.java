@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import procesador.EntradaTS.TipoEntradaTS;
 import procesador.Variable.TipoVariable;
