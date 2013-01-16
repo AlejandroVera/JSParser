@@ -1,5 +1,7 @@
 package procesador;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -11,6 +13,10 @@ public class TS {
 	
 	public TS(){
 		this.lista = new HashMap<String, EntradaTS>();
+	}
+	
+	public Collection<EntradaTS> getEntradas(){
+		return this.lista.values();
 	}
 	
 	/**

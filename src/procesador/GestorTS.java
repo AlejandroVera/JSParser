@@ -1,5 +1,8 @@
 package procesador;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Stack;
 
 import procesador.EntradaTS.TipoEntradaTS;
@@ -69,7 +72,7 @@ public class GestorTS {
 			return false;
 		
 		//Eliminamos la TS
-		this.matrizBloques.pop();
+		//this.matrizBloques.pop();
 		
 		//Actualizamos el puntero de la TS actual
 		if(this.matrizBloques.size() > 0)
@@ -83,8 +86,15 @@ public class GestorTS {
 	}
 	
 	private void imprimirTS() {
-		
-		
+		TS aux=this.matrizBloques.pop().getTS();
+		Collection<EntradaTS> entradas = aux.getEntradas();
+		Iterator<EntradaTS> it = entradas.iterator();
+		System.out.println("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++");
+		while(it.hasNext()){
+			EntradaTS ets = it.next();
+			System.out.println("TIPO: "+ets.getTipoEntrada()+" ");	
+		}
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}
 
 	/**
