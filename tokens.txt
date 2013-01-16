@@ -1,0 +1,113 @@
+< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : bb > 
+< PUNTOYCOMA , ; > 
+< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : xx > 
+< NEWLINE , NL > 
+< SWITCH ,  tipoEntrada: RESERVADA nombre : switch > 
+< PARENTESISAB , ( > 
+< ENTERO , 2 > 
+< PARENTESISCE , ) > 
+< LLAVEAB , { > 
+< NEWLINE , NL > 
+< CASE ,  tipoEntrada: RESERVADA nombre : case > 
+< ENTERO , 1 > 
+< DOSPUNTOS , : > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : xx > 
+< OPASIGNACION , = > 
+< PROMPT ,  tipoEntrada: RESERVADA nombre : prompt > 
+< PARENTESISAB , ( > 
+< CADENA , "Cual ha salido?" > 
+< PARENTESISCE , ) > 
+< PUNTOYCOMA , ; > 
+< NEWLINE , NL > 
+< CASE ,  tipoEntrada: RESERVADA nombre : case > 
+< ENTERO , 2 > 
+< DOSPUNTOS , : > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : xx > 
+< OPASIGNACION , = > 
+< PROMPT ,  tipoEntrada: RESERVADA nombre : prompt > 
+< PARENTESISAB , ( > 
+< CADENA , "Estas seguro?" > 
+< PARENTESISCE , ) > 
+< PUNTOYCOMA , ; > 
+< BREAK ,  tipoEntrada: RESERVADA nombre : break > 
+< NEWLINE , NL > 
+< LLAVECE , } > 
+< NEWLINE , NL > 
+< FUNCTION ,  tipoEntrada: RESERVADA nombre : function > 
+< IDENTIFICADOR , ola > 
+< PARENTESISAB , ( > 
+< IDENTIFICADOR , a > 
+< COMA , , > 
+< IDENTIFICADOR , b > 
+< PARENTESISCE , ) > 
+< LLAVEAB , { > 
+< NEWLINE , NL > 
+< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : z > 
+< NEWLINE , NL > 
+< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : c > 
+< NEWLINE , NL > 
+< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : k > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : k > 
+< OPASIGNACION , = > 
+< NEW ,  tipoEntrada: RESERVADA nombre : new > 
+< ARRAY ,  tipoEntrada: RESERVADA nombre : Array > 
+< PARENTESISAB , ( > 
+< ENTERO , 2 > 
+< PARENTESISCE , ) > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : w > 
+< OPASIGNACION , = > 
+< ENTERO , 1 > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : c > 
+< OPASIGNACION , = > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : a > 
+< OPARITMETICO , + > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : b > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : z > 
+< OPASIGNACION , = > 
+< ENTERO , 3 > 
+< OPARITMETICO , + > 
+< PARENTESISAB , ( > 
+< ENTERO , 4 > 
+< OPARITMETICO , + > 
+< ENTERO , 5 > 
+< PARENTESISCE , ) > 
+< OPARITMETICO , + > 
+< ENTERO , 6 > 
+< NEWLINE , NL > 
+< IF ,  tipoEntrada: RESERVADA nombre : if > 
+< PARENTESISAB , ( > 
+< ENTERO , 1 > 
+< OPRELACIONAL , > > 
+< ENTERO , 1 > 
+< PARENTESISCE , ) > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : c > 
+< OPASIGNACION , = > 
+< ENTERO , 2 > 
+< NEWLINE , NL > 
+< RETURN ,  tipoEntrada: RESERVADA nombre : return > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : c > 
+< NEWLINE , NL > 
+< LLAVECE , } > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: FUNCION nombre : ola > 
+< PARENTESISAB , ( > 
+< ENTERO , 1 > 
+< COMA , , > 
+< ENTERO , 2 > 
+< PARENTESISCE , ) > 
+< NEWLINE , NL > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : vvv > 
+< OPASIGNACION , = > 
+< ENTERO , 1 > 
+< NEWLINE , NL > 
+< EOF , EOF > 

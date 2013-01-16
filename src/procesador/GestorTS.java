@@ -103,13 +103,13 @@ public class GestorTS {
 		try{
 			FileWriter TextOut;
 			TextOut = new FileWriter(archivo, true);
-			TextOut.write("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++"+'\n');
+			TextOut.write("++++++++++++++++++++++++++++++++++TABLA "+getNumeroActual()+"+++++++++++++++++++++++++++++++++++++"+'\n');
 
 			while(it.hasNext()){
 				EntradaTS ets = it.next();
 
 				TextOut.write("TIPO: "+ets.getTipoEntrada()+"   ");
-				TextOut.write("NOMBRE "+ets.getNombre()+"   ");
+				TextOut.write("NOMBRE: "+ets.getNombre()+"   ");
 				if(ets instanceof Funcion){
 					TextOut.write("NUMERO DE PARAMETROS: "+((Funcion)ets).getNumParmametros()+"   ");
 				}
