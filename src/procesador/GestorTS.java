@@ -198,5 +198,9 @@ public class GestorTS {
 		}
 		return encontrado;
 	}
+	
+	public int getNumeroActual(){
+		return tSActual.getNumeroTS();
+	}
 
 }
