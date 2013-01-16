@@ -1,21 +1,33 @@
-//// Gramática LR(1) del analizador Sintáctico
-Axioma = X
+//// Gramatica LR(1) del analizador Sintactico
+Axioma = $accept
 
-NoTerminales = { X A O S D V F I W E Z P L N C B H R }
+NoTerminales = { X A S D V F I I2 W E Z P L N C C1 B H R S1 Q Q2 T P1 P2 P3 P4 P5 P6 P7}
 
-Terminales = { eof \n var id , = ( ) + > ++ [ ] new Array if switch case break function return }
+Terminales = { \n var id ; , = ( ) + > ++ [ ] { } new
+				Array if switch case break function
+				return $end & cadena entero
+				prompt document.write}
 
 Producciones = {
-	X -> A O
-	X -> O
 	
-	O -> eof
+	$accept: X $end
 	
-	A -> S D A
-	A -> D
+	X -> A	
 	
-	D -> \n
-	D -> ;
+	A -> S1 A
+	A -> S1
+	
+	S1 -> S D
+	
+	D -> Q
+	D -> Q2
+	
+	Q2 -> ;
+	
+	L -> Q				
+	L -> lambda
+	
+	Q -> \n 
 	
 	S -> V		//// Definir variable
 	S -> F		//// Definir funcion
@@ -23,35 +35,53 @@ Producciones = {
 	S -> W		//// Switch case
 	S -> E		//// Expresion
 	
-	V -> var id
-		
-	//// Expresiones
-	E -> id = N 	//// Asignacion
-	E -> id ( P ) 	//// LLamada a funcion
-	E -> E + E		//// Suma
-	E -> E > E		//// Mayor que
-	E -> E ++		//// Postincremento
-	E -> ( E )		//// Para poner parentesis
-	E ->  id		//// un id
-	E ->  id [ E ]	//// Acceder a un elemento de un vector
+	V -> T id
+	
+	T -> var
 	
 	P -> Z			//// Parametros para funcion
 	P -> lambda
 	
-	Z -> E
-	Z -> E , Z
+	Z -> P5
+	Z -> P5 , Z
+		
+	P6 -> id = N
+	P6 -> P7
 	
-	N -> E			
-	N -> new Array ( E )	//// Array
+	P7 -> P7 & P5
+	P7 -> P5
 	
-	L -> \n				//// Salto de línea no necesario
-	L -> lambda
+	P5 -> P5 > P4
+	P5 -> P4
 	
-	I -> if ( E ) L S
+	P4 -> P4 + P3
+	P4 -> P3
 	
-	W -> switch ( E ) L { C L }
+	P3 -> ++ P2
+	P3 -> P2
 	
-	C -> L case E : A L B
+	P2 -> ( P6 )
+	P2 -> P1
+	
+	P1 -> id ( P )
+	P1 -> id [ P6 ]
+	P1 -> id
+	P1 -> prompt ( P6 )
+	P1 -> document.write ( P6 )
+	P1 -> entero
+	P1 -> cadena
+		
+	N -> P5			
+	N -> new Array ( P6 )	//// Array
+		
+	I -> if ( P6 ) L I2
+	
+	I2 -> S
+	I2 -> R
+	
+	W -> switch ( P6 ) L { C L }
+	
+	C -> L case C1 : A L B
 	
 	F -> function id ( H ) L { A R L }
 	

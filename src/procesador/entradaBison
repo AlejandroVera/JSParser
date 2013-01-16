@@ -25,7 +25,7 @@ import java.io.IOException;
 
 /* Grammar follows */
 %%
-X : A
+X : A {Procesador.tablaSimbolos.borrarTabla();}
 ;
 
 A : S1 A
@@ -88,6 +88,15 @@ P6 : IDENTIFICADOR OPASIGNACION N {
 	if((ent = Procesador.tablaSimbolos.setTipoVariable($1.nombre, $1.tipo)) != null)
 		$1.entrada = ent;
 	$$.tipo = $1.tipo; }
+|   IDENTIFICADOR CORCHETEAB P6 CORCHETECE OPASIGNACION N { 
+	if($6.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("Tipo incompatible",false);
+	if($3.tipo != TipoParam.ENTERO) 
+		Procesador.errores.addError("El indice debe ser de tipo entero",false);	
+	if($1.tipo != TipoParam.VECTOR)
+		Procesador.errores.addError("Error en la asignacion: accediendo a indice de un elemento no vector",false); 
+	EntradaTS ent;
+	$$.tipo = TipoParam.ENTERO; }
 | P7 { $$.tipo = $1.tipo; }
 ;
 
