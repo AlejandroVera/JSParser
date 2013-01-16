@@ -1,20 +1,20 @@
 //// Gramatica LR(1) del analizador Sintactico
-Axioma = $accept
+Axioma = XA
 
 NoTerminales = { X A S D V F I I2 
 				W E Z P L N C C1 C2 
 				B H R S1 Q Q2 T 
 				P1 P2 P3 P4 P5 P6 P7
-				H AS F2 J}
+				AS F2 J XA }
 
 Terminales = { \n var id ; , = ( ) + > ++ [ ] { } new
 				Array if switch case break function
-				return $end & cadena entero
-				prompt document.write}
+				return eof & cadena entero
+				prompt document.write : }
 
 Producciones = {
 	
-	$accept: X $end
+	XA -> X eof
 	
 	X -> A	
 	
