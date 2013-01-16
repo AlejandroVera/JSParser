@@ -33,14 +33,12 @@ public class Procesador {
 		
 		//Creamos el gestor de errores
 		errores = new GestorErrores(lexico);
-		new AnalizadorSS(lexico);
 		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
-		/*
 		try {
 			analizador.parse();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	public static GestorErrores getGestorErrores(){
