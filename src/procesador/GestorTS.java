@@ -92,6 +92,10 @@ public class GestorTS {
 			if(ets instanceof Funcion){
 				System.out.print("NUMERO DE PARAMETROS: "+((Funcion)ets).getNumParmametros()+"   ");		
 			}
+			if(ets instanceof Variable){
+				System.out.print("TIPO VARIABLE: "+((Variable)ets).getTipo()+"   ");		
+				System.out.print("VALOR: "+((Variable)ets).getValor()+"   ");	
+			}
 			System.out.println();
 		}
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
