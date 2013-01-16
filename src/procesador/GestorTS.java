@@ -94,7 +94,6 @@ public class GestorTS {
 			}
 			if(ets instanceof Variable){
 				System.out.print("TIPO VARIABLE: "+((Variable)ets).getTipo()+"   ");		
-				System.out.print("VALOR: "+((Variable)ets).getValor()+"   ");	
 			}
 			System.out.println();
 		}
