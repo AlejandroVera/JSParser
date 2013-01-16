@@ -34,6 +34,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private File fichero;
 	private Token anterior;
 	File archivo = null;
+	File archivoParse = null;
 
 	/**
 	 * Estado 0 signifca que no se está en la declaración de una función.<br>
@@ -193,11 +194,21 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		String homeUsuario = System.getProperty("user.home");
 		String barraSistema = System.getProperty("file.separator");
 		archivo = new File(homeUsuario+barraSistema+"tokens.txt");
+		archivoParse= new File(homeUsuario+barraSistema+"parse.txt");
 		try{
 			if(archivo.exists()){
 				archivo.delete();
 			}
 			archivo.createNewFile();
+			if(archivoParse.exists()){
+				archivoParse.delete();
+			}
+			archivoParse.createNewFile();
+			
+			FileWriter textParse;
+			textParse = new FileWriter(archivo, true);
+			textParse.write("Ascendente");
+			textParse.close();			
 
 		}catch(Exception e){e.printStackTrace();}
 
