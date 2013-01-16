@@ -343,7 +343,135 @@ public class AnalizadorAsc
     
 /* Line 351 of lalr1.java  */
 /* Line 28 of "entradaBison"  */
-    {Procesador.tablaSimbolos.borrarTabla();};
+    {Procesador.tablaSimbolos.borrarTabla();
+	   Procesador.lexico.addParse(2);
+	   Procesador.lexico.addParse(1);};
+  break;
+    
+
+  case 3:
+  if (yyn == 3)
+    
+/* Line 351 of lalr1.java  */
+/* Line 33 of "entradaBison"  */
+    {Procesador.lexico.addParse(3);};
+  break;
+    
+
+  case 4:
+  if (yyn == 4)
+    
+/* Line 351 of lalr1.java  */
+/* Line 34 of "entradaBison"  */
+    {Procesador.lexico.addParse(4);};
+  break;
+    
+
+  case 5:
+  if (yyn == 5)
+    
+/* Line 351 of lalr1.java  */
+/* Line 37 of "entradaBison"  */
+    {Procesador.lexico.addParse(5);};
+  break;
+    
+
+  case 6:
+  if (yyn == 6)
+    
+/* Line 351 of lalr1.java  */
+/* Line 40 of "entradaBison"  */
+    {Procesador.lexico.addParse(6);};
+  break;
+    
+
+  case 7:
+  if (yyn == 7)
+    
+/* Line 351 of lalr1.java  */
+/* Line 41 of "entradaBison"  */
+    {Procesador.lexico.addParse(7);};
+  break;
+    
+
+  case 8:
+  if (yyn == 8)
+    
+/* Line 351 of lalr1.java  */
+/* Line 45 of "entradaBison"  */
+    {Procesador.lexico.addParse(8);};
+  break;
+    
+
+  case 9:
+  if (yyn == 9)
+    
+/* Line 351 of lalr1.java  */
+/* Line 47 of "entradaBison"  */
+    {Procesador.lexico.addParse(9);};
+  break;
+    
+
+  case 10:
+  if (yyn == 10)
+    
+/* Line 351 of lalr1.java  */
+/* Line 48 of "entradaBison"  */
+    {Procesador.lexico.addParse(10);};
+  break;
+    
+
+  case 11:
+  if (yyn == 11)
+    
+/* Line 351 of lalr1.java  */
+/* Line 51 of "entradaBison"  */
+    {Procesador.lexico.addParse(11);};
+  break;
+    
+
+  case 12:
+  if (yyn == 12)
+    
+/* Line 351 of lalr1.java  */
+/* Line 54 of "entradaBison"  */
+    {Procesador.lexico.addParse(12);};
+  break;
+    
+
+  case 13:
+  if (yyn == 13)
+    
+/* Line 351 of lalr1.java  */
+/* Line 55 of "entradaBison"  */
+    {Procesador.lexico.addParse(13);};
+  break;
+    
+
+  case 14:
+  if (yyn == 14)
+    
+/* Line 351 of lalr1.java  */
+/* Line 56 of "entradaBison"  */
+    {Procesador.lexico.addParse(14);};
+  break;
+    
+
+  case 15:
+  if (yyn == 15)
+    
+/* Line 351 of lalr1.java  */
+/* Line 57 of "entradaBison"  */
+    {Procesador.lexico.addParse(15);};
+  break;
+    
+
+  case 16:
+  if (yyn == 16)
+    
+/* Line 351 of lalr1.java  */
+/* Line 58 of "entradaBison"  */
+    {Procesador.lexico.addParse(16);};
   break;
     
 
@@ -351,9 +479,10 @@ public class AnalizadorAsc
   if (yyn == 17)
     
 /* Line 351 of lalr1.java  */
-/* Line 59 of "entradaBison"  */
+/* Line 61 of "entradaBison"  */
     { 
-	Procesador.lexico.setEstadoDecV(false);};
+	Procesador.lexico.setEstadoDecV(false);
+	Procesador.lexico.addParse(17);};
   break;
     
 
@@ -361,8 +490,9 @@ public class AnalizadorAsc
   if (yyn == 18)
     
 /* Line 351 of lalr1.java  */
-/* Line 63 of "entradaBison"  */
-    { Procesador.lexico.setEstadoDecV(true); };
+/* Line 66 of "entradaBison"  */
+    { Procesador.lexico.setEstadoDecV(true);
+			Procesador.lexico.addParse(18); };
   break;
     
 
@@ -370,8 +500,8 @@ public class AnalizadorAsc
   if (yyn == 19)
     
 /* Line 351 of lalr1.java  */
-/* Line 66 of "entradaBison"  */
-    { yyval.nParam = ((Parametros)(yystack.valueAt (1-(1)))).nParam; };
+/* Line 70 of "entradaBison"  */
+    { yyval.nParam = ((Parametros)(yystack.valueAt (1-(1)))).nParam;Procesador.lexico.addParse(19);  };
   break;
     
 
@@ -379,8 +509,8 @@ public class AnalizadorAsc
   if (yyn == 20)
     
 /* Line 351 of lalr1.java  */
-/* Line 67 of "entradaBison"  */
-    { yyval.nParam = 0; };
+/* Line 71 of "entradaBison"  */
+    { yyval.nParam = 0; Procesador.lexico.addParse(20); };
   break;
     
 
@@ -388,11 +518,12 @@ public class AnalizadorAsc
   if (yyn == 21)
     
 /* Line 351 of lalr1.java  */
-/* Line 70 of "entradaBison"  */
+/* Line 74 of "entradaBison"  */
     { 
 	yyval.nParam = 1;
 	if(((Parametros)(yystack.valueAt (1-(1)))).tipo != TipoParam.ENTERO)
-		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false); };
+		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false);
+		Procesador.lexico.addParse(21); };
   break;
     
 
@@ -400,11 +531,12 @@ public class AnalizadorAsc
   if (yyn == 22)
     
 /* Line 351 of lalr1.java  */
-/* Line 74 of "entradaBison"  */
+/* Line 79 of "entradaBison"  */
     { 
 	yyval.nParam = ((Parametros)(yystack.valueAt (3-(3)))).nParam + 1;
 	if(((Parametros)(yystack.valueAt (3-(1)))).tipo != TipoParam.ENTERO)
-		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false); };
+		Procesador.errores.addError("Parametros de las funciones deben ser enteros.",false);
+		Procesador.lexico.addParse(22); };
   break;
     
 
@@ -412,7 +544,7 @@ public class AnalizadorAsc
   if (yyn == 23)
     
 /* Line 351 of lalr1.java  */
-/* Line 80 of "entradaBison"  */
+/* Line 86 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.ENTERO && ((Parametros)(yystack.valueAt (3-(3)))).tipo != TipoParam.VECTOR ) 
 		Procesador.errores.addError("Tipo incompatible",false);
@@ -422,7 +554,8 @@ public class AnalizadorAsc
 	EntradaTS ent;
 	if((ent = Procesador.tablaSimbolos.setTipoVariable(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(1)))).tipo)) != null)
 		((Parametros)(yystack.valueAt (3-(1)))).entrada = ent;
-	yyval.tipo = ((Parametros)(yystack.valueAt (3-(1)))).tipo; };
+	yyval.tipo = ((Parametros)(yystack.valueAt (3-(1)))).tipo;
+	Procesador.lexico.addParse(23); };
   break;
     
 
@@ -430,7 +563,7 @@ public class AnalizadorAsc
   if (yyn == 24)
     
 /* Line 351 of lalr1.java  */
-/* Line 91 of "entradaBison"  */
+/* Line 98 of "entradaBison"  */
     { 
 	
 	if(((Parametros)(yystack.valueAt (6-(6)))).tipo != TipoParam.ENTERO) 
@@ -439,7 +572,8 @@ public class AnalizadorAsc
 		Procesador.errores.addError("El indice debe ser de tipo entero",false);	
 	if(((Parametros)(yystack.valueAt (6-(1)))).tipo != TipoParam.VECTOR)
 		Procesador.errores.addError("Error en la asignacion: accediendo a indice de un elemento no vector",false); 
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO;
+	Procesador.lexico.addParse(24); };
   break;
     
 
@@ -447,8 +581,8 @@ public class AnalizadorAsc
   if (yyn == 25)
     
 /* Line 351 of lalr1.java  */
-/* Line 100 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 108 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(25); };
   break;
     
 
@@ -456,11 +590,12 @@ public class AnalizadorAsc
   if (yyn == 26)
     
 /* Line 351 of lalr1.java  */
-/* Line 103 of "entradaBison"  */
+/* Line 111 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO)) 
 		Procesador.errores.addError("Tipos de datos no validos para operador logico",false);
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO;
+	Procesador.lexico.addParse(26); };
   break;
     
 
@@ -468,8 +603,8 @@ public class AnalizadorAsc
   if (yyn == 27)
     
 /* Line 351 of lalr1.java  */
-/* Line 107 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 116 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(27); };
   break;
     
 
@@ -477,11 +612,11 @@ public class AnalizadorAsc
   if (yyn == 28)
     
 /* Line 351 of lalr1.java  */
-/* Line 110 of "entradaBison"  */
+/* Line 119 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO)) 
 		Procesador.errores.addError("Tipos de datos no validos para operador relacional",false);
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO; Procesador.lexico.addParse(28); };
   break;
     
 
@@ -489,8 +624,8 @@ public class AnalizadorAsc
   if (yyn == 29)
     
 /* Line 351 of lalr1.java  */
-/* Line 114 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 123 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(29); };
   break;
     
 
@@ -498,11 +633,12 @@ public class AnalizadorAsc
   if (yyn == 30)
     
 /* Line 351 of lalr1.java  */
-/* Line 117 of "entradaBison"  */
+/* Line 126 of "entradaBison"  */
     { 
 	if(!(((Parametros)(yystack.valueAt (3-(1)))).tipo == ((Parametros)(yystack.valueAt (3-(3)))).tipo && ((Parametros)(yystack.valueAt (3-(1)))).tipo == TipoParam.ENTERO))
 		Procesador.errores.addError("Tipos de datos no validos para operador aritmetico",false);
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO;
+	Procesador.lexico.addParse(30); };
   break;
     
 
@@ -510,8 +646,8 @@ public class AnalizadorAsc
   if (yyn == 31)
     
 /* Line 351 of lalr1.java  */
-/* Line 121 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 131 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(31); };
   break;
     
 
@@ -519,11 +655,12 @@ public class AnalizadorAsc
   if (yyn == 32)
     
 /* Line 351 of lalr1.java  */
-/* Line 124 of "entradaBison"  */
+/* Line 134 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (2-(2)))).tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Tipos de datos no validos para operador de incremento",false); 
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO;
+	Procesador.lexico.addParse(32); };
   break;
     
 
@@ -531,8 +668,8 @@ public class AnalizadorAsc
   if (yyn == 33)
     
 /* Line 351 of lalr1.java  */
-/* Line 128 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 139 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(33); };
   break;
     
 
@@ -540,8 +677,8 @@ public class AnalizadorAsc
   if (yyn == 34)
     
 /* Line 351 of lalr1.java  */
-/* Line 131 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (3-(2)))).tipo; };
+/* Line 142 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (3-(2)))).tipo; Procesador.lexico.addParse(34);};
   break;
     
 
@@ -549,8 +686,8 @@ public class AnalizadorAsc
   if (yyn == 35)
     
 /* Line 351 of lalr1.java  */
-/* Line 132 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 143 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(35); };
   break;
     
 
@@ -558,11 +695,12 @@ public class AnalizadorAsc
   if (yyn == 36)
     
 /* Line 351 of lalr1.java  */
-/* Line 135 of "entradaBison"  */
+/* Line 146 of "entradaBison"  */
     { 
 	if(!Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (4-(1)))).nombre, ((Parametros)(yystack.valueAt (4-(3)))).nParam)) 
 		Procesador.errores.addError("Funcion no definida",false); 
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO; 
+	Procesador.lexico.addParse(36); };
   break;
     
 
@@ -570,14 +708,15 @@ public class AnalizadorAsc
   if (yyn == 37)
     
 /* Line 351 of lalr1.java  */
-/* Line 139 of "entradaBison"  */
+/* Line 151 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (4-(1)))).tipo == TipoParam.NULO) 
 		Procesador.errores.addError("Variable no definida",false);
 	if(((Parametros)(yystack.valueAt (4-(1)))).tipo != TipoParam.VECTOR) 
 		Procesador.errores.addError("La variable no es de tipo vector.", false);
 	if(((Parametros)(yystack.valueAt (4-(3)))).tipo != TipoParam.ENTERO) Procesador.errores.addError("Indice no es de tipo entero.",false); 
-	yyval.tipo = TipoParam.ENTERO; };
+	yyval.tipo = TipoParam.ENTERO;
+	Procesador.lexico.addParse(37); };
   break;
     
 
@@ -585,7 +724,7 @@ public class AnalizadorAsc
   if (yyn == 38)
     
 /* Line 351 of lalr1.java  */
-/* Line 146 of "entradaBison"  */
+/* Line 159 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (1-(1)))).tipo == TipoParam.ENTERO) 
 		yyval.tipo = TipoParam.ENTERO;
@@ -594,7 +733,8 @@ public class AnalizadorAsc
 	else if(((Parametros)(yystack.valueAt (1-(1)))).tipo == TipoParam.NULO)
 		Procesador.errores.addError("Tipo no definido",false);
 	else 
-		Procesador.errores.addError("Tipo no valido",false); };
+		Procesador.errores.addError("Tipo no valido",false);
+		Procesador.lexico.addParse(38); };
   break;
     
 
@@ -602,10 +742,11 @@ public class AnalizadorAsc
   if (yyn == 39)
     
 /* Line 351 of lalr1.java  */
-/* Line 155 of "entradaBison"  */
+/* Line 169 of "entradaBison"  */
     { if (((Parametros)(yystack.valueAt (4-(3)))).tipo!=TipoParam.CADENA) 
 				Procesador.errores.addError("El parametro de prompt debe ser una cadena.",false); 
-			yyval.tipo = TipoParam.ENTERO; };
+			yyval.tipo = TipoParam.ENTERO;
+			Procesador.lexico.addParse(39); };
   break;
     
 
@@ -613,10 +754,11 @@ public class AnalizadorAsc
   if (yyn == 40)
     
 /* Line 351 of lalr1.java  */
-/* Line 158 of "entradaBison"  */
+/* Line 173 of "entradaBison"  */
     { if (((Parametros)(yystack.valueAt (4-(3)))).tipo!=TipoParam.CADENA) 
 				Procesador.errores.addError("El parametro de Document.write debe ser una cadena.",false); 
-			  yyval.tipo = TipoParam.ENTERO; };
+			  yyval.tipo = TipoParam.ENTERO;
+			  Procesador.lexico.addParse(40); };
   break;
     
 
@@ -624,8 +766,8 @@ public class AnalizadorAsc
   if (yyn == 41)
     
 /* Line 351 of lalr1.java  */
-/* Line 161 of "entradaBison"  */
-    { yyval.tipo = TipoParam.ENTERO; };
+/* Line 177 of "entradaBison"  */
+    { yyval.tipo = TipoParam.ENTERO; Procesador.lexico.addParse(41); };
   break;
     
 
@@ -633,8 +775,8 @@ public class AnalizadorAsc
   if (yyn == 42)
     
 /* Line 351 of lalr1.java  */
-/* Line 162 of "entradaBison"  */
-    { yyval.tipo = TipoParam.CADENA; };
+/* Line 178 of "entradaBison"  */
+    { yyval.tipo = TipoParam.CADENA; Procesador.lexico.addParse(42); };
   break;
     
 
@@ -642,8 +784,8 @@ public class AnalizadorAsc
   if (yyn == 43)
     
 /* Line 351 of lalr1.java  */
-/* Line 165 of "entradaBison"  */
-    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; };
+/* Line 181 of "entradaBison"  */
+    { yyval.tipo = ((Parametros)(yystack.valueAt (1-(1)))).tipo; Procesador.lexico.addParse(43); };
   break;
     
 
@@ -651,11 +793,12 @@ public class AnalizadorAsc
   if (yyn == 44)
     
 /* Line 351 of lalr1.java  */
-/* Line 166 of "entradaBison"  */
+/* Line 182 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (5-(4)))).tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Tamaño de vector debe ser entero",false); 
-	yyval.tipo = TipoParam.VECTOR;	
+	yyval.tipo = TipoParam.VECTOR;
+	Procesador.lexico.addParse(44);	
 	};
   break;
     
@@ -664,10 +807,29 @@ public class AnalizadorAsc
   if (yyn == 45)
     
 /* Line 351 of lalr1.java  */
-/* Line 173 of "entradaBison"  */
+/* Line 190 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (6-(3)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Condición debe ser entera",false); };
+		Procesador.errores.addError("Condición debe ser entera",false);
+		Procesador.lexico.addParse(45); };
+  break;
+    
+
+  case 46:
+  if (yyn == 46)
+    
+/* Line 351 of lalr1.java  */
+/* Line 196 of "entradaBison"  */
+    {Procesador.lexico.addParse(46);};
+  break;
+    
+
+  case 47:
+  if (yyn == 47)
+    
+/* Line 351 of lalr1.java  */
+/* Line 197 of "entradaBison"  */
+    {Procesador.lexico.addParse(47);};
   break;
     
 
@@ -675,10 +837,20 @@ public class AnalizadorAsc
   if (yyn == 48)
     
 /* Line 351 of lalr1.java  */
-/* Line 182 of "entradaBison"  */
+/* Line 200 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (9-(3)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Variable del Switch debe ser entera",false); };
+		Procesador.errores.addError("Variable del Switch debe ser entera",false);
+		Procesador.lexico.addParse(48); };
+  break;
+    
+
+  case 49:
+  if (yyn == 49)
+    
+/* Line 351 of lalr1.java  */
+/* Line 207 of "entradaBison"  */
+    {Procesador.lexico.addParse(49);};
   break;
     
 
@@ -686,10 +858,47 @@ public class AnalizadorAsc
   if (yyn == 50)
     
 /* Line 351 of lalr1.java  */
-/* Line 191 of "entradaBison"  */
+/* Line 210 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (1-(1)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Condición debe ser entera",false); };
+		Procesador.errores.addError("Condición debe ser entera",false);
+		Procesador.lexico.addParse(50); };
+  break;
+    
+
+  case 51:
+  if (yyn == 51)
+    
+/* Line 351 of lalr1.java  */
+/* Line 216 of "entradaBison"  */
+    {Procesador.lexico.addParse(51); };
+  break;
+    
+
+  case 52:
+  if (yyn == 52)
+    
+/* Line 351 of lalr1.java  */
+/* Line 217 of "entradaBison"  */
+    {Procesador.lexico.addParse(52); };
+  break;
+    
+
+  case 53:
+  if (yyn == 53)
+    
+/* Line 351 of lalr1.java  */
+/* Line 220 of "entradaBison"  */
+    {Procesador.lexico.addParse(53); };
+  break;
+    
+
+  case 54:
+  if (yyn == 54)
+    
+/* Line 351 of lalr1.java  */
+/* Line 221 of "entradaBison"  */
+    {Procesador.lexico.addParse(54); };
   break;
     
 
@@ -697,10 +906,11 @@ public class AnalizadorAsc
   if (yyn == 55)
     
 /* Line 351 of lalr1.java  */
-/* Line 204 of "entradaBison"  */
+/* Line 224 of "entradaBison"  */
     { 
 	Procesador.lexico.setEstadoDecF(0); 
-	Procesador.tablaSimbolos.borrarTabla();};
+	Procesador.tablaSimbolos.borrarTabla();
+	Procesador.lexico.addParse(55); };
   break;
     
 
@@ -708,11 +918,12 @@ public class AnalizadorAsc
   if (yyn == 56)
     
 /* Line 351 of lalr1.java  */
-/* Line 209 of "entradaBison"  */
+/* Line 230 of "entradaBison"  */
     { 
 	if(Procesador.lexico.getEstadoDecF() != 0) 
 		Procesador.errores.addError("No se admite la declaración anidada de funciones.",false); 
-	Procesador.lexico.setEstadoDecF(1); };
+	Procesador.lexico.setEstadoDecF(1);
+	Procesador.lexico.addParse(56);  };
   break;
     
 
@@ -720,7 +931,7 @@ public class AnalizadorAsc
   if (yyn == 57)
     
 /* Line 351 of lalr1.java  */
-/* Line 215 of "entradaBison"  */
+/* Line 237 of "entradaBison"  */
     { 
 	
 	if(Procesador.tablaSimbolos.buscarFuncionTS(((Parametros)(yystack.valueAt (3-(1)))).nombre, ((Parametros)(yystack.valueAt (3-(3)))).nParam))
@@ -737,6 +948,7 @@ public class AnalizadorAsc
 		Procesador.tablaSimbolos.añadir(s,false,EntradaTS.TipoEntradaTS.VARIABLE);
 		Procesador.tablaSimbolos.setTipoVariable(s, TipoParam.ENTERO);
 	}
+	Procesador.lexico.addParse(57); 
 	};
   break;
     
@@ -745,11 +957,39 @@ public class AnalizadorAsc
   if (yyn == 58)
     
 /* Line 351 of lalr1.java  */
-/* Line 232 of "entradaBison"  */
+/* Line 255 of "entradaBison"  */
     {
 	Procesador.tablaSimbolos.añadir(((Parametros)(yystack.valueAt (3-(1)))).nombre,false,EntradaTS.TipoEntradaTS.FUNCION);
 	Procesador.tablaSimbolos.crearTabla();
-	Procesador.lexico.setEstadoDecF(2); };
+	Procesador.lexico.setEstadoDecF(2);
+	Procesador.lexico.addParse(58);  };
+  break;
+    
+
+  case 59:
+  if (yyn == 59)
+    
+/* Line 351 of lalr1.java  */
+/* Line 262 of "entradaBison"  */
+    {Procesador.lexico.addParse(59); };
+  break;
+    
+
+  case 60:
+  if (yyn == 60)
+    
+/* Line 351 of lalr1.java  */
+/* Line 263 of "entradaBison"  */
+    {Procesador.lexico.addParse(60); };
+  break;
+    
+
+  case 61:
+  if (yyn == 61)
+    
+/* Line 351 of lalr1.java  */
+/* Line 264 of "entradaBison"  */
+    {Procesador.lexico.addParse(61);};
   break;
     
 
@@ -757,10 +997,11 @@ public class AnalizadorAsc
   if (yyn == 62)
     
 /* Line 351 of lalr1.java  */
-/* Line 243 of "entradaBison"  */
+/* Line 267 of "entradaBison"  */
     { 
 	yyval.nParam=1; 
-	yyval.listaP.add(((Parametros)(yystack.valueAt (2-(1)))).nombre); };
+	yyval.listaP.add(((Parametros)(yystack.valueAt (2-(1)))).nombre); 
+	Procesador.lexico.addParse(62);};
   break;
     
 
@@ -768,12 +1009,13 @@ public class AnalizadorAsc
   if (yyn == 63)
     
 /* Line 351 of lalr1.java  */
-/* Line 246 of "entradaBison"  */
+/* Line 271 of "entradaBison"  */
     {
 	yyval.nParam=((Parametros)(yystack.valueAt (3-(3)))).nParam+1;
 	((Parametros)(yystack.valueAt (3-(1)))).tipo = TipoParam.ENTERO; 
 	((Parametros)(yystack.valueAt (3-(3)))).listaP.add(((Parametros)(yystack.valueAt (3-(1)))).nombre);
-	yyval.listaP = ((Parametros)(yystack.valueAt (3-(3)))).listaP; };
+	yyval.listaP = ((Parametros)(yystack.valueAt (3-(3)))).listaP;
+	Procesador.lexico.addParse(63); };
   break;
     
 
@@ -781,17 +1023,27 @@ public class AnalizadorAsc
   if (yyn == 64)
     
 /* Line 351 of lalr1.java  */
-/* Line 253 of "entradaBison"  */
+/* Line 279 of "entradaBison"  */
     { 
 	if(((Parametros)(yystack.valueAt (2-(2)))).tipo != TipoParam.ENTERO) 
-		Procesador.errores.addError("Funcion debe devolver un entero",false); };
+		Procesador.errores.addError("Funcion debe devolver un entero",false);
+	Procesador.lexico.addParse(64); };
+  break;
+    
+
+  case 65:
+  if (yyn == 65)
+    
+/* Line 351 of lalr1.java  */
+/* Line 283 of "entradaBison"  */
+    {Procesador.lexico.addParse(65);};
   break;
     
 
 
 
 /* Line 351 of lalr1.java  */
-/* Line 795 of "AnalizadorAsc.java"  */
+/* Line 1047 of "AnalizadorAsc.java"  */
 	default: break;
       }
 
@@ -1411,13 +1663,13 @@ public class AnalizadorAsc
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
   private static final short yyrline_[] =
   {
-         0,    28,    28,    31,    32,    35,    38,    39,    43,    45,
-      46,    49,    52,    53,    54,    55,    56,    59,    63,    66,
-      67,    70,    74,    80,    91,   100,   103,   107,   110,   114,
-     117,   121,   124,   128,   131,   132,   135,   139,   146,   155,
-     158,   161,   162,   165,   166,   173,   178,   179,   182,   188,
-     191,   196,   197,   200,   201,   204,   209,   215,   232,   238,
-     239,   240,   243,   246,   253,   256
+         0,    28,    28,    33,    34,    37,    40,    41,    45,    47,
+      48,    51,    54,    55,    56,    57,    58,    61,    66,    70,
+      71,    74,    79,    86,    98,   108,   111,   116,   119,   123,
+     126,   131,   134,   139,   142,   143,   146,   151,   159,   169,
+     173,   177,   178,   181,   182,   190,   196,   197,   200,   207,
+     210,   216,   217,   220,   221,   224,   230,   237,   255,   262,
+     263,   264,   267,   271,   279,   283
   };
 
   // Report on the debug stream that the rule yyrule is going to be reduced.
@@ -1498,7 +1750,7 @@ public class AnalizadorAsc
 
 
 /* Line 931 of lalr1.java  */
-/* Line 260 of "entradaBison"  */
+/* Line 287 of "entradaBison"  */
 
 
 
