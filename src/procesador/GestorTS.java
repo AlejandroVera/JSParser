@@ -119,7 +119,7 @@ public class GestorTS {
 				TextOut.write('\n');
 
 			}
-			TextOut.write("+++++++++++++++++++++++++++++++++++FIN TABLA+++++++++++++++++++++++++++++++++"+'\n');
+			TextOut.write("+++++++++++++++++++++++++++++++++++FIN TABLA+++++++++++++++++++++++++++++++++"+'\n'+'\n');
 			TextOut.close();
 		}catch(Exception e){e.printStackTrace();}
 	}
