@@ -35,12 +35,12 @@ public class Procesador {
 		errores = new GestorErrores(lexico);
 		new AnalizadorSS(lexico);
 		AnalizadorAsc analizador = new AnalizadorAsc(lexico);
+		/*
 		try {
 			analizador.parse();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static GestorErrores getGestorErrores(){
