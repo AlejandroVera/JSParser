@@ -556,10 +556,11 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 					  Variable v = (Variable) entrada;
 					  if(v.getTipo() == TipoVariable.ENTERO)
 						  yylval.tipo = TipoParam.ENTERO;
-					  else
+					  else if(v.getTipo() == TipoVariable.VECTOR)
 						  yylval.tipo = TipoParam.VECTOR;
-				  }else
-					  yylval.tipo = TipoParam.NULO;
+					  else
+						  yylval.tipo = TipoParam.NULO;
+				  }
 			  }
 		  }else if(tokenid == AnalizadorAsc.ENTERO){
 			  yylval.tipo = TipoParam.ENTERO;

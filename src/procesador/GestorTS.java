@@ -58,7 +58,7 @@ public class GestorTS {
 	 * @return La nueva entrada añadida. Null en caso de que ya estuviese en la tabla.
 	 */
 	public EntradaTS añadir(String elemento, boolean global){
-		return añadir(elemento, global, TipoEntradaTS.INDEFINIDO);
+		return añadir(elemento, global, TipoEntradaTS.VARIABLE);
 	}
 	
 	/**
@@ -121,11 +121,12 @@ public class GestorTS {
 	public EntradaTS setTipoVariable(String elemento, TipoParam tipo){
 		EntradaTS resultado = null;
 		
-		if(tSActual.borrar(elemento)){
+		if((resultado=buscar(elemento))!= null){
+			Variable v = (Variable) resultado;
 			if(tipo == TipoParam.ENTERO)
-				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.ENTERO));
+				v.setTipo(TipoVariable.ENTERO);
 			else
-				resultado = tSActual.añadir(new Variable(elemento, TipoVariable.VECTOR));
+				v.setTipo(TipoVariable.VECTOR);
 		}
 		
 		return resultado;

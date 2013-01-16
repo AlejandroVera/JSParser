@@ -11,7 +11,7 @@ public class EntradaTS {
 	 * Los diferentes tipos de datos que se pueden guardar en la tabla de simbolos.
 	 */
 	public static enum TipoEntradaTS{
-		INDEFINIDO, FUNCION, VARIABLE, RESERVADA
+		VARIABLE, RESERVADA, FUNCION
 	}
 	
 	String nombre;
@@ -20,7 +20,7 @@ public class EntradaTS {
 	
 	public EntradaTS(String nombre) {
 		this.nombre = nombre;
-		this.tipoEntrada = TipoEntradaTS.INDEFINIDO;
+		this.tipoEntrada = TipoEntradaTS.VARIABLE;
 	}
 
 
