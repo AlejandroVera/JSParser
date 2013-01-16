@@ -23,7 +23,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	private final String digito= "1234567890";
 	private final String letra= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
-	private final String alfanum= digito+letra+"_";
+	private final String alfanum= digito+letra+"_"+".";
 	private String cadena;
 	private String numero;
 	private Matriz matriz;
@@ -98,7 +98,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				sol= new Casilla(6,"nada");
 			}
 			else{
-				emitirError("Caracter no valido");
+				Procesador.getGestorErrores().addError("Caracter no valido",true);
 				int es=0;
 				String acc=null;
 				if(estado==0){
@@ -250,7 +250,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 		//*************estado 7********************
 		ArrayList<Transicion> tr7 = new ArrayList<Transicion>();
-		tr7.add(new Transicion("/",  0, "nada"));
+		tr7.add(new Transicion("/",  0, "casinada"));
 		tr7.add(new Transicion(null, 6, "nada"));
 		matriz.definirTransiciones(tr7, 7);
 		
@@ -303,6 +303,11 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="nada"){
 			puntero++;
+			nCaracterActual++;
+		}
+		else if(accion=="casinada"){
+			if(buffer.get(puntero+1)==10)
+				puntero++;
 			nCaracterActual++;
 		}
 		else if(accion=="a1"){
@@ -421,7 +426,9 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		else if(accion=="a4"){
 			EntradaTS ets=Procesador.getGestorTS().buscar(cadena);
 			if(ets!=null){ //Está en la TS
-				
+				if(cadena.contains(".")){
+					
+				}
 				//Si estamos declarando una variable que ya está declarada -> error
 				if(getEstadoDecV()){
 					Procesador.getGestorErrores().addError("Identificador \""+cadena+"\" ya declarado.",true);
@@ -460,7 +467,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a5"){
 			if(Math.abs( Integer.valueOf(numero))>32768){
-				emitirError("Entero fuera de rango");
+				Procesador.getGestorErrores().addError("Entero fuera de rango",true);
 			}
 			token = new Token(AnalizadorAsc.ENTERO, Integer.valueOf(numero));
 			numero="";
@@ -479,16 +486,12 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			token = new Token(AnalizadorAsc.OPLOGICO, "&&");
 		}
 		else if(accion=="emitirError"){
-			emitirError("caracter no valido");
+			Procesador.getGestorErrores().addError("caracter no valido",true);
 		}
 
 		return token;
 	}
 
-	public void emitirError( String mensaje){
-		Procesador.getGestorErrores().addError(mensaje,true);
-
-	}
 	
 	public void setEstadoDecV(boolean v){
 		System.out.println("Cambiamos estado de declaracion de var a "+v);
@@ -540,6 +543,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 
 	  public int yylex () throws IOException {
 		  Token t = dameToken();
+		  System.out.println(t.toString());
 		  yylval = new Parametros();
 		  int tokenid = t.getTipo();
 		  
