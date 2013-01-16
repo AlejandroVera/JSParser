@@ -172,11 +172,15 @@ B : BREAK
 F : FUNCTION F2 { Procesador.lexico.setEstadoDecF(1); }
 ;
 
-F2 : H L LLAVEAB A R L LLAVECE { 
+F2 : H L LLAVEAB L AS LLAVECE { 
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();}
 ;
 
+AS : A R L
+| A L
+| R L
+;
 
 H : IDENTIFICADOR PARENTESISAB J  { 
 	if(Procesador.lexico.getEstadoDecF() != 0) 
@@ -200,7 +204,6 @@ R : RETURN P6 {
 	if($2.tipo != TipoParam.ENTERO) 
 		Procesador.errores.addError("Funcion debe devolver un entero",false); }
 | RETURN
-| 
 ;
 
 /* User functions */
