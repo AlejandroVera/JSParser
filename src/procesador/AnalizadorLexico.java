@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -291,6 +292,22 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 			}
 			anterior=sol;
 		}
+		//WRITE TOKEN 
+		try{
+		File archivo = null;
+		String homeUsuario = System.getProperty("user.home");
+		String barraSistema = System.getProperty("file.separator");
+		archivo = new File(homeUsuario+barraSistema+"tokens.txt");
+		if(!archivo.exists()){
+			archivo.createNewFile();
+		}
+		FileWriter TextOut;
+		TextOut = new FileWriter(archivo, true);
+		TextOut.write(sol.toString()+"\n");
+		TextOut.close();
+		}catch(Exception e){e.printStackTrace();}
+
+
 		return sol;
 	}
 

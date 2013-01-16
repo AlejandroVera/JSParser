@@ -21,4 +21,4 @@ function ola(a, b){
 
 ola(1,2)
 /*falla */
-xafix=2;
+vvv=1
