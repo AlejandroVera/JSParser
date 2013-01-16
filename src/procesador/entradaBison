@@ -33,6 +33,7 @@ A : S1 A
 ;
 
 S1 : S D
+/*| S Con esto funciona a pesar de los conflictos!!*/
 ;
 
 D : Q
@@ -169,10 +170,10 @@ B : BREAK
 | 
 ;
 
-F : FUNCTION F2 { Procesador.lexico.setEstadoDecF(1); }
+F2 : FUNCTION { Procesador.lexico.setEstadoDecF(1); }
 ;
 
-F2 : H L LLAVEAB L AS LLAVECE { 
+F : F2 H L LLAVEAB L AS LLAVECE { 
 	Procesador.lexico.setEstadoDecF(0); 
 	Procesador.tablaSimbolos.borrarTabla();}
 ;

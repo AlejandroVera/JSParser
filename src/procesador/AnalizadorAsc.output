@@ -73,9 +73,9 @@ Gramática
    46 B: BREAK
    47  | /* vacío */
 
-   48 F: FUNCTION F2
+   48 F2: FUNCTION
 
-   49 F2: H L LLAVEAB L AS LLAVECE
+   49 F: F2 H L LLAVEAB L AS LLAVECE
 
    50 AS: A R L
    51   | A L
@@ -179,10 +179,10 @@ C (55)
     en la izquierda: 45, en la derecha: 44
 B (56)
     en la izquierda: 46 47, en la derecha: 45
-F (57)
-    en la izquierda: 48, en la derecha: 12
-F2 (58)
-    en la izquierda: 49, en la derecha: 48
+F2 (57)
+    en la izquierda: 48, en la derecha: 49
+F (58)
+    en la izquierda: 49, en la derecha: 12
 AS (59)
     en la izquierda: 50 51 52, en la derecha: 49
 H (60)
@@ -224,38 +224,36 @@ estado 0
     P1  ir al estado 24
     I   ir al estado 25
     W   ir al estado 26
-    F   ir al estado 27
+    F2  ir al estado 27
+    F   ir al estado 28
 
 
 estado 1
 
    43 I: IF . PARENTESISAB P6 PARENTESISCE L S
 
-    PARENTESISAB  desplazar e ir al estado 28
+    PARENTESISAB  desplazar e ir al estado 29
 
 
 estado 2
 
    44 W: SWITCH . PARENTESISAB P6 PARENTESISCE L LLAVEAB C L LLAVECE
 
-    PARENTESISAB  desplazar e ir al estado 29
+    PARENTESISAB  desplazar e ir al estado 30
 
 
 estado 3
 
-   48 F: FUNCTION . F2
+   48 F2: FUNCTION .
 
-    IDENTIFICADOR  desplazar e ir al estado 30
-
-    F2  ir al estado 31
-    H   ir al estado 32
+    $default  reduce usando la regla 48 (F2)
 
 
 estado 4
 
    38 P1: DOCWRITE . PARENTESISAB P6 PARENTESISCE
 
-    PARENTESISAB  desplazar e ir al estado 33
+    PARENTESISAB  desplazar e ir al estado 31
 
 
 estado 5
@@ -269,7 +267,7 @@ estado 6
 
    37 P1: PROMPT . PARENTESISAB P6 PARENTESISCE
 
-    PARENTESISAB  desplazar e ir al estado 34
+    PARENTESISAB  desplazar e ir al estado 32
 
 
 estado 7
@@ -281,9 +279,9 @@ estado 7
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    P2  ir al estado 36
+    P2  ir al estado 34
     P1  ir al estado 24
 
 
@@ -299,7 +297,7 @@ estado 8
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    P6  ir al estado 37
+    P6  ir al estado 35
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -329,9 +327,9 @@ estado 11
    35   | IDENTIFICADOR . CORCHETEAB P6 CORCHETECE
    36   | IDENTIFICADOR .
 
-    OPASIGNACION  desplazar e ir al estado 38
-    CORCHETEAB    desplazar e ir al estado 39
-    PARENTESISAB  desplazar e ir al estado 40
+    OPASIGNACION  desplazar e ir al estado 36
+    CORCHETEAB    desplazar e ir al estado 37
+    PARENTESISAB  desplazar e ir al estado 38
 
     $default  reduce usando la regla 36 (P1)
 
@@ -340,7 +338,7 @@ estado 12
 
     0 $accept: X . $end
 
-    $end  desplazar e ir al estado 41
+    $end  desplazar e ir al estado 39
 
 
 estado 13
@@ -369,7 +367,7 @@ estado 14
 
     $default  reduce usando la regla 3 (A)
 
-    A   ir al estado 42
+    A   ir al estado 40
     S1  ir al estado 14
     S   ir al estado 15
     V   ir al estado 16
@@ -383,19 +381,20 @@ estado 14
     P1  ir al estado 24
     I   ir al estado 25
     W   ir al estado 26
-    F   ir al estado 27
+    F2  ir al estado 27
+    F   ir al estado 28
 
 
 estado 15
 
     4 S1: S . D
 
-    PUNTOYCOMA  desplazar e ir al estado 43
-    NEWLINE     desplazar e ir al estado 44
+    PUNTOYCOMA  desplazar e ir al estado 41
+    NEWLINE     desplazar e ir al estado 42
 
-    D   ir al estado 45
-    Q2  ir al estado 46
-    Q   ir al estado 47
+    D   ir al estado 43
+    Q2  ir al estado 44
+    Q   ir al estado 45
 
 
 estado 16
@@ -409,7 +408,7 @@ estado 17
 
    16 V: T . IDENTIFICADOR
 
-    IDENTIFICADOR  desplazar e ir al estado 48
+    IDENTIFICADOR  desplazar e ir al estado 46
 
 
 estado 18
@@ -424,7 +423,7 @@ estado 19
    23 P6: P7 .
    24 P7: P7 . OPLOGICO P5
 
-    OPLOGICO  desplazar e ir al estado 49
+    OPLOGICO  desplazar e ir al estado 47
 
     $default  reduce usando la regla 23 (P6)
 
@@ -434,7 +433,7 @@ estado 20
    25 P7: P5 .
    26 P5: P5 . OPRELACIONAL P4
 
-    OPRELACIONAL  desplazar e ir al estado 50
+    OPRELACIONAL  desplazar e ir al estado 48
 
     $default  reduce usando la regla 25 (P7)
 
@@ -444,7 +443,7 @@ estado 21
    27 P5: P4 .
    28 P4: P4 . OPARITMETICO P3
 
-    OPARITMETICO  desplazar e ir al estado 51
+    OPARITMETICO  desplazar e ir al estado 49
 
     $default  reduce usando la regla 27 (P5)
 
@@ -486,12 +485,21 @@ estado 26
 
 estado 27
 
+   49 F: F2 . H L LLAVEAB L AS LLAVECE
+
+    IDENTIFICADOR  desplazar e ir al estado 50
+
+    H  ir al estado 51
+
+
+estado 28
+
    12 S: F .
 
     $default  reduce usando la regla 12 (S)
 
 
-estado 28
+estado 29
 
    43 I: IF PARENTESISAB . P6 PARENTESISCE L S
 
@@ -512,7 +520,7 @@ estado 28
     P1  ir al estado 24
 
 
-estado 29
+estado 30
 
    44 W: SWITCH PARENTESISAB . P6 PARENTESISCE L LLAVEAB C L LLAVECE
 
@@ -533,34 +541,7 @@ estado 29
     P1  ir al estado 24
 
 
-estado 30
-
-   53 H: IDENTIFICADOR . PARENTESISAB J
-   54  | IDENTIFICADOR . PARENTESISAB PARENTESISCE
-
-    PARENTESISAB  desplazar e ir al estado 54
-
-
 estado 31
-
-   48 F: FUNCTION F2 .
-
-    $default  reduce usando la regla 48 (F)
-
-
-estado 32
-
-   49 F2: H . L LLAVEAB L AS LLAVECE
-
-    NEWLINE  desplazar e ir al estado 44
-
-    $default  reduce usando la regla 9 (L)
-
-    L  ir al estado 55
-    Q  ir al estado 56
-
-
-estado 33
 
    38 P1: DOCWRITE PARENTESISAB . P6 PARENTESISCE
 
@@ -572,7 +553,7 @@ estado 33
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    P6  ir al estado 57
+    P6  ir al estado 54
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -581,7 +562,7 @@ estado 33
     P1  ir al estado 24
 
 
-estado 34
+estado 32
 
    37 P1: PROMPT PARENTESISAB . P6 PARENTESISCE
 
@@ -593,7 +574,7 @@ estado 34
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    P6  ir al estado 58
+    P6  ir al estado 55
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -602,54 +583,54 @@ estado 34
     P1  ir al estado 24
 
 
-estado 35
+estado 33
 
    34 P1: IDENTIFICADOR . PARENTESISAB P PARENTESISCE
    35   | IDENTIFICADOR . CORCHETEAB P6 CORCHETECE
    36   | IDENTIFICADOR .
 
-    CORCHETEAB    desplazar e ir al estado 39
-    PARENTESISAB  desplazar e ir al estado 40
+    CORCHETEAB    desplazar e ir al estado 37
+    PARENTESISAB  desplazar e ir al estado 38
 
     $default  reduce usando la regla 36 (P1)
 
 
-estado 36
+estado 34
 
    30 P3: OPESPECIAL P2 .
 
     $default  reduce usando la regla 30 (P3)
 
 
-estado 37
+estado 35
 
    32 P2: PARENTESISAB P6 . PARENTESISCE
 
-    PARENTESISCE  desplazar e ir al estado 59
+    PARENTESISCE  desplazar e ir al estado 56
 
 
-estado 38
+estado 36
 
    22 P6: IDENTIFICADOR OPASIGNACION . N
 
-    NEW            desplazar e ir al estado 60
+    NEW            desplazar e ir al estado 57
     DOCWRITE       desplazar e ir al estado 4
     PROMPT         desplazar e ir al estado 6
     OPESPECIAL     desplazar e ir al estado 7
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    P5  ir al estado 61
+    P5  ir al estado 58
     P4  ir al estado 21
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
-    N   ir al estado 62
+    N   ir al estado 59
 
 
-estado 39
+estado 37
 
    35 P1: IDENTIFICADOR CORCHETEAB . P6 CORCHETECE
 
@@ -661,7 +642,7 @@ estado 39
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    P6  ir al estado 63
+    P6  ir al estado 60
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -670,7 +651,7 @@ estado 39
     P1  ir al estado 24
 
 
-estado 40
+estado 38
 
    34 P1: IDENTIFICADOR PARENTESISAB . P PARENTESISCE
 
@@ -680,76 +661,76 @@ estado 40
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
     $default  reduce usando la regla 19 (P)
 
-    P   ir al estado 64
-    Z   ir al estado 65
-    P5  ir al estado 66
+    P   ir al estado 61
+    Z   ir al estado 62
+    P5  ir al estado 63
     P4  ir al estado 21
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
 
 
-estado 41
+estado 39
 
     0 $accept: X $end .
 
     $default  aceptar
 
 
-estado 42
+estado 40
 
     2 A: S1 A .
 
     $default  reduce usando la regla 2 (A)
 
 
-estado 43
+estado 41
 
     7 Q2: PUNTOYCOMA .
 
     $default  reduce usando la regla 7 (Q2)
 
 
-estado 44
+estado 42
 
    10 Q: NEWLINE .
 
     $default  reduce usando la regla 10 (Q)
 
 
-estado 45
+estado 43
 
     4 S1: S D .
 
     $default  reduce usando la regla 4 (S1)
 
 
-estado 46
+estado 44
 
     6 D: Q2 .
 
     $default  reduce usando la regla 6 (D)
 
 
-estado 47
+estado 45
 
     5 D: Q .
 
     $default  reduce usando la regla 5 (D)
 
 
-estado 48
+estado 46
 
    16 V: T IDENTIFICADOR .
 
     $default  reduce usando la regla 16 (V)
 
 
-estado 49
+estado 47
 
    24 P7: P7 OPLOGICO . P5
 
@@ -759,16 +740,16 @@ estado 49
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    P5  ir al estado 67
+    P5  ir al estado 64
     P4  ir al estado 21
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
 
 
-estado 50
+estado 48
 
    26 P5: P5 OPRELACIONAL . P4
 
@@ -778,15 +759,15 @@ estado 50
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    P4  ir al estado 68
+    P4  ir al estado 65
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
 
 
-estado 51
+estado 49
 
    28 P4: P4 OPARITMETICO . P3
 
@@ -796,11 +777,31 @@ estado 51
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    P3  ir al estado 69
+    P3  ir al estado 66
     P2  ir al estado 23
     P1  ir al estado 24
+
+
+estado 50
+
+   53 H: IDENTIFICADOR . PARENTESISAB J
+   54  | IDENTIFICADOR . PARENTESISAB PARENTESISCE
+
+    PARENTESISAB  desplazar e ir al estado 67
+
+
+estado 51
+
+   49 F: F2 H . L LLAVEAB L AS LLAVECE
+
+    NEWLINE  desplazar e ir al estado 42
+
+    $default  reduce usando la regla 9 (L)
+
+    L  ir al estado 68
+    Q  ir al estado 69
 
 
 estado 52
@@ -819,229 +820,194 @@ estado 53
 
 estado 54
 
-   53 H: IDENTIFICADOR PARENTESISAB . J
-   54  | IDENTIFICADOR PARENTESISAB . PARENTESISCE
+   38 P1: DOCWRITE PARENTESISAB P6 . PARENTESISCE
 
-    PARENTESISCE   desplazar e ir al estado 72
-    IDENTIFICADOR  desplazar e ir al estado 73
-
-    J  ir al estado 74
+    PARENTESISCE  desplazar e ir al estado 72
 
 
 estado 55
 
-   49 F2: H L . LLAVEAB L AS LLAVECE
+   37 P1: PROMPT PARENTESISAB P6 . PARENTESISCE
 
-    LLAVEAB  desplazar e ir al estado 75
+    PARENTESISCE  desplazar e ir al estado 73
 
 
 estado 56
-
-    8 L: Q .
-
-    $default  reduce usando la regla 8 (L)
-
-
-estado 57
-
-   38 P1: DOCWRITE PARENTESISAB P6 . PARENTESISCE
-
-    PARENTESISCE  desplazar e ir al estado 76
-
-
-estado 58
-
-   37 P1: PROMPT PARENTESISAB P6 . PARENTESISCE
-
-    PARENTESISCE  desplazar e ir al estado 77
-
-
-estado 59
 
    32 P2: PARENTESISAB P6 PARENTESISCE .
 
     $default  reduce usando la regla 32 (P2)
 
 
-estado 60
+estado 57
 
    42 N: NEW . ARRAY PARENTESISAB P6 PARENTESISCE
 
-    ARRAY  desplazar e ir al estado 78
+    ARRAY  desplazar e ir al estado 74
 
 
-estado 61
+estado 58
 
    26 P5: P5 . OPRELACIONAL P4
    41 N: P5 .
 
-    OPRELACIONAL  desplazar e ir al estado 50
+    OPRELACIONAL  desplazar e ir al estado 48
 
     $default  reduce usando la regla 41 (N)
 
 
-estado 62
+estado 59
 
    22 P6: IDENTIFICADOR OPASIGNACION N .
 
     $default  reduce usando la regla 22 (P6)
 
 
-estado 63
+estado 60
 
    35 P1: IDENTIFICADOR CORCHETEAB P6 . CORCHETECE
 
-    CORCHETECE  desplazar e ir al estado 79
+    CORCHETECE  desplazar e ir al estado 75
 
 
-estado 64
+estado 61
 
    34 P1: IDENTIFICADOR PARENTESISAB P . PARENTESISCE
 
-    PARENTESISCE  desplazar e ir al estado 80
+    PARENTESISCE  desplazar e ir al estado 76
 
 
-estado 65
+estado 62
 
    18 P: Z .
 
     $default  reduce usando la regla 18 (P)
 
 
-estado 66
+estado 63
 
    20 Z: P5 .
    21  | P5 . COMA Z
    26 P5: P5 . OPRELACIONAL P4
 
-    OPRELACIONAL  desplazar e ir al estado 50
-    COMA          desplazar e ir al estado 81
+    OPRELACIONAL  desplazar e ir al estado 48
+    COMA          desplazar e ir al estado 77
 
     $default  reduce usando la regla 20 (Z)
 
 
-estado 67
+estado 64
 
    24 P7: P7 OPLOGICO P5 .
    26 P5: P5 . OPRELACIONAL P4
 
-    OPRELACIONAL  desplazar e ir al estado 50
+    OPRELACIONAL  desplazar e ir al estado 48
 
     $default  reduce usando la regla 24 (P7)
 
 
-estado 68
+estado 65
 
    26 P5: P5 OPRELACIONAL P4 .
    28 P4: P4 . OPARITMETICO P3
 
-    OPARITMETICO  desplazar e ir al estado 51
+    OPARITMETICO  desplazar e ir al estado 49
 
     $default  reduce usando la regla 26 (P5)
 
 
-estado 69
+estado 66
 
    28 P4: P4 OPARITMETICO P3 .
 
     $default  reduce usando la regla 28 (P4)
 
 
+estado 67
+
+   53 H: IDENTIFICADOR PARENTESISAB . J
+   54  | IDENTIFICADOR PARENTESISAB . PARENTESISCE
+
+    PARENTESISCE   desplazar e ir al estado 78
+    IDENTIFICADOR  desplazar e ir al estado 79
+
+    J  ir al estado 80
+
+
+estado 68
+
+   49 F: F2 H L . LLAVEAB L AS LLAVECE
+
+    LLAVEAB  desplazar e ir al estado 81
+
+
+estado 69
+
+    8 L: Q .
+
+    $default  reduce usando la regla 8 (L)
+
+
 estado 70
 
    43 I: IF PARENTESISAB P6 PARENTESISCE . L S
 
-    NEWLINE  desplazar e ir al estado 44
+    NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
     L  ir al estado 82
-    Q  ir al estado 56
+    Q  ir al estado 69
 
 
 estado 71
 
    44 W: SWITCH PARENTESISAB P6 PARENTESISCE . L LLAVEAB C L LLAVECE
 
-    NEWLINE  desplazar e ir al estado 44
+    NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
     L  ir al estado 83
-    Q  ir al estado 56
+    Q  ir al estado 69
 
 
 estado 72
-
-   54 H: IDENTIFICADOR PARENTESISAB PARENTESISCE .
-
-    $default  reduce usando la regla 54 (H)
-
-
-estado 73
-
-   55 J: IDENTIFICADOR . PARENTESISCE
-   56  | IDENTIFICADOR . COMA J
-
-    PARENTESISCE  desplazar e ir al estado 84
-    COMA          desplazar e ir al estado 85
-
-
-estado 74
-
-   53 H: IDENTIFICADOR PARENTESISAB J .
-
-    $default  reduce usando la regla 53 (H)
-
-
-estado 75
-
-   49 F2: H L LLAVEAB . L AS LLAVECE
-
-    NEWLINE  desplazar e ir al estado 44
-
-    $default  reduce usando la regla 9 (L)
-
-    L  ir al estado 86
-    Q  ir al estado 56
-
-
-estado 76
 
    38 P1: DOCWRITE PARENTESISAB P6 PARENTESISCE .
 
     $default  reduce usando la regla 38 (P1)
 
 
-estado 77
+estado 73
 
    37 P1: PROMPT PARENTESISAB P6 PARENTESISCE .
 
     $default  reduce usando la regla 37 (P1)
 
 
-estado 78
+estado 74
 
    42 N: NEW ARRAY . PARENTESISAB P6 PARENTESISCE
 
-    PARENTESISAB  desplazar e ir al estado 87
+    PARENTESISAB  desplazar e ir al estado 84
 
 
-estado 79
+estado 75
 
    35 P1: IDENTIFICADOR CORCHETEAB P6 CORCHETECE .
 
     $default  reduce usando la regla 35 (P1)
 
 
-estado 80
+estado 76
 
    34 P1: IDENTIFICADOR PARENTESISAB P PARENTESISCE .
 
     $default  reduce usando la regla 34 (P1)
 
 
-estado 81
+estado 77
 
    21 Z: P5 COMA . Z
 
@@ -1051,14 +1017,49 @@ estado 81
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 35
+    IDENTIFICADOR  desplazar e ir al estado 33
 
-    Z   ir al estado 88
-    P5  ir al estado 66
+    Z   ir al estado 85
+    P5  ir al estado 63
     P4  ir al estado 21
     P3  ir al estado 22
     P2  ir al estado 23
     P1  ir al estado 24
+
+
+estado 78
+
+   54 H: IDENTIFICADOR PARENTESISAB PARENTESISCE .
+
+    $default  reduce usando la regla 54 (H)
+
+
+estado 79
+
+   55 J: IDENTIFICADOR . PARENTESISCE
+   56  | IDENTIFICADOR . COMA J
+
+    PARENTESISCE  desplazar e ir al estado 86
+    COMA          desplazar e ir al estado 87
+
+
+estado 80
+
+   53 H: IDENTIFICADOR PARENTESISAB J .
+
+    $default  reduce usando la regla 53 (H)
+
+
+estado 81
+
+   49 F: F2 H L LLAVEAB . L AS LLAVECE
+
+    NEWLINE  desplazar e ir al estado 42
+
+    $default  reduce usando la regla 9 (L)
+
+    L  ir al estado 88
+    Q  ir al estado 69
 
 
 estado 82
@@ -1089,7 +1090,8 @@ estado 82
     P1  ir al estado 24
     I   ir al estado 25
     W   ir al estado 26
-    F   ir al estado 27
+    F2  ir al estado 27
+    F   ir al estado 28
 
 
 estado 83
@@ -1101,23 +1103,51 @@ estado 83
 
 estado 84
 
+   42 N: NEW ARRAY PARENTESISAB . P6 PARENTESISCE
+
+    DOCWRITE       desplazar e ir al estado 4
+    PROMPT         desplazar e ir al estado 6
+    OPESPECIAL     desplazar e ir al estado 7
+    PARENTESISAB   desplazar e ir al estado 8
+    ENTERO         desplazar e ir al estado 9
+    CADENA         desplazar e ir al estado 10
+    IDENTIFICADOR  desplazar e ir al estado 11
+
+    P6  ir al estado 91
+    P7  ir al estado 19
+    P5  ir al estado 20
+    P4  ir al estado 21
+    P3  ir al estado 22
+    P2  ir al estado 23
+    P1  ir al estado 24
+
+
+estado 85
+
+   21 Z: P5 COMA Z .
+
+    $default  reduce usando la regla 21 (Z)
+
+
+estado 86
+
    55 J: IDENTIFICADOR PARENTESISCE .
 
     $default  reduce usando la regla 55 (J)
 
 
-estado 85
+estado 87
 
    56 J: IDENTIFICADOR COMA . J
 
-    IDENTIFICADOR  desplazar e ir al estado 73
+    IDENTIFICADOR  desplazar e ir al estado 79
 
-    J  ir al estado 91
+    J  ir al estado 92
 
 
-estado 86
+estado 88
 
-   49 F2: H L LLAVEAB L . AS LLAVECE
+   49 F: F2 H L LLAVEAB L . AS LLAVECE
 
     IF             desplazar e ir al estado 1
     SWITCH         desplazar e ir al estado 2
@@ -1125,14 +1155,14 @@ estado 86
     DOCWRITE       desplazar e ir al estado 4
     VAR            desplazar e ir al estado 5
     PROMPT         desplazar e ir al estado 6
-    RETURN         desplazar e ir al estado 92
+    RETURN         desplazar e ir al estado 93
     OPESPECIAL     desplazar e ir al estado 7
     PARENTESISAB   desplazar e ir al estado 8
     ENTERO         desplazar e ir al estado 9
     CADENA         desplazar e ir al estado 10
     IDENTIFICADOR  desplazar e ir al estado 11
 
-    A   ir al estado 93
+    A   ir al estado 94
     S1  ir al estado 14
     S   ir al estado 15
     V   ir al estado 16
@@ -1146,37 +1176,10 @@ estado 86
     P1  ir al estado 24
     I   ir al estado 25
     W   ir al estado 26
-    F   ir al estado 27
-    AS  ir al estado 94
-    R   ir al estado 95
-
-
-estado 87
-
-   42 N: NEW ARRAY PARENTESISAB . P6 PARENTESISCE
-
-    DOCWRITE       desplazar e ir al estado 4
-    PROMPT         desplazar e ir al estado 6
-    OPESPECIAL     desplazar e ir al estado 7
-    PARENTESISAB   desplazar e ir al estado 8
-    ENTERO         desplazar e ir al estado 9
-    CADENA         desplazar e ir al estado 10
-    IDENTIFICADOR  desplazar e ir al estado 11
-
-    P6  ir al estado 96
-    P7  ir al estado 19
-    P5  ir al estado 20
-    P4  ir al estado 21
-    P3  ir al estado 22
-    P2  ir al estado 23
-    P1  ir al estado 24
-
-
-estado 88
-
-   21 Z: P5 COMA Z .
-
-    $default  reduce usando la regla 21 (Z)
+    F2  ir al estado 27
+    F   ir al estado 28
+    AS  ir al estado 95
+    R   ir al estado 96
 
 
 estado 89
@@ -1190,23 +1193,30 @@ estado 90
 
    44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB . C L LLAVECE
 
-    NEWLINE  desplazar e ir al estado 44
+    NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
     L  ir al estado 97
-    Q  ir al estado 56
+    Q  ir al estado 69
     C  ir al estado 98
 
 
 estado 91
+
+   42 N: NEW ARRAY PARENTESISAB P6 . PARENTESISCE
+
+    PARENTESISCE  desplazar e ir al estado 99
+
+
+estado 92
 
    56 J: IDENTIFICADOR COMA J .
 
     $default  reduce usando la regla 56 (J)
 
 
-estado 92
+estado 93
 
    57 R: RETURN . P6
    58  | RETURN .
@@ -1221,7 +1231,7 @@ estado 92
 
     $default  reduce usando la regla 58 (R)
 
-    P6  ir al estado 99
+    P6  ir al estado 100
     P7  ir al estado 19
     P5  ir al estado 20
     P4  ir al estado 21
@@ -1230,45 +1240,38 @@ estado 92
     P1  ir al estado 24
 
 
-estado 93
+estado 94
 
    50 AS: A . R L
    51   | A . L
 
-    NEWLINE  desplazar e ir al estado 44
-    RETURN   desplazar e ir al estado 92
+    NEWLINE  desplazar e ir al estado 42
+    RETURN   desplazar e ir al estado 93
 
     $default  reduce usando la regla 9 (L)
 
-    L  ir al estado 100
-    Q  ir al estado 56
-    R  ir al estado 101
-
-
-estado 94
-
-   49 F2: H L LLAVEAB L AS . LLAVECE
-
-    LLAVECE  desplazar e ir al estado 102
+    L  ir al estado 101
+    Q  ir al estado 69
+    R  ir al estado 102
 
 
 estado 95
 
-   52 AS: R . L
+   49 F: F2 H L LLAVEAB L AS . LLAVECE
 
-    NEWLINE  desplazar e ir al estado 44
-
-    $default  reduce usando la regla 9 (L)
-
-    L  ir al estado 103
-    Q  ir al estado 56
+    LLAVECE  desplazar e ir al estado 103
 
 
 estado 96
 
-   42 N: NEW ARRAY PARENTESISAB P6 . PARENTESISCE
+   52 AS: R . L
 
-    PARENTESISCE  desplazar e ir al estado 104
+    NEWLINE  desplazar e ir al estado 42
+
+    $default  reduce usando la regla 9 (L)
+
+    L  ir al estado 104
+    Q  ir al estado 69
 
 
 estado 97
@@ -1282,59 +1285,59 @@ estado 98
 
    44 W: SWITCH PARENTESISAB P6 PARENTESISCE L LLAVEAB C . L LLAVECE
 
-    NEWLINE  desplazar e ir al estado 44
+    NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
     L  ir al estado 106
-    Q  ir al estado 56
+    Q  ir al estado 69
 
 
 estado 99
+
+   42 N: NEW ARRAY PARENTESISAB P6 PARENTESISCE .
+
+    $default  reduce usando la regla 42 (N)
+
+
+estado 100
 
    57 R: RETURN P6 .
 
     $default  reduce usando la regla 57 (R)
 
 
-estado 100
+estado 101
 
    51 AS: A L .
 
     $default  reduce usando la regla 51 (AS)
 
 
-estado 101
+estado 102
 
    50 AS: A R . L
 
-    NEWLINE  desplazar e ir al estado 44
+    NEWLINE  desplazar e ir al estado 42
 
     $default  reduce usando la regla 9 (L)
 
     L  ir al estado 107
-    Q  ir al estado 56
-
-
-estado 102
-
-   49 F2: H L LLAVEAB L AS LLAVECE .
-
-    $default  reduce usando la regla 49 (F2)
+    Q  ir al estado 69
 
 
 estado 103
 
-   52 AS: R L .
+   49 F: F2 H L LLAVEAB L AS LLAVECE .
 
-    $default  reduce usando la regla 52 (AS)
+    $default  reduce usando la regla 49 (F)
 
 
 estado 104
 
-   42 N: NEW ARRAY PARENTESISAB P6 PARENTESISCE .
+   52 AS: R L .
 
-    $default  reduce usando la regla 42 (N)
+    $default  reduce usando la regla 52 (AS)
 
 
 estado 105
@@ -1416,19 +1419,20 @@ estado 110
     P1  ir al estado 24
     I   ir al estado 25
     W   ir al estado 26
-    F   ir al estado 27
+    F2  ir al estado 27
+    F   ir al estado 28
 
 
 estado 111
 
    45 C: L CASE P6 DOSPUNTOS A . D B
 
-    PUNTOYCOMA  desplazar e ir al estado 43
-    NEWLINE     desplazar e ir al estado 44
+    PUNTOYCOMA  desplazar e ir al estado 41
+    NEWLINE     desplazar e ir al estado 42
 
     D   ir al estado 112
-    Q2  ir al estado 46
-    Q   ir al estado 47
+    Q2  ir al estado 44
+    Q   ir al estado 45
 
 
 estado 112
