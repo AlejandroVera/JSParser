@@ -432,7 +432,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 				if( ets.getTipoEntrada().equals(TipoEntradaTS.RESERVADA)){
 					int tipo = 0;
 					switch(ets.getNombre()){
-						case "array": tipo = AnalizadorAsc.ARRAY; break;
+						case "Array": tipo = AnalizadorAsc.ARRAY; break;
 						case "break": tipo = AnalizadorAsc.BREAK; break;
 						case "case": tipo = AnalizadorAsc.CASE; break;
 						case "document.write": tipo = AnalizadorAsc.DOCWRITE; break;
