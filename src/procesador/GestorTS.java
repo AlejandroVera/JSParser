@@ -65,14 +65,10 @@ public class GestorTS {
 	 * Borra la tabla actual.
 	 * @return True si se ha podido borrar. False si no había tablas que borrar.
 	 */
-	public boolean borrarTabla(){
+	public boolean borrarTabla(){//Se borra en el metodo imprimirTS()
 		imprimirTS();
 		if(this.matrizBloques.size() == 0)
 			return false;
-		
-		//Eliminamos la TS
-		//this.matrizBloques.pop();
-		
 		//Actualizamos el puntero de la TS actual
 		if(this.matrizBloques.size() > 0)
 			this.tSActual = this.matrizBloques.firstElement().getTS();
@@ -91,7 +87,12 @@ public class GestorTS {
 		System.out.println("++++++++++++++++++++++++++++++++++TABLA++++++++++++++++++++++++++++++++++++++");
 		while(it.hasNext()){
 			EntradaTS ets = it.next();
-			System.out.println("TIPO: "+ets.getTipoEntrada()+" ");	
+			System.out.println("TIPO: "+ets.getTipoEntrada()+"   ");	
+			System.out.print("NOMBRE "+ets.getNombre()+"   ");	
+			if(ets instanceof Funcion){
+				System.out.print("NUMERO DE PARAMETROS: "+((Funcion)ets).getNumParmametros()+"   ");		
+			}
+			
 		}
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}

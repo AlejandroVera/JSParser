@@ -8,7 +8,7 @@ function ola(a, b){
 	var z
 	var c
 	var k
-	k = new Array[2]
+	k = new Array(2)
 	w = 1
 	c = a + b
 	z=3+(4+5)+6

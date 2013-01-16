@@ -1,5 +1,7 @@
 package procesador;
 
+import java.util.List;
+
 /**
  * Cada una de las filas de cada una de las tablas de a Tabla de Simbolos
  */
@@ -36,5 +38,6 @@ public class EntradaTS {
 		sol=" tipoEntrada: "+tipoEntrada.toString()+" nombre : "+this.nombre;
 		return sol;
 	}
+
 
 }

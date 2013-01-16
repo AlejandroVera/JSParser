@@ -1,5 +1,6 @@
 package procesador;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class Funcion extends EntradaTS {
 	
 	public boolean existsWithXParam(Integer x){
 		return this.parametros.contains(x); 
+	}
+	
+	
+	public int getNumParmametros(){
+		return this.parametros.size();
 	}
 
 }
