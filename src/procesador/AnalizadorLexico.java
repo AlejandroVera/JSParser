@@ -175,6 +175,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	private LinkedList<Character> buffer;
 	private int puntero;
 	private int estado;
+	private boolean newline = false;
 
 	/**Constructor
 	 * 
@@ -335,6 +336,10 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 	/*+******************acciones semanticas*******************+*/
 	public Token doAccionSem(String accion){
 		Token token=null;
+		if(newline){
+			nlineaActual++;
+			newline = false;
+		}
 		if(accion=="EOF"){
 			token = new Token(AnalizadorAsc.EOF,"EOF");
 		}
@@ -433,7 +438,7 @@ public class AnalizadorLexico implements AnalizadorAsc.Lexer{
 		}
 		else if(accion=="a32"){
 			this.nCaracterActual=0;
-			nlineaActual++;
+			newline = true;
 			puntero++;
 			token = new Token(AnalizadorAsc.NEWLINE,"NL");
 		}

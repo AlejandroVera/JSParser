@@ -1,13 +1,2 @@
-< VAR ,  tipoEntrada: RESERVADA nombre : var > 
+< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : vari > 
 < IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : bb > 
-< NEWLINE , NL > 
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : bb > 
-< OPASIGNACION , = > 
-< ENTERO , 2 > 
-< NEWLINE , NL > 
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : x > 
-< OPASIGNACION , = > 
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : bb > 
-< OPARITMETICO , + > 
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : z > 
-< NEWLINE , NL > 

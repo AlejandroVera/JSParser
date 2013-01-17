@@ -1,2 +1,2 @@
-Tipo no definido (Linea 4)
- En la linea: switch(2){
+Tipo no definido (Linea 1)
+ En la linea: vari bb
