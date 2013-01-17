@@ -50,6 +50,7 @@ Producciones = {
 	Z -> P5 , Z
 		
 	P6 -> id = N
+	P6 -> id [ P6 ] = N
 	P6 -> P7
 	
 	P7 -> P7 & P5
@@ -83,9 +84,9 @@ Producciones = {
 	I2 -> S
 	I2 -> R
 	
-	W -> switch ( P6 ) L { C L }
+	W -> switch ( P6 ) L { L C }
 	
-	C -> L case C1 : A L B C2
+	C -> case C1 : A L B C2
 	
 	C1 -> P6
 	
