@@ -1,6 +1,7 @@
 var bb
+var cc
 bb=2
-x=bb+z
+x=bb
 switch(2){
 	case 1: xx = prompt("Cual ha salido?");
 	case 2: xx = prompt("Estas seguro?"); break

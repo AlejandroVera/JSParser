@@ -1,2 +1,0 @@
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : vari > 
-< IDENTIFICADOR ,  tipoEntrada: VARIABLE nombre : bb > 
