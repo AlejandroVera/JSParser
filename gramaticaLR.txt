@@ -2,7 +2,7 @@
 Axioma = XA
 
 NoTerminales = { X A S D V F I I2 
-				W E Z P L N C C1 C2 
+				W Z P L N C C1 C2 
 				B H R S1 Q Q2 T 
 				P1 P2 P3 P4 P5 P6 P7
 				AS F2 J XA }
@@ -37,7 +37,7 @@ Producciones = {
 	S -> F		//// Definir funcion
 	S -> I		//// If
 	S -> W		//// Switch case
-	S -> E		//// Expresion
+	S -> P6		//// Expresion
 	
 	V -> T id
 	
